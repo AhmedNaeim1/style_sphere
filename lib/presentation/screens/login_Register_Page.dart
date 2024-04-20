@@ -75,16 +75,7 @@ class LoginRegisterPage extends StatelessWidget {
                             onPressed: () {
                               Navigator.pushNamed(
                                 context,
-                                AppRoutes.preferences,
-                                arguments: {
-                                  'preferences': {
-                                    "Style": [],
-                                    "Material": [],
-                                    "Occasion": []
-                                  },
-                                  'profile': false,
-                                  'preferencesPage': 'Style'
-                                },
+                                AppRoutes.login,
                               );
                             },
                             color: true,
