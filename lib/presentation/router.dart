@@ -7,6 +7,7 @@ import 'package:style_sphere/presentation/screens/Authentication/register/first_
 import 'package:style_sphere/presentation/screens/Authentication/register/second_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/third_Step.dart';
 import 'package:style_sphere/presentation/screens/login_Register_Page.dart';
+import 'package:style_sphere/presentation/screens/preferences.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -19,13 +20,14 @@ class AppRoutes {
   static const String firstStep = '/firstStep';
   static const String secondStep = '/secondStep/:name';
   static const String login = '/login';
+  static const String preferences = '/preferences';
 
   static const String EmailVerification = '/EmailVerification';
 
   static Map<String, WidgetBuilder> define() {
     return {
       home: (context) => const MyHomePage(),
-      firstStep: (context) => FirstStep(),
+      firstStep: (context) => const FirstStep(),
       loginRegisterPage: (context) => const LoginRegisterPage(),
       login: (context) => const LoginPage(),
 
@@ -46,7 +48,7 @@ class AppRoutes {
                 name: args["name"].toString(),
                 dateOfBirth: args["dob"].toString()));
       case AppRoutes.firstStep:
-        return MaterialPageRoute(builder: (_) => FirstStep());
+        return MaterialPageRoute(builder: (_) => const FirstStep());
       case AppRoutes.secondStep:
         final name = settings.arguments as String;
 
@@ -55,13 +57,25 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const LoginRegisterPage());
       case AppRoutes.login:
         return MaterialPageRoute(builder: (_) => const LoginPage());
-      // case AppRoutes.signup:
-      //   return MaterialPageRoute(builder: (_) => SignUpScreen());
-      // case AppRoutes.profile:
-      //  return MaterialPageRoute(builder: (_) => const ProfileScreen());
+      // var preferences = args["preferences"] as List;
       //
-      //   case AppRoutes.EmailVerification:
-      //     return MaterialPageRoute(builder: (_) => const EmailVerificationPage());
+      // preferences = preferences.map((e) => e as bool).toList();
+
+      case AppRoutes.preferences:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        final Map<String, List<dynamic>> preferencesMap = args["preferences"];
+
+        final Map<String, List<bool>> preferences = preferencesMap
+            .map((key, value) => MapEntry(key, value.cast<bool>()));
+
+        return MaterialPageRoute(
+          builder: (_) => PreferencesPage(
+            preferences: preferences,
+            preferencesPage: args["preferencesPage"],
+            profile: args["profile"],
+          ),
+        );
 
       default:
         return MaterialPageRoute(
