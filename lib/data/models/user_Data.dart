@@ -16,13 +16,13 @@ class UserData {
     this.currencyPreference,
     this.regionPreference,
     this.preferredStyles,
-    this.preferredMaterial,
-    this.preferredOccasion,
+    this.preferredMaterials,
+    this.preferredOccasions,
     this.token,
   });
 
   UserData.fromJson(dynamic json) {
-    userID = json['userID'];
+    userID = json['_id'];
     userName = json['userName'];
     name = json['name'];
     email = json['email'];
@@ -38,12 +38,12 @@ class UserData {
     currencyPreference = json['currencyPreference'];
     regionPreference = json['regionPreference'];
     preferredStyles = json['preferredStyles'];
-    preferredMaterial = json['preferredMaterial'];
-    preferredOccasion = json['preferredOccasion'];
+    preferredMaterials = json['preferredMaterials'];
+    preferredOccasions = json['preferredOccasions'];
     token = json['token'];
   }
 
-  int? userID;
+  String? userID;
   String? userName;
   String? name;
   String? email;
@@ -59,13 +59,13 @@ class UserData {
   String? currencyPreference;
   String? regionPreference;
   List? preferredStyles;
-  List? preferredMaterial;
-  List? preferredOccasion;
+  List? preferredMaterials;
+  List? preferredOccasions;
   String? token;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['userID'] = userID;
+
     map['userName'] = userName;
     map['name'] = name;
     map['email'] = email;
@@ -81,8 +81,8 @@ class UserData {
     map['currencyPreference'] = currencyPreference;
     map['regionPreference'] = regionPreference;
     map['preferredStyles'] = preferredStyles;
-    map['preferredMaterial'] = preferredMaterial;
-    map['preferredOccasion'] = preferredOccasion;
+    map['preferredMaterials'] = preferredMaterials;
+    map['preferredOccasions'] = preferredOccasions;
     map['token'] = token;
     return map;
   }

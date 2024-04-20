@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:style_sphere/businessLogic/blocs/user_State.dart';
+import 'package:style_sphere/businessLogic/blocs/user_state.dart';
 import 'package:style_sphere/data/models/user_Data.dart';
 import 'package:style_sphere/data/repositories/user_Repository.dart';
+import 'package:style_sphere/presentation/functions/constant_functions.dart';
 import 'package:style_sphere/presentation/router.dart';
 
 // ignore: camel_case_types
@@ -27,8 +28,16 @@ class userCubit extends Cubit<userStates> {
       if (user.runtimeType == UserData) {
         emit(userRegisterSuccessState());
         print(" Success");
-
-        // Navigator.of(context).pushReplacementNamed(AppRoutes.EmailVerification);
+        await savePreferencesInfo(user);
+        Navigator.pushReplacementNamed(
+          context,
+          AppRoutes.preferences,
+          arguments: {
+            'preferences': {"Style": [], "Material": [], "Occasion": []},
+            'profile': false,
+            'preferencesPage': 'Style',
+          },
+        );
       } else if (user["message"] != null) {
         emit(userRegisterErrorState());
         ScaffoldMessenger.of(context).showSnackBar(
@@ -111,6 +120,19 @@ class userCubit extends Cubit<userStates> {
         ),
       );
       emit(userLoginErrorState());
+    }
+  }
+
+  void updateUserPreferences(
+      String userId, UserData userPreferencesInfo) async {
+    try {
+      final user = await _userRepository.updateUserPreferences(
+          userId, userPreferencesInfo);
+      print("success");
+
+      savePreferencesInfo(user);
+    } catch (e) {
+      emit(UploadUserDataErrorState(error: e.toString()));
     }
   }
 }

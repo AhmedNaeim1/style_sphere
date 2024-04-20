@@ -43,7 +43,7 @@ class UserRepository {
 
   Future<dynamic> registerUser(UserData user) async {
     final response = await http.post(
-        Uri.parse('http://127.0.0.1:3020/user/signup'),
+        Uri.parse('http://127.0.0.1:3005/user/signup'),
         body: jsonEncode(user.toJson()),
         headers: {'Content-Type': 'application/json'});
 
@@ -54,6 +54,22 @@ class UserRepository {
     } else if (response.statusCode == 200) {
       final responses = jsonDecode(response.body);
       return responses;
+    } else {
+      return "error";
+    }
+  }
+
+  updateUserPreferences(String userId, UserData userPreferencesInfo) async {
+    userPreferencesInfo.userID = userId;
+    final response = await http.put(
+        Uri.parse('http://127.0.0.1:3005/user/$userId/preferences'),
+        body: jsonEncode(userPreferencesInfo.toJson()),
+        headers: {'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      print(response.body);
+      UserData user = UserData.fromJson(jsonDecode(response.body));
+
+      return user;
     } else {
       return "error";
     }
