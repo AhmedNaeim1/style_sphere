@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
+import 'package:style_sphere/presentation/constant_widgets/buttons.dart';
+import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
 import 'package:style_sphere/presentation/router.dart';
-import 'package:style_sphere/presentation/widgets/constant_Widgets.dart';
 
 class LoginRegisterPage extends StatelessWidget {
   const LoginRegisterPage({super.key});
@@ -36,7 +37,7 @@ class LoginRegisterPage extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                      "assets/loginRegisterPage.png"),
+                                      "assets/authentication/loginRegisterPage.png"),
                                   fit: BoxFit.fitWidth,
                                   alignment: Alignment.center,
                                 ),
@@ -72,7 +73,19 @@ class LoginRegisterPage extends StatelessWidget {
                           CustomElevatedButton(
                             text: 'Login',
                             onPressed: () {
-                              Navigator.pushNamed(context, AppRoutes.login);
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.preferences,
+                                arguments: {
+                                  'preferences': {
+                                    "Style": [],
+                                    "Material": [],
+                                    "Occasion": []
+                                  },
+                                  'profile': false,
+                                  'preferencesPage': 'Style'
+                                },
+                              );
                             },
                             color: true,
                           ),

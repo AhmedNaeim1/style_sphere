@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:style_sphere/constants.dart';
+import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
+import 'package:style_sphere/presentation/constant_widgets/buttons.dart';
+import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
+import 'package:style_sphere/presentation/constant_widgets/textFields.dart';
+import 'package:style_sphere/presentation/constant_widgets/texts.dart';
 import 'package:style_sphere/presentation/router.dart';
-import 'package:style_sphere/presentation/widgets/constant_Widgets.dart';
 
 // ignore: must_be_immutable
 class FirstStep extends StatefulWidget {
-  FirstStep({super.key});
+  const FirstStep({super.key});
 
   @override
   State<FirstStep> createState() => _FirstStepState();
@@ -43,7 +47,8 @@ class _FirstStepState extends State<FirstStep> {
                   child: Container(
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/emailRegister1.png"),
+                        image: AssetImage(
+                            "assets/authentication/emailRegister1.png"),
                         fit: BoxFit.fitWidth,
                         alignment: Alignment.topCenter,
                       ),
@@ -58,22 +63,25 @@ class _FirstStepState extends State<FirstStep> {
                             Center(
                               child: buildCustomText(
                                 text: "1/3",
-                                color: grey20Color,
+                                color: darkBlueColor,
                                 fontSize: 10,
                                 align: TextAlign.center,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                             buildSizedBox(3.h),
                             buildCustomText(
                               text: "What's your name?",
                               fontSize: 21,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w500,
+                              color: darkBlueColor,
                             ),
                             buildSizedBox(1.h),
                             buildCustomText(
                               text:
                                   "So we can personalize your StyleSphere experience!",
                               fontSize: 10,
+                              color: greyBlueColor,
                             ),
                             buildSizedBox(2.h),
                             Row(

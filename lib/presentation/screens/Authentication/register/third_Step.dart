@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
-import 'package:style_sphere/businessLogic/cubits/user_Cubit.dart';
+import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
 import 'package:style_sphere/constants.dart';
 import 'package:style_sphere/data/models/user_Data.dart';
-import 'package:style_sphere/presentation/widgets/constant_Widgets.dart';
+import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
+import 'package:style_sphere/presentation/constant_widgets/buttons.dart';
+import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
+import 'package:style_sphere/presentation/constant_widgets/textFields.dart';
+import 'package:style_sphere/presentation/constant_widgets/texts.dart';
 
 // ignore: must_be_immutable
 class ThirdStep extends StatefulWidget {
@@ -67,7 +71,8 @@ class _ThirdStepState extends State<ThirdStep> {
                     child: Container(
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage("assets/emailRegister.png"),
+                          image: AssetImage(
+                              "assets/authentication/emailRegister.png"),
                           fit: BoxFit.fitWidth,
                           alignment: Alignment.center,
                         ),
@@ -85,17 +90,21 @@ class _ThirdStepState extends State<ThirdStep> {
                                   fontSize: 10,
                                   color: grey20Color,
                                   align: TextAlign.center,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                               buildCustomText(
-                                  text: "What's your Email?",
-                                  fontSize: 21,
-                                  fontWeight: FontWeight.bold),
+                                text: "What's your Email?",
+                                fontSize: 21,
+                                fontWeight: FontWeight.w500,
+                                color: darkBlueColor,
+                              ),
                               buildSizedBox(1.h),
                               buildCustomText(
                                 text:
                                     "We will send a verification code to make sure it’s you.",
                                 fontSize: 10,
+                                color: greyBlueColor,
                               ),
                               buildSizedBox(2.h),
                               buildTextFieldSection(

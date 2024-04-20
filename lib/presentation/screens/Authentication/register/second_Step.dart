@@ -4,8 +4,12 @@ import 'package:flutter_picker/flutter_picker.dart' as datePicker;
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:style_sphere/constants.dart';
+import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
+import 'package:style_sphere/presentation/constant_widgets/buttons.dart';
+import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
+import 'package:style_sphere/presentation/constant_widgets/textFields.dart';
+import 'package:style_sphere/presentation/constant_widgets/texts.dart';
 import 'package:style_sphere/presentation/router.dart';
-import 'package:style_sphere/presentation/widgets/constant_Widgets.dart';
 
 // ignore: must_be_immutable
 class SecondStep extends StatefulWidget {
@@ -45,7 +49,8 @@ class _SecondStepState extends State<SecondStep> {
                   child: Container(
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/emailRegister2.png"),
+                        image: AssetImage(
+                            "assets/authentication/emailRegister2.png"),
                         fit: BoxFit.fitWidth,
                         alignment: Alignment.topCenter,
                       ),
@@ -63,19 +68,23 @@ class _SecondStepState extends State<SecondStep> {
                                 fontSize: 10,
                                 color: grey20Color,
                                 align: TextAlign.center,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                             buildSizedBox(3.h),
                             buildCustomText(
-                                text:
-                                    "Hey ${widget.name.split(" ")[0]}, what’s your date of birth?",
-                                fontSize: 21,
-                                fontWeight: FontWeight.bold),
+                              text:
+                                  "Hey ${widget.name.split(" ")[0]}, what’s your date of birth?",
+                              fontSize: 21,
+                              fontWeight: FontWeight.w500,
+                              color: darkBlueColor,
+                            ),
                             buildSizedBox(1.h),
                             buildCustomText(
                                 text:
                                     "We need this to keep StyleSphere a safe space",
-                                fontSize: 10),
+                                fontSize: 10,
+                                color: greyBlueColor),
                             buildSizedBox(5.h),
                             buildTextFieldSection(
                               "Date of Birth",

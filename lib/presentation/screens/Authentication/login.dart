@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
-import 'package:style_sphere/businessLogic/cubits/user_Cubit.dart';
+import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
 import 'package:style_sphere/constants.dart';
-import 'package:style_sphere/presentation/widgets/constant_Widgets.dart';
+import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
+import 'package:style_sphere/presentation/constant_widgets/buttons.dart';
+import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
+import 'package:style_sphere/presentation/constant_widgets/textFields.dart';
+import 'package:style_sphere/presentation/constant_widgets/texts.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -50,7 +54,8 @@ class _LoginPageState extends State<LoginPage> {
                     child: Container(
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage("assets/loginPage.png"),
+                          image:
+                              AssetImage("assets/authentication/loginPage.png"),
                           fit: BoxFit.fitWidth,
                           alignment: Alignment.center,
                         ),
