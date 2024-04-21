@@ -216,14 +216,10 @@ class _PreferencesPageState extends State<PreferencesPage> {
                 );
               } else if (widget.preferencesPage == "Occasion" &&
                   occasionPreferenceStates.contains(true)) {
-                print("here");
                 UserData? userData = await getUserPreferencesInfo();
-                print(userData);
                 userData!.preferredMaterials = materialPreferenceStates;
                 userData.preferredStyles = stylePreferenceStates;
                 userData.preferredOccasions = occasionPreferenceStates;
-                //TODO: Update user preferences
-                print(userData.userID);
                 cubit.updateUserPreferences(userData.userID!, userData);
                 Navigator.pushNamed(
                   context,

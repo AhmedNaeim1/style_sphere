@@ -27,7 +27,6 @@ class userCubit extends Cubit<userStates> {
 
       if (user.runtimeType == UserData) {
         emit(userRegisterSuccessState());
-        print(" Success");
         await savePreferencesInfo(user);
         Navigator.pushReplacementNamed(
           context,
@@ -92,7 +91,8 @@ class userCubit extends Cubit<userStates> {
 
       if (user.runtimeType == UserData) {
         emit(userLoginSuccessState());
-        print(" Success");
+        await savePreferencesInfo(user);
+
         Navigator.of(context).pushReplacementNamed(AppRoutes.home);
       } else if (user == "Error while logging in") {
         emit(userLoginErrorState());
@@ -128,7 +128,6 @@ class userCubit extends Cubit<userStates> {
     try {
       final user = await _userRepository.updateUserPreferences(
           userId, userPreferencesInfo);
-      print("success");
 
       savePreferencesInfo(user);
     } catch (e) {

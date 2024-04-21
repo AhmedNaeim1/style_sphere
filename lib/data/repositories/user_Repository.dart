@@ -29,9 +29,8 @@ class UserRepository {
     });
     if (response.statusCode == 200) {
       try {
-        print(response.body);
         user = UserData.fromJson(jsonDecode(response.body));
-        print(user);
+
         return user;
       } catch (e) {
         return response.body;
@@ -49,7 +48,7 @@ class UserRepository {
 
     if (response.statusCode == 201) {
       UserData user = UserData.fromJson(jsonDecode(response.body));
-      print(user);
+
       return user;
     } else if (response.statusCode == 200) {
       final responses = jsonDecode(response.body);
@@ -66,7 +65,6 @@ class UserRepository {
         body: jsonEncode(userPreferencesInfo.toJson()),
         headers: {'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
-      print(response.body);
       UserData user = UserData.fromJson(jsonDecode(response.body));
 
       return user;

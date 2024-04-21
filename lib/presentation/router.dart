@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:style_sphere/main.dart';
 import 'package:style_sphere/presentation/screens/Authentication/login.dart';
+import 'package:style_sphere/presentation/screens/Authentication/login_Register_Page.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/first_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/second_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/third_Step.dart';
-import 'package:style_sphere/presentation/screens/login_Register_Page.dart';
 import 'package:style_sphere/presentation/screens/preferences.dart';
 
 class AppRoutes {
