@@ -15,6 +15,14 @@ class userCubit extends Cubit<userStates> {
 
   static userCubit get(context) => BlocProvider.of(context);
 
+  Future<UserData> getUserData() async {
+    emit(userInitialState());
+
+    final user = await _userRepository.getUserDataFronSharedPreferences();
+
+    return user;
+  }
+
   void registerWithEmailPassword(
     UserData userData,
     BuildContext context,
@@ -93,7 +101,7 @@ class userCubit extends Cubit<userStates> {
         emit(userLoginSuccessState());
         await savePreferencesInfo(user);
 
-        Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+        Navigator.of(context).pushReplacementNamed(AppRoutes.navbar);
       } else if (user == "Error while logging in") {
         emit(userLoginErrorState());
         ScaffoldMessenger.of(context).showSnackBar(

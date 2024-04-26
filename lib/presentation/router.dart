@@ -2,12 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:style_sphere/main.dart';
+import 'package:style_sphere/presentation/constant_widgets/botton_navigation_bar.dart';
 import 'package:style_sphere/presentation/screens/Authentication/login.dart';
 import 'package:style_sphere/presentation/screens/Authentication/login_Register_Page.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/first_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/second_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/third_Step.dart';
 import 'package:style_sphere/presentation/screens/preferences.dart';
+import 'package:style_sphere/presentation/screens/profile.dart';
+import 'package:style_sphere/presentation/screens/settings.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -21,6 +24,8 @@ class AppRoutes {
   static const String secondStep = '/secondStep/:name';
   static const String login = '/login';
   static const String preferences = '/preferences';
+  static const String navbar = '/navbar';
+  static const String settings = '/settings';
 
   static const String EmailVerification = '/EmailVerification';
 
@@ -30,6 +35,9 @@ class AppRoutes {
       firstStep: (context) => const FirstStep(),
       loginRegisterPage: (context) => const LoginRegisterPage(),
       login: (context) => const LoginPage(),
+      profile: (context) => const ProfilePage(),
+      navbar: (context) => const BottomNavbar(),
+      settings: (context) => const SettingsPage(),
 
       // signup: (context) => SignUpScreen(),
       // profile: (context) => const ProfileScreen(),
@@ -57,6 +65,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const LoginRegisterPage());
       case AppRoutes.login:
         return MaterialPageRoute(builder: (_) => const LoginPage());
+      case AppRoutes.settings:
+        return MaterialPageRoute(builder: (_) => const SettingsPage());
       // var preferences = args["preferences"] as List;
       //
       // preferences = preferences.map((e) => e as bool).toList();
@@ -76,6 +86,10 @@ class AppRoutes {
             profile: args["profile"],
           ),
         );
+      case AppRoutes.profile:
+        return MaterialPageRoute(builder: (_) => const ProfilePage());
+      case AppRoutes.navbar:
+        return MaterialPageRoute(builder: (_) => const BottomNavbar());
 
       default:
         return MaterialPageRoute(

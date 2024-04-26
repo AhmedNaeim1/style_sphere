@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
             ),
             routes: AppRoutes.define(),
             onGenerateRoute: AppRoutes.generateRoute,
-            initialRoute: AppRoutes.loginRegisterPage,
+            initialRoute: AppRoutes.profile,
           ),
         );
       },
@@ -50,8 +50,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: const Center(
-        child: Column(),
+      body: const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'Home Page',
+            style: TextStyle(fontSize: 20),
+          ),
+        ],
       ),
     );
   }

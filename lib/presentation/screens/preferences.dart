@@ -223,7 +223,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
                 cubit.updateUserPreferences(userData.userID!, userData);
                 Navigator.pushNamed(
                   context,
-                  AppRoutes.home,
+                  AppRoutes.navbar,
                 );
               }
             },

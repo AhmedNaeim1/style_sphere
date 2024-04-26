@@ -39,3 +39,32 @@ Column buildPasswordInfoRow(
     ],
   );
 }
+
+Widget buildEditProfileRow(String text, IconData icon, BuildContext context) {
+  return GestureDetector(
+    onTap: () {},
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Icon(
+          icon,
+          color: blackColor,
+          size: 22.sp,
+          weight: 0.1,
+        ),
+        buildCustomText(
+          text: text,
+          color: grey80Color,
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+        ),
+        const Spacer(),
+        Icon(
+          Icons.arrow_forward_ios,
+          color: blackColor,
+          size: 15.sp,
+        ),
+      ],
+    ),
+  );
+}

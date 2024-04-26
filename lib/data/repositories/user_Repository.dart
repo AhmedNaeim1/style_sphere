@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:style_sphere/presentation/functions/constant_functions.dart';
 
 import '../models/user_Data.dart';
 
@@ -8,8 +9,8 @@ class UserRepository {
   UserRepository();
 
   Future<UserData> getUserData() async {
-    UserData user = UserData(); //get fron local storage
-    //do an http api call to get user data
+    UserData user = UserData();
+
     final response =
         await http.get(Uri.parse('http://localhost:3020/user/${user.userID}'));
     if (response.statusCode == 200) {
@@ -18,6 +19,14 @@ class UserRepository {
     } else {
       return user;
     }
+  }
+
+  Future<UserData> getUserDataFronSharedPreferences() async {
+    UserData user = UserData();
+
+    user = (await getUserPreferencesInfo())!;
+
+    return user;
   }
 
   Future<dynamic> logIn(String email, String password) async {
