@@ -1,5 +1,7 @@
 // ignore_for_file: camel_case_types
 
+import 'package:style_sphere/data/models/user_Data.dart';
+
 abstract class userStates {}
 
 class userInitialState extends userStates {}
@@ -40,12 +42,26 @@ class userRegisterErrorState extends userStates {
 //UploadUserDataLoadingState
 class UploadUserDataLoadingState extends userStates {}
 
+class GetUserDataLoadingState extends userStates {}
+
 //UploadUserDataSuccessState
 class UploadUserDataSuccessState extends userStates {}
+
+class GetUserDataSuccessState extends userStates {
+  final UserData user;
+
+  GetUserDataSuccessState({required this.user});
+}
 
 //UploadUserDataErrorState
 class UploadUserDataErrorState extends userStates {
   final String? error;
 
   UploadUserDataErrorState({this.error});
+}
+
+class GetUserDataErrorState extends userStates {
+  final String? error;
+
+  GetUserDataErrorState({this.error});
 }

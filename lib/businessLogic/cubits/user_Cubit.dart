@@ -10,17 +10,20 @@ import 'package:style_sphere/presentation/router.dart';
 
 // ignore: camel_case_types
 class userCubit extends Cubit<userStates> {
-  userCubit() : super(userInitialState());
+  userCubit({required UserRepository repository}) : super(userInitialState());
   final UserRepository _userRepository = UserRepository();
 
   static userCubit get(context) => BlocProvider.of(context);
 
-  Future<UserData> getUserData() async {
-    emit(userInitialState());
+  void getUserData() async {
+    emit(GetUserDataLoadingState());
+    try {
+      final user = await _userRepository.getUserDataFromSharedPreferences();
 
-    final user = await _userRepository.getUserDataFronSharedPreferences();
-
-    return user;
+      emit(GetUserDataSuccessState(user: user));
+    } catch (_) {
+      emit(GetUserDataErrorState());
+    }
   }
 
   void registerWithEmailPassword(

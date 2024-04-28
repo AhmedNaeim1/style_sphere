@@ -21,7 +21,7 @@ class UserRepository {
     }
   }
 
-  Future<UserData> getUserDataFronSharedPreferences() async {
+  Future<UserData> getUserDataFromSharedPreferences() async {
     UserData user = UserData();
 
     user = (await getUserPreferencesInfo())!;
