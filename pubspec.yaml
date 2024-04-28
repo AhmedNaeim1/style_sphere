@@ -70,6 +70,7 @@ flutter:
   assets:
     - assets/
     - assets/authentication/
+    - assets/settings/
     - assets/preferences/
     - assets/preferences/material/
     - assets/preferences/occasion/

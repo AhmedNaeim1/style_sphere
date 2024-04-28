@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
+import 'package:style_sphere/data/repositories/user_Repository.dart';
 import 'package:style_sphere/presentation/router.dart';
 
 void main() {
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, screenType) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider(create: (context) => userCubit()),
+            BlocProvider(
+                create: (context) => userCubit(repository: UserRepository())),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

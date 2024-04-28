@@ -8,9 +8,11 @@ import 'package:style_sphere/presentation/screens/Authentication/login_Register_
 import 'package:style_sphere/presentation/screens/Authentication/register/first_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/second_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/third_Step.dart';
+import 'package:style_sphere/presentation/screens/Settings/confirmation_page.dart';
+import 'package:style_sphere/presentation/screens/Settings/edit_profile.dart';
+import 'package:style_sphere/presentation/screens/Settings/settings.dart';
 import 'package:style_sphere/presentation/screens/preferences.dart';
 import 'package:style_sphere/presentation/screens/profile.dart';
-import 'package:style_sphere/presentation/screens/settings.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -26,6 +28,8 @@ class AppRoutes {
   static const String preferences = '/preferences';
   static const String navbar = '/navbar';
   static const String settings = '/settings';
+  static const String editProfile = '/editProfile';
+  static const String confirmationPage = '/confirmationPage';
 
   static const String EmailVerification = '/EmailVerification';
 
@@ -38,6 +42,7 @@ class AppRoutes {
       profile: (context) => const ProfilePage(),
       navbar: (context) => const BottomNavbar(),
       settings: (context) => const SettingsPage(),
+      editProfile: (context) => const EditProfilePage(),
 
       // signup: (context) => SignUpScreen(),
       // profile: (context) => const ProfileScreen(),
@@ -67,9 +72,15 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case AppRoutes.settings:
         return MaterialPageRoute(builder: (_) => const SettingsPage());
-      // var preferences = args["preferences"] as List;
-      //
-      // preferences = preferences.map((e) => e as bool).toList();
+      case AppRoutes.editProfile:
+        return MaterialPageRoute(builder: (_) => const EditProfilePage());
+      case AppRoutes.confirmationPage:
+        final args = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => ConfirmationPage(
+            pageComingFrom: args,
+          ),
+        );
 
       case AppRoutes.preferences:
         final args = settings.arguments as Map<String, dynamic>;
