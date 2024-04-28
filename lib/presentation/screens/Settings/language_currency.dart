@@ -48,6 +48,7 @@ class _LanguageCurrencyPageState extends State<LanguageCurrencyPage> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
+              buildSizedBox(4.h),
               Container(
                 margin: const EdgeInsets.all(6),
                 decoration: BoxDecoration(

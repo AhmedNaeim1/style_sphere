@@ -106,6 +106,8 @@ Widget buildLanguageTile({
   required String selectedLanguage,
   required void Function(String) onChanged,
 }) {
+  bool isSelected = selectedLanguage == languageValue;
+
   return ListTile(
     onTap: () {
       onChanged(languageValue);
@@ -113,18 +115,32 @@ Widget buildLanguageTile({
     title: buildCustomText(
       text: languageName,
       color: blackColor,
-      fontSize: 14,
+      fontSize: 12,
       align: TextAlign.left,
       fontWeight: FontWeight.normal,
     ),
-    trailing: Radio(
-      value: languageValue,
-      groupValue: selectedLanguage,
-      onChanged: (String? value) {
-        if (value != null) {
-          onChanged(value);
-        }
-      },
+    trailing: Container(
+      width: 24.0,
+      height: 24.0,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: isSelected
+            ? Border.all(
+                color: Colors.transparent,
+              )
+            : Border.all(
+                color: Colors.black,
+                width: 1.5,
+              ),
+        color: isSelected ? const Color(0xff4AC76D) : Colors.transparent,
+      ),
+      child: isSelected
+          ? const Icon(
+              Icons.check,
+              size: 18.0,
+              color: Colors.white,
+            )
+          : null,
     ),
   );
 }
