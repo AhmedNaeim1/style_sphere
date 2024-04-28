@@ -99,3 +99,32 @@ Widget buildEditProfileRow(String labelText, String routeName,
     ),
   );
 }
+
+Widget buildLanguageTile({
+  required String languageName,
+  required String languageValue,
+  required String selectedLanguage,
+  required void Function(String) onChanged,
+}) {
+  return ListTile(
+    onTap: () {
+      onChanged(languageValue);
+    },
+    title: buildCustomText(
+      text: languageName,
+      color: blackColor,
+      fontSize: 14,
+      align: TextAlign.left,
+      fontWeight: FontWeight.normal,
+    ),
+    trailing: Radio(
+      value: languageValue,
+      groupValue: selectedLanguage,
+      onChanged: (String? value) {
+        if (value != null) {
+          onChanged(value);
+        }
+      },
+    ),
+  );
+}

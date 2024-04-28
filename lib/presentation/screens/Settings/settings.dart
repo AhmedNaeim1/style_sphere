@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,34 +83,36 @@ class _SettingsPageState extends State<SettingsPage> {
                                   Icons.person_outline,
                                   context,
                                   AppRoutes.editProfile,
-                                  state.user,
+                                  json.encode(state.user),
                                 ),
                                 buildSizedBox(2.h),
-                                buildSettingsRow(
-                                  "Language",
-                                  Icons.language,
-                                  context,
-                                  AppRoutes.editProfile,
-                                  state.user,
-                                ),
+                                buildSettingsRow("Language", Icons.language,
+                                    context, AppRoutes.languages, {
+                                  "language": state.user.languagePreference ??
+                                      "English",
+                                  "currency":
+                                      state.user.currencyPreference ?? "EGP",
+                                  "page": "Language"
+                                }),
                                 buildSizedBox(2.h),
-                                // buildEditProfileRow("Notifications",
-                                //     Icons.notifications_outlined, context),
-                                // buildSizedBox(2.h),
                                 buildSettingsRow(
-                                  "Currency",
-                                  Icons.currency_bitcoin,
-                                  context,
-                                  AppRoutes.editProfile,
-                                  state.user,
-                                ),
+                                    "Currency",
+                                    Icons.currency_bitcoin,
+                                    context,
+                                    AppRoutes.languages, {
+                                  "language": state.user.languagePreference ??
+                                      "English",
+                                  "currency":
+                                      state.user.currencyPreference ?? "EGP",
+                                  "page": "Currency"
+                                }),
                                 buildSizedBox(2.h),
                                 buildSettingsRow(
                                   "Region",
                                   Icons.language,
                                   context,
                                   AppRoutes.editProfile,
-                                  state.user,
+                                  state.user.regionPreference,
                                 ),
                                 buildSizedBox(4.h),
                                 buildCustomText(

@@ -1,6 +1,9 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:style_sphere/data/models/user_Data.dart';
 import 'package:style_sphere/main.dart';
 import 'package:style_sphere/presentation/constant_widgets/botton_navigation_bar.dart';
 import 'package:style_sphere/presentation/screens/Authentication/login.dart';
@@ -10,6 +13,7 @@ import 'package:style_sphere/presentation/screens/Authentication/register/second
 import 'package:style_sphere/presentation/screens/Authentication/register/third_Step.dart';
 import 'package:style_sphere/presentation/screens/Settings/confirmation_page.dart';
 import 'package:style_sphere/presentation/screens/Settings/edit_profile.dart';
+import 'package:style_sphere/presentation/screens/Settings/language_currency.dart';
 import 'package:style_sphere/presentation/screens/Settings/settings.dart';
 import 'package:style_sphere/presentation/screens/preferences.dart';
 import 'package:style_sphere/presentation/screens/profile.dart';
@@ -30,6 +34,7 @@ class AppRoutes {
   static const String settings = '/settings';
   static const String editProfile = '/editProfile';
   static const String confirmationPage = '/confirmationPage';
+  static const String languages = '/languages';
 
   static const String EmailVerification = '/EmailVerification';
 
@@ -42,7 +47,6 @@ class AppRoutes {
       profile: (context) => const ProfilePage(),
       navbar: (context) => const BottomNavbar(),
       settings: (context) => const SettingsPage(),
-      editProfile: (context) => const EditProfilePage(),
 
       // signup: (context) => SignUpScreen(),
       // profile: (context) => const ProfileScreen(),
@@ -73,12 +77,28 @@ class AppRoutes {
       case AppRoutes.settings:
         return MaterialPageRoute(builder: (_) => const SettingsPage());
       case AppRoutes.editProfile:
-        return MaterialPageRoute(builder: (_) => const EditProfilePage());
+        final args = settings.arguments as String;
+
+        final userPreference = UserData.fromJson(json.decode(args));
+
+        return MaterialPageRoute(
+            builder: (_) => EditProfilePage(user: userPreference));
       case AppRoutes.confirmationPage:
         final args = settings.arguments as String;
         return MaterialPageRoute(
           builder: (_) => ConfirmationPage(
             pageComingFrom: args,
+          ),
+        );
+
+      case AppRoutes.languages:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return MaterialPageRoute(
+          builder: (_) => LanguageCurrencyPage(
+            language: args["language"],
+            page: args["page"],
+            currency: args["currency"],
           ),
         );
 
@@ -99,6 +119,7 @@ class AppRoutes {
         );
       case AppRoutes.profile:
         return MaterialPageRoute(builder: (_) => const ProfilePage());
+
       case AppRoutes.navbar:
         return MaterialPageRoute(builder: (_) => const BottomNavbar());
 
