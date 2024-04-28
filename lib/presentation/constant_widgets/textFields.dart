@@ -70,3 +70,61 @@ Widget buildDisabledTextField(TextEditingController controller, String hintText,
     ),
   );
 }
+
+Widget buildNameFieldEditProfile(
+    String labelText,
+    String hintText,
+    TextEditingController controller,
+    bool isEditing,
+    void Function(bool) onPressed) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        labelText,
+        style: TextStyle(
+          color: Colors.black,
+          fontFamily: 'Gabarito',
+          fontSize: 12.sp,
+        ),
+      ),
+      SizedBox(
+        height: 5.h,
+        child: GestureDetector(
+          onTap: () {
+            onPressed(!isEditing);
+          },
+          child: TextField(
+            controller: controller,
+            enabled: isEditing,
+            decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
+              hintText: hintText,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(
+                  color: grey20Color,
+                  width: 2,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(
+                  color: greyColor,
+                  width: 2,
+                ),
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  onPressed(!isEditing);
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:style_sphere/constants.dart';
 
-PreferredSizeWidget buildAppBar(String title, BuildContext context) {
+PreferredSizeWidget buildAppBar(
+    String title, BuildContext context, double fontSize) {
   return AppBar(
     backgroundColor: Colors.transparent,
     elevation: 0,
@@ -20,8 +21,8 @@ PreferredSizeWidget buildAppBar(String title, BuildContext context) {
       style: TextStyle(
         fontFamily: 'Gabarito',
         color: darkBlueColor,
-        fontSize: 20.sp,
-        fontWeight: FontWeight.bold,
+        fontSize: fontSize,
+        fontWeight: FontWeight.normal,
       ),
     ),
   );

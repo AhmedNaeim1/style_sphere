@@ -40,17 +40,22 @@ Column buildPasswordInfoRow(
   );
 }
 
-Widget buildEditProfileRow(String text, IconData icon, BuildContext context) {
+Widget buildSettingsRow(String text, IconData icon, BuildContext context,
+    String routeName, dynamic arguments) {
   return GestureDetector(
-    onTap: () {},
+    onTap: () {
+      Navigator.pushNamed(context, routeName, arguments: arguments);
+    },
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Icon(
           icon,
           color: blackColor,
           size: 22.sp,
           weight: 0.1,
+        ),
+        SizedBox(
+          width: 4.w,
         ),
         buildCustomText(
           text: text,
@@ -64,6 +69,32 @@ Widget buildEditProfileRow(String text, IconData icon, BuildContext context) {
           color: blackColor,
           size: 15.sp,
         ),
+      ],
+    ),
+  );
+}
+
+Widget buildEditProfileRow(String labelText, String routeName,
+    BuildContext context, dynamic arguments) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.pushNamed(context, routeName, arguments: arguments);
+    },
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        buildCustomText(
+          text: labelText,
+          color: Colors.black,
+          fontSize: 11,
+          align: TextAlign.left,
+          fontWeight: FontWeight.normal,
+        ),
+        const Icon(
+          Icons.arrow_forward_ios,
+          color: Colors.black,
+          size: 15,
+        )
       ],
     ),
   );
