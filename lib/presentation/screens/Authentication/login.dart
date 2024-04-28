@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
 import 'package:style_sphere/constants.dart';
+import 'package:style_sphere/data/repositories/user_Repository.dart';
 import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
 import 'package:style_sphere/presentation/constant_widgets/buttons.dart';
 import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
@@ -37,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
     final cubit = BlocProvider.of<userCubit>(context);
 
     return BlocProvider<userCubit>(
-      create: (context) => userCubit(),
+      create: (context) => userCubit(repository: UserRepository()),
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
@@ -68,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               buildSizedBox(5.h),
-                              buildAppBar("Login", context),
+                              buildAppBar("Login", context, 20.sp),
                               buildSizedBox(5.h),
                               buildTextFieldSection(
                                   "Email",

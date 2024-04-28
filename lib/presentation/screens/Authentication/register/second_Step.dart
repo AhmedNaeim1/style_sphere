@@ -39,7 +39,7 @@ class _SecondStepState extends State<SecondStep> {
       ),
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: buildAppBar("Register", context),
+        appBar: buildAppBar("Register", context, 20.sp),
         body: LayoutBuilder(
           builder: (context, constraint) {
             return SingleChildScrollView(

@@ -4,6 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
 import 'package:style_sphere/constants.dart';
 import 'package:style_sphere/data/models/user_Data.dart';
+import 'package:style_sphere/data/repositories/user_Repository.dart';
 import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
 import 'package:style_sphere/presentation/constant_widgets/buttons.dart';
 import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
@@ -73,7 +74,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
     final cubit = BlocProvider.of<userCubit>(context);
 
     return BlocProvider<userCubit>(
-      create: (context) => userCubit(),
+      create: (context) => userCubit(repository: UserRepository()),
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: widget.preferencesPage == "Style"
@@ -81,7 +82,11 @@ class _PreferencesPageState extends State<PreferencesPage> {
                 "Preferences",
                 AppRoutes.preferences,
                 {
-                  'preferences': {"Style": [], "Material": [], "Occasion": []},
+                  'preferences': {
+                    "Style": stylePreferenceStates,
+                    "Material": materialPreferenceStates,
+                    "Occasion": occasionPreferenceStates
+                  },
                   'profile': widget.profile,
                   'preferencesPage': "Material",
                 },
@@ -93,15 +98,20 @@ class _PreferencesPageState extends State<PreferencesPage> {
                     {
                       'preferences': {
                         "Style": stylePreferenceStates,
-                        "Material": [],
-                        "Occasion": []
+                        "Material": materialPreferenceStates,
+                        "Occasion": occasionPreferenceStates
                       },
                       'profile': widget.profile,
                       'preferencesPage': "Occasion",
                     },
                     context)
                 : buildActionsAppBar(
-                    "Preferences", AppRoutes.home, {}, context),
+                    "Preferences",
+                    widget.profile
+                        ? AppRoutes.confirmationPage
+                        : AppRoutes.navbar,
+                    widget.profile ? "Preferences" : {},
+                    context),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
@@ -182,7 +192,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
         floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: CustomElevatedButton(
-            text: 'Continue',
+            text: widget.profile == true && widget.preferencesPage == "Occasion"
+                ? 'Done'
+                : 'Continue',
             onPressed: () async {
               if (widget.preferencesPage == "Style" &&
                   stylePreferenceStates.contains(true)) {
@@ -192,8 +204,8 @@ class _PreferencesPageState extends State<PreferencesPage> {
                   arguments: {
                     'preferences': {
                       "Style": stylePreferenceStates,
-                      "Material": [],
-                      "Occasion": []
+                      "Material": materialPreferenceStates,
+                      "Occasion": occasionPreferenceStates
                     },
                     'profile': widget.profile,
                     'preferencesPage': "Material",
@@ -208,7 +220,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
                     'preferences': {
                       "Style": stylePreferenceStates,
                       "Material": materialPreferenceStates,
-                      "Occasion": []
+                      "Occasion": occasionPreferenceStates
                     },
                     'profile': widget.profile,
                     'preferencesPage': "Occasion",
@@ -221,10 +233,16 @@ class _PreferencesPageState extends State<PreferencesPage> {
                 userData.preferredStyles = stylePreferenceStates;
                 userData.preferredOccasions = occasionPreferenceStates;
                 cubit.updateUserPreferences(userData.userID!, userData);
-                Navigator.pushNamed(
-                  context,
-                  AppRoutes.navbar,
-                );
+                widget.profile
+                    ? Navigator.pushNamed(
+                        context,
+                        AppRoutes.confirmationPage,
+                        arguments: "Preferences",
+                      )
+                    : Navigator.pushNamed(
+                        context,
+                        AppRoutes.navbar,
+                      );
               }
             },
             color: true,

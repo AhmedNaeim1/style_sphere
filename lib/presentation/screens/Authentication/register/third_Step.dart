@@ -5,6 +5,7 @@ import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
 import 'package:style_sphere/constants.dart';
 import 'package:style_sphere/data/models/user_Data.dart';
+import 'package:style_sphere/data/repositories/user_Repository.dart';
 import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
 import 'package:style_sphere/presentation/constant_widgets/buttons.dart';
 import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
@@ -53,7 +54,9 @@ class _ThirdStepState extends State<ThirdStep> {
     final cubit = BlocProvider.of<userCubit>(context);
 
     return BlocProvider<userCubit>(
-      create: (context) => userCubit(),
+      create: (context) => userCubit(
+        repository: UserRepository(),
+      ),
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
@@ -61,7 +64,7 @@ class _ThirdStepState extends State<ThirdStep> {
         ),
         child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: buildAppBar("Register", context),
+          appBar: buildAppBar("Register", context, 20.sp),
           body: LayoutBuilder(
             builder: (context, constraint) {
               return SingleChildScrollView(
@@ -298,6 +301,18 @@ class _ThirdStepState extends State<ThirdStep> {
                                           widget.dateOfBirth.toString(),
                                       email: _emailController.text,
                                       password: _passwordController.text,
+                                      location: "Egypt",
+                                      profilePictureUrl: "",
+                                      registrationDate: DateTime.now(),
+                                      followingCount: 0,
+                                      followersCount: 0,
+                                      businessID: 0,
+                                      languagePreference: "English",
+                                      currencyPreference: "EGP",
+                                      regionPreference: "Egypt",
+                                      preferredStyles: [],
+                                      preferredMaterials: [],
+                                      preferredOccasions: [],
                                     );
                                     cubit.registerWithEmailPassword(
                                         user, context);
