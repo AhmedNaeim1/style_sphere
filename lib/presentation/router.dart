@@ -14,6 +14,7 @@ import 'package:style_sphere/presentation/screens/Authentication/register/third_
 import 'package:style_sphere/presentation/screens/Settings/confirmation_page.dart';
 import 'package:style_sphere/presentation/screens/Settings/edit_profile.dart';
 import 'package:style_sphere/presentation/screens/Settings/language_currency.dart';
+import 'package:style_sphere/presentation/screens/Settings/region.dart';
 import 'package:style_sphere/presentation/screens/Settings/settings.dart';
 import 'package:style_sphere/presentation/screens/preferences.dart';
 import 'package:style_sphere/presentation/screens/profile.dart';
@@ -35,6 +36,7 @@ class AppRoutes {
   static const String editProfile = '/editProfile';
   static const String confirmationPage = '/confirmationPage';
   static const String languages = '/languages';
+  static const String region = '/region';
 
   static const String EmailVerification = '/EmailVerification';
 
@@ -90,15 +92,23 @@ class AppRoutes {
             pageComingFrom: args,
           ),
         );
-
-      case AppRoutes.languages:
+      case AppRoutes.region:
         final args = settings.arguments as Map<String, dynamic>;
+        final userData = UserData.fromJson(json.decode(args["user"]));
 
         return MaterialPageRoute(
+          builder: (_) => RegionPage(
+            region: args["region"],
+            user: userData,
+          ),
+        );
+      case AppRoutes.languages:
+        final args = settings.arguments as Map<String, dynamic>;
+        final userData = UserData.fromJson(json.decode(args["user"]));
+        return MaterialPageRoute(
           builder: (_) => LanguageCurrencyPage(
-            language: args["language"],
             page: args["page"],
-            currency: args["currency"],
+            user: userData,
           ),
         );
 
