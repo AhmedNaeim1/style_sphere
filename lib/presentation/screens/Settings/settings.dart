@@ -25,7 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return BlocProvider<userCubit>(
       create: (context) =>
-          userCubit(repository: UserRepository())..getUserData(),
+          userCubit(repository: UserRepository())..getUserPreferencesData(),
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
@@ -80,39 +80,44 @@ class _SettingsPageState extends State<SettingsPage> {
                                 buildSizedBox(2.h),
                                 buildSettingsRow(
                                   "Edit Profile",
-                                  Icons.person_outline,
+                                  "assets/iconPerson.png",
                                   context,
                                   AppRoutes.editProfile,
                                   json.encode(state.user),
                                 ),
                                 buildSizedBox(2.h),
-                                buildSettingsRow("Language", Icons.language,
-                                    context, AppRoutes.languages, {
-                                  "language": state.user.languagePreference ??
-                                      "English",
-                                  "currency":
-                                      state.user.currencyPreference ?? "EGP",
-                                  "page": "Language"
-                                }),
-                                buildSizedBox(2.h),
                                 buildSettingsRow(
-                                    "Currency",
-                                    Icons.currency_bitcoin,
+                                    "Language",
+                                    "assets/iconLanguages.png",
                                     context,
                                     AppRoutes.languages, {
                                   "language": state.user.languagePreference ??
                                       "English",
                                   "currency":
                                       state.user.currencyPreference ?? "EGP",
-                                  "page": "Currency"
+                                  "page": "Language",
+                                  "user": json.encode(state.user),
+                                }),
+                                buildSizedBox(2.h),
+                                buildSettingsRow(
+                                    "Currency",
+                                    "assets/iconCurrency.png",
+                                    context,
+                                    AppRoutes.languages, {
+                                  "page": "Currency",
+                                  "user": json.encode(state.user),
                                 }),
                                 buildSizedBox(2.h),
                                 buildSettingsRow(
                                   "Region",
-                                  Icons.language,
+                                  "assets/iconRegion.png",
                                   context,
-                                  AppRoutes.editProfile,
-                                  state.user.regionPreference,
+                                  AppRoutes.region,
+                                  {
+                                    "region":
+                                        state.user.regionPreference ?? "Egypt",
+                                    "user": json.encode(state.user),
+                                  },
                                 ),
                                 buildSizedBox(4.h),
                                 buildCustomText(
@@ -125,15 +130,15 @@ class _SettingsPageState extends State<SettingsPage> {
                                 buildSizedBox(2.h),
                                 buildSettingsRow(
                                   "Saved Cards",
-                                  Icons.favorite_border,
+                                  "assets/iconSavedCards.png",
                                   context,
                                   AppRoutes.editProfile,
                                   state.user,
                                 ),
                                 buildSizedBox(2.h),
                                 buildSettingsRow(
-                                  "Saved Address",
-                                  Icons.remove_red_eye,
+                                  "Saved Addresses",
+                                  "assets/iconSavedAddress.png",
                                   context,
                                   AppRoutes.editProfile,
                                   state.user,

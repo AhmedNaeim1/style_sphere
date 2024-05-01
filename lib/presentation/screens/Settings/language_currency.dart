@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
+import 'package:style_sphere/data/models/user_Data.dart';
 import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
 import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
 
 class LanguageCurrencyPage extends StatefulWidget {
-  String language;
   String page;
-  String currency;
 
-  LanguageCurrencyPage(
-      {super.key,
-      required this.language,
-      required this.page,
-      required this.currency});
+  UserData user;
+
+  LanguageCurrencyPage({super.key, required this.page, required this.user});
 
   @override
   State<LanguageCurrencyPage> createState() => _LanguageCurrencyPageState();
 }
 
 class _LanguageCurrencyPageState extends State<LanguageCurrencyPage> {
-  late String selectedLanguage = widget.language;
-  late String selectedCurrency = widget.currency;
+  late String selectedLanguage = widget.user.languagePreference ?? "English";
+  late String selectedCurrency = widget.user.currencyPreference ?? "EGP";
 
   @override
   void initState() {
     super.initState();
     widget.page == "Language"
-        ? selectedLanguage = widget.language
-        : selectedCurrency = widget.currency;
+        ? selectedLanguage = widget.user.languagePreference!
+        : selectedCurrency = widget.user.currencyPreference!;
   }
 
   @override
   Widget build(BuildContext context) {
+    final cubit = BlocProvider.of<userCubit>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: buildAppBar(
@@ -64,7 +65,7 @@ class _LanguageCurrencyPageState extends State<LanguageCurrencyPage> {
                 ),
                 child: Column(
                   children: [
-                    buildLanguageTile(
+                    buildLanguageCurrencyTile(
                       languageName: widget.page == "Language"
                           ? "English (US)"
                           : "Egyptian Pound (EGP)",
@@ -73,15 +74,24 @@ class _LanguageCurrencyPageState extends State<LanguageCurrencyPage> {
                       selectedLanguage: widget.page == "Language"
                           ? selectedLanguage
                           : selectedCurrency,
-                      onChanged: (String value) {
+                      onChanged: (String value) async {
+                        UserData user = widget.user;
                         setState(() {
-                          widget.page == "Language"
-                              ? selectedLanguage = value
-                              : selectedCurrency = value;
+                          if (widget.page == "Language") {
+                            selectedLanguage = value;
+                            user.languagePreference = value;
+                          } else {
+                            selectedCurrency = value;
+                            user.currencyPreference = value;
+                          }
                         });
+                        cubit.updateUser(
+                          widget.user.userID!,
+                          user,
+                        );
                       },
                     ),
-                    buildLanguageTile(
+                    buildLanguageCurrencyTile(
                       languageName: widget.page == "Language"
                           ? "Arabic (AR)"
                           : "Dollars (\$)",
@@ -90,12 +100,21 @@ class _LanguageCurrencyPageState extends State<LanguageCurrencyPage> {
                       selectedLanguage: widget.page == "Language"
                           ? selectedLanguage
                           : selectedCurrency,
-                      onChanged: (String value) {
+                      onChanged: (String value) async {
+                        UserData user = widget.user;
                         setState(() {
-                          widget.page == "Language"
-                              ? selectedLanguage = value
-                              : selectedCurrency = value;
+                          if (widget.page == "Language") {
+                            selectedLanguage = value;
+                            user.languagePreference = value;
+                          } else {
+                            selectedCurrency = value;
+                            user.currencyPreference = value;
+                          }
                         });
+                        cubit.updateUser(
+                          widget.user.userID!,
+                          user,
+                        );
                       },
                     ),
                   ],
