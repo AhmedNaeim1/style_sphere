@@ -15,7 +15,7 @@ class userCubit extends Cubit<userStates> {
 
   static userCubit get(context) => BlocProvider.of(context);
 
-  void getUserData() async {
+  void getUserPreferencesData() async {
     emit(GetUserDataLoadingState());
     try {
       final user = await _userRepository.getUserDataFromSharedPreferences();
@@ -23,6 +23,28 @@ class userCubit extends Cubit<userStates> {
       emit(GetUserDataSuccessState(user: user));
     } catch (_) {
       emit(GetUserDataErrorState());
+    }
+  }
+
+  void getUserData() async {
+    emit(GetUserDataLoadingState());
+    try {
+      final user = await _userRepository.getUserData();
+      savePreferencesInfo(user);
+
+      emit(GetUserDataSuccessState(user: user));
+    } catch (_) {
+      emit(GetUserDataErrorState());
+    }
+  }
+
+  void updateUser(String userId, UserData userInfo) async {
+    try {
+      final user = await _userRepository.updateUser(userId, userInfo);
+
+      savePreferencesInfo(user);
+    } catch (e) {
+      emit(UploadUserDataErrorState(error: e.toString()));
     }
   }
 

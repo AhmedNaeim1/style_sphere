@@ -40,36 +40,44 @@ Column buildPasswordInfoRow(
   );
 }
 
-Widget buildSettingsRow(String text, IconData icon, BuildContext context,
-    String routeName, dynamic arguments) {
+Widget buildSettingsRow(
+  String text,
+  String imageIconPath, // SVG icon path as a string
+  BuildContext context,
+  String routeName,
+  dynamic arguments,
+) {
   return GestureDetector(
     onTap: () {
       Navigator.pushNamed(context, routeName, arguments: arguments);
     },
-    child: Row(
-      children: [
-        Icon(
-          icon,
-          color: blackColor,
-          size: 22.sp,
-          weight: 0.1,
-        ),
-        SizedBox(
-          width: 4.w,
-        ),
-        buildCustomText(
-          text: text,
-          color: grey80Color,
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ),
-        const Spacer(),
-        Icon(
-          Icons.arrow_forward_ios,
-          color: blackColor,
-          size: 15.sp,
-        ),
-      ],
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 12),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 18.sp,
+            height: 18.sp,
+            child: Image.asset(
+              fit: BoxFit.fitHeight,
+              imageIconPath,
+            ),
+          ),
+          SizedBox(width: 4.w),
+          buildCustomText(
+            text: text,
+            color: grey80Color,
+            fontSize: 13,
+            fontWeight: FontWeight.normal,
+          ),
+          const Spacer(),
+          Icon(
+            Icons.arrow_forward_ios,
+            color: blackColor,
+            size: 12.sp,
+          ),
+        ],
+      ),
     ),
   );
 }
@@ -100,7 +108,7 @@ Widget buildEditProfileRow(String labelText, String routeName,
   );
 }
 
-Widget buildLanguageTile({
+Widget buildLanguageCurrencyTile({
   required String languageName,
   required String languageValue,
   required String selectedLanguage,
@@ -114,6 +122,60 @@ Widget buildLanguageTile({
     },
     title: buildCustomText(
       text: languageName,
+      color: blackColor,
+      fontSize: 12,
+      align: TextAlign.left,
+      fontWeight: FontWeight.normal,
+    ),
+    trailing: Container(
+      width: 24.0,
+      height: 24.0,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: isSelected
+            ? Border.all(
+                color: Colors.transparent,
+              )
+            : Border.all(
+                color: Colors.black,
+                width: 1.5,
+              ),
+        color: isSelected ? const Color(0xff4AC76D) : Colors.transparent,
+      ),
+      child: isSelected
+          ? const Icon(
+              Icons.check,
+              size: 18.0,
+              color: Colors.white,
+            )
+          : null,
+    ),
+  );
+}
+
+Widget buildRegionTile({
+  required String regionName,
+  required String regionValue,
+  required String selectedRegion,
+  required String imageIconPath,
+  required void Function(String) onChanged,
+}) {
+  bool isSelected = selectedRegion == regionValue;
+
+  return ListTile(
+    onTap: () {
+      onChanged(regionValue);
+    },
+    leading: SizedBox(
+      width: 22.sp,
+      height: 22.sp,
+      child: Image.asset(
+        fit: BoxFit.fitHeight,
+        imageIconPath,
+      ),
+    ),
+    title: buildCustomText(
+      text: regionName,
       color: blackColor,
       fontSize: 12,
       align: TextAlign.left,

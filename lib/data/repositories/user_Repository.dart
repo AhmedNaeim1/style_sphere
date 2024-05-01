@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:style_sphere/presentation/functions/constant_functions.dart';
@@ -79,6 +80,54 @@ class UserRepository {
       return user;
     } else {
       return "error";
+    }
+  }
+
+  updateUser(String userId, UserData userInfo) async {
+    userInfo.userID = userId;
+    final response = await http.put(
+        Uri.parse('http://127.0.0.1:3005/user/$userId'),
+        body: jsonEncode(userInfo.toJson()),
+        headers: {'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      UserData user = UserData.fromJson(jsonDecode(response.body));
+
+      return user;
+    } else {
+      return "error";
+    }
+  }
+
+  Future<void> uploadImage(File imageFile) async {
+    const String uploadUrl =
+        'https://storage.googleapis.com/style-sphere-graduation.appspot.com';
+
+    try {
+      // Read the image file as bytes
+      List<int> imageBytes = await imageFile.readAsBytes();
+
+      // Encode the image bytes to base64
+      String base64Image = base64Encode(imageBytes);
+
+      // Make a POST request to the Cloud Storage upload URL
+      http.Response response = await http.post(
+        Uri.parse(uploadUrl),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        },
+        body: jsonEncode({
+          'image': base64Image,
+        }),
+      );
+
+      // Check the response status
+      if (response.statusCode == 200) {
+        print('Image uploaded successfully.');
+      } else {
+        print('Error uploading image: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error uploading image: $e');
     }
   }
 
