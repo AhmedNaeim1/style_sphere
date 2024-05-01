@@ -29,9 +29,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = BlocProvider.of<userCubit>(context);
+
     return BlocProvider<userCubit>(
       create: (context) =>
-          userCubit(repository: UserRepository())..getUserData(),
+          userCubit(repository: UserRepository())..getUserPreferencesData(),
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
@@ -58,7 +60,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     Container(
                       margin: EdgeInsets.only(top: 21.5.h),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.white.withOpacity(0.8),
                         borderRadius: BorderRadius.circular(20.0),
                         boxShadow: [
                           BoxShadow(
@@ -87,7 +89,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       setState(() {
                                         isEditingFirst = newValue;
                                         isEditingSecond = false;
+                                        widget.user.name =
+                                            "${firstNameController.text} ${lastNameController.text}";
                                       });
+                                      cubit.updateUser(
+                                        widget.user.userID!,
+                                        widget.user,
+                                      );
                                     },
                                   ),
                                 ),
@@ -104,7 +112,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       setState(() {
                                         isEditingSecond = newValue;
                                         isEditingFirst = false;
+                                        widget.user.name =
+                                            "${firstNameController.text} ${lastNameController.text}";
                                       });
+                                      cubit.updateUser(
+                                        widget.user.userID!,
+                                        widget.user,
+                                      );
                                     },
                                   ),
                                 ),
@@ -176,15 +190,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             child: CircleAvatar(
                               radius: 12.h,
                               backgroundColor: Colors.transparent,
-                              child: Align(
-                                alignment: Alignment.bottomRight,
-                                child: CircleAvatar(
-                                  backgroundColor: primaryColor,
-                                  radius: 22.0,
-                                  child: Icon(
-                                    Icons.edit,
-                                    size: 3.h,
-                                    color: Colors.white,
+                              child: GestureDetector(
+                                onTap: () {
+                                  // cubit.uploadProfilePicture(
+                                  //   widget.user.userID!,
+                                  //   widget.user,
+                                  // );
+                                },
+                                child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: CircleAvatar(
+                                    backgroundColor: primaryColor,
+                                    radius: 22.0,
+                                    child: Icon(
+                                      Icons.edit,
+                                      size: 3.h,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
