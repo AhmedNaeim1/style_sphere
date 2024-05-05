@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:style_sphere/businessLogic/blocs/user_state.dart';
-import 'package:style_sphere/data/models/user_Data.dart';
-import 'package:style_sphere/data/repositories/user_Repository.dart';
+import 'package:style_sphere/data/models/user_data.dart';
+import 'package:style_sphere/data/repositories/user_repository.dart';
 import 'package:style_sphere/presentation/functions/constant_functions.dart';
 import 'package:style_sphere/presentation/router.dart';
 
@@ -58,17 +58,15 @@ class userCubit extends Cubit<userStates> {
     try {
       final user = await _userRepository.registerUser(userData);
 
-      if (user.runtimeType == UserData) {
+      final otp = await _userRepository.sendOTP(user.email!.toString());
+
+      if (user.runtimeType == UserData && otp == "Success") {
         emit(userRegisterSuccessState());
         await savePreferencesInfo(user);
         Navigator.pushReplacementNamed(
           context,
-          AppRoutes.preferences,
-          arguments: {
-            'preferences': {"Style": [], "Material": [], "Occasion": []},
-            'profile': false,
-            'preferencesPage': 'Style',
-          },
+          AppRoutes.emailVerification,
+          arguments: user.email,
         );
       } else if (user["message"] != null) {
         emit(userRegisterErrorState());
@@ -100,18 +98,37 @@ class userCubit extends Cubit<userStates> {
     }
   }
 
-  //
-  // Future<void> checkEmailVerification(BuildContext context) async {
-  //   final User? user = _auth.currentUser;
-  //   if (user != null) {
-  //     await user
-  //         .reload(); // Reload user data to get updated email verification status
-  //     if (user.emailVerified) {
-  //       // Email is verified, navigate to the dashboard
-  //       Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
-  //     }
-  //   }
-  // }
+  void verifyEmail(String email, String otp, BuildContext context) async {
+    emit(userInitialState());
+    emit(userRegisterLoadingState());
+
+    try {
+      final user = await _userRepository.verifyOTP(email, otp);
+
+      if (user.runtimeType == UserData) {
+        emit(userRegisterSuccessState());
+        await savePreferencesInfo(user);
+        Navigator.pushReplacementNamed(
+          context,
+          AppRoutes.preferences,
+          arguments: {
+            'preferences': {"Style": [], "Material": [], "Occasion": []},
+            'profile': false,
+            'preferencesPage': 'Style',
+          },
+        );
+      }
+    } catch (e) {
+      emit(userRegisterErrorState());
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content:
+              Text("Error while registering your email. Please try again!"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   //function for login with email and password
   void loginWithEmailPassword(

@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:style_sphere/presentation/functions/constant_functions.dart';
 
-import '../models/user_Data.dart';
+import '../models/user_data.dart';
 
 class UserRepository {
   UserRepository();
@@ -13,7 +13,7 @@ class UserRepository {
     UserData user = UserData();
 
     final response =
-        await http.get(Uri.parse('http://localhost:3020/user/${user.userID}'));
+        await http.get(Uri.parse('http://127.0.0.1:3020/user/${user.userID}'));
     if (response.statusCode == 200) {
       user = UserData.fromJson(jsonDecode(response.body));
       return user;
@@ -55,10 +55,10 @@ class UserRepository {
         Uri.parse('http://127.0.0.1:3005/user/signup'),
         body: jsonEncode(user.toJson()),
         headers: {'Content-Type': 'application/json'});
-
+    print("response");
     if (response.statusCode == 201) {
       UserData user = UserData.fromJson(jsonDecode(response.body));
-
+      print(user);
       return user;
     } else if (response.statusCode == 200) {
       final responses = jsonDecode(response.body);
@@ -97,6 +97,49 @@ class UserRepository {
       return "error";
     }
   }
+
+  sendOTP(String email) async {
+    final response = await http
+        .post(Uri.parse('http://127.0.0.1:3005/user/userOTPSending'), body: {
+      "email": email,
+    });
+
+    if (response.statusCode == 200) {
+      dynamic otp = jsonDecode(response.body);
+
+      return otp["message"];
+    } else {
+      return "error";
+    }
+  }
+
+  verifyOTP(String email, String otp) async {
+    final response = await http.post(
+      Uri.parse('http://127.0.0.1:3005/user/userOTPVerification'),
+      body: {
+        "email": email,
+        "otp": otp,
+      },
+    );
+    if (response.statusCode == 200) {
+      UserData user = UserData.fromJson(jsonDecode(response.body));
+      return user;
+    } else {
+      return "error";
+    }
+  }
+
+  // checkOTP(String email, String otp) async {
+  //   final response = await http.post(
+  //       Uri.parse('http://' + serverIP + ':3005/user/otp'),
+  //       body: jsonEncode({"email": email, "otp": otp}),
+  //       headers: {'Content-Type': 'application/json'});
+  //   if (response.statusCode == 200) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   Future<void> uploadImage(File imageFile) async {
     const String uploadUrl =
