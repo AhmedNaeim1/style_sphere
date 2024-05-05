@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
 import 'package:style_sphere/constants.dart';
-import 'package:style_sphere/data/models/user_Data.dart';
-import 'package:style_sphere/data/repositories/user_Repository.dart';
+import 'package:style_sphere/data/models/user_data.dart';
+import 'package:style_sphere/data/repositories/user_repository.dart';
 import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
 import 'package:style_sphere/presentation/constant_widgets/buttons.dart';
 import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
@@ -303,7 +303,8 @@ class _ThirdStepState extends State<ThirdStep> {
                                       password: _passwordController.text,
                                       location: "Egypt",
                                       profilePictureUrl: "",
-                                      registrationDate: DateTime.now(),
+                                      registrationDate:
+                                          DateTime.now().toString(),
                                       followingCount: 0,
                                       followersCount: 0,
                                       businessID: 0,
@@ -313,6 +314,7 @@ class _ThirdStepState extends State<ThirdStep> {
                                       preferredStyles: [],
                                       preferredMaterials: [],
                                       preferredOccasions: [],
+                                      isVerified: false,
                                     );
                                     cubit.registerWithEmailPassword(
                                         user, context);
