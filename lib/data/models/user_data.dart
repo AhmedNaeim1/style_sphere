@@ -19,6 +19,7 @@ class UserData {
     this.preferredMaterials,
     this.preferredOccasions,
     this.token,
+    this.isVerified,
   });
 
   UserData.fromJson(dynamic json) {
@@ -37,10 +38,11 @@ class UserData {
     languagePreference = json['languagePreference'];
     currencyPreference = json['currencyPreference'];
     regionPreference = json['regionPreference'];
-    preferredStyles = json['preferredStyles'];
-    preferredMaterials = json['preferredMaterials'];
-    preferredOccasions = json['preferredOccasions'];
+    preferredStyles = json['preferredStyles'] ?? [];
+    preferredMaterials = json['preferredMaterials'] ?? [];
+    preferredOccasions = json['preferredOccasions'] ?? [];
     token = json['token'];
+    isVerified = json['isVerified'];
   }
 
   String? userID;
@@ -62,6 +64,7 @@ class UserData {
   List? preferredMaterials;
   List? preferredOccasions;
   String? token;
+  bool? isVerified;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -84,6 +87,7 @@ class UserData {
     map['preferredMaterials'] = preferredMaterials;
     map['preferredOccasions'] = preferredOccasions;
     map['token'] = token;
+    map['isVerified'] = isVerified;
     return map;
   }
 }
