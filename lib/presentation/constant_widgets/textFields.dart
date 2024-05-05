@@ -116,7 +116,7 @@ Widget buildNameFieldEditProfile(
                 ),
               ),
               suffixIcon: IconButton(
-                icon: Icon(Icons.edit),
+                icon: const Icon(Icons.edit),
                 onPressed: () {
                   onPressed(!isEditing);
                 },

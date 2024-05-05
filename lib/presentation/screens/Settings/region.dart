@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
-import 'package:style_sphere/data/models/user_Data.dart';
+import 'package:style_sphere/data/models/user_data.dart';
 import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
 import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
 
 class RegionPage extends StatefulWidget {
-  String region;
-  UserData user;
+  final String region;
+  final UserData user;
 
   RegionPage({
     super.key,

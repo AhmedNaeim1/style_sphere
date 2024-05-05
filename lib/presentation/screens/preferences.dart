@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
 import 'package:style_sphere/constants.dart';
-import 'package:style_sphere/data/models/user_Data.dart';
-import 'package:style_sphere/data/repositories/user_Repository.dart';
+import 'package:style_sphere/data/models/user_data.dart';
+import 'package:style_sphere/data/repositories/user_repository.dart';
 import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
 import 'package:style_sphere/presentation/constant_widgets/buttons.dart';
 import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
@@ -37,17 +37,20 @@ class _PreferencesPageState extends State<PreferencesPage> {
   @override
   void initState() {
     setState(() {
-      if (widget.preferences["Style"].toString() == [].toString()) {
+      if (widget.preferences["Style"].toString() == [].toString() &&
+          stylePreferenceStates.isEmpty) {
         stylePreferenceStates = List.generate(6, (index) => false);
       } else {
         stylePreferenceStates = widget.preferences["Style"]!;
       }
-      if (widget.preferences["Material"].toString() == [].toString()) {
+      if (widget.preferences["Material"].toString() == [].toString() &&
+          materialPreferenceStates.isEmpty) {
         materialPreferenceStates = List.generate(6, (index) => false);
       } else {
         materialPreferenceStates = widget.preferences["Material"]!;
       }
-      if (widget.preferences["Occasion"].toString() == [].toString()) {
+      if (widget.preferences["Occasion"].toString() == [].toString() &&
+          occasionPreferenceStates.isEmpty) {
         occasionPreferenceStates = List.generate(6, (index) => false);
       } else {
         occasionPreferenceStates = widget.preferences["Occasion"]!;
@@ -228,8 +231,12 @@ class _PreferencesPageState extends State<PreferencesPage> {
                 );
               } else if (widget.preferencesPage == "Occasion" &&
                   occasionPreferenceStates.contains(true)) {
-                UserData? userData = await getUserPreferencesInfo();
-                userData!.preferredMaterials = materialPreferenceStates;
+                UserData userData = await getUserPreferencesInfo();
+                print(userData.preferredMaterials);
+                print(userData.userID);
+                print(userData.preferredStyles);
+                print(userData.preferredOccasions);
+                userData.preferredMaterials = materialPreferenceStates;
                 userData.preferredStyles = stylePreferenceStates;
                 userData.preferredOccasions = occasionPreferenceStates;
                 cubit.updateUserPreferences(userData.userID!, userData);

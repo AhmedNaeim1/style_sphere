@@ -7,9 +7,9 @@ import 'package:style_sphere/presentation/constant_widgets/texts.dart';
 import 'package:style_sphere/presentation/router.dart';
 
 class ConfirmationPage extends StatelessWidget {
-  String pageComingFrom;
+  final String pageComingFrom;
 
-  ConfirmationPage({Key? key, required this.pageComingFrom}) : super(key: key);
+  const ConfirmationPage({super.key, required this.pageComingFrom});
 
   @override
   Widget build(BuildContext context) {

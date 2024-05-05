@@ -3,16 +3,17 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:style_sphere/data/models/user_Data.dart';
+import 'package:style_sphere/data/models/user_data.dart';
 import 'package:style_sphere/main.dart';
 import 'package:style_sphere/presentation/constant_widgets/botton_navigation_bar.dart';
 import 'package:style_sphere/presentation/screens/Authentication/login.dart';
 import 'package:style_sphere/presentation/screens/Authentication/login_Register_Page.dart';
+import 'package:style_sphere/presentation/screens/Authentication/register/email_verification.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/first_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/second_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/third_Step.dart';
 import 'package:style_sphere/presentation/screens/Settings/confirmation_page.dart';
-import 'package:style_sphere/presentation/screens/Settings/edit_profile.dart';
+import 'package:style_sphere/presentation/screens/Settings/editProfile/edit_profile.dart';
 import 'package:style_sphere/presentation/screens/Settings/language_currency.dart';
 import 'package:style_sphere/presentation/screens/Settings/region.dart';
 import 'package:style_sphere/presentation/screens/Settings/settings.dart';
@@ -38,7 +39,7 @@ class AppRoutes {
   static const String languages = '/languages';
   static const String region = '/region';
 
-  static const String EmailVerification = '/EmailVerification';
+  static const String emailVerification = '/emailVerification';
 
   static Map<String, WidgetBuilder> define() {
     return {
@@ -90,6 +91,13 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => ConfirmationPage(
             pageComingFrom: args,
+          ),
+        );
+      case AppRoutes.emailVerification:
+        final args = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => EmailVerification(
+            email: args,
           ),
         );
       case AppRoutes.region:

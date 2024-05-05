@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_types
 
-import 'package:style_sphere/data/models/user_Data.dart';
+import 'package:style_sphere/data/models/user_data.dart';
 
 abstract class userStates {}
 
