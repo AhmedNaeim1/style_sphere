@@ -11,6 +11,7 @@ import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart
 import 'package:style_sphere/presentation/constant_widgets/textFields.dart';
 import 'package:style_sphere/presentation/constant_widgets/texts.dart';
 
+// ignore: must_be_immutable
 class NewPassword extends StatefulWidget {
   UserData user;
 
