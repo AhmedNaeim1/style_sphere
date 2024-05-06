@@ -1,5 +1,3 @@
-// ignore_for_file: constant_identifier_names
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -13,6 +11,8 @@ import 'package:style_sphere/presentation/screens/Authentication/register/first_
 import 'package:style_sphere/presentation/screens/Authentication/register/second_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/third_Step.dart';
 import 'package:style_sphere/presentation/screens/Settings/confirmation_page.dart';
+import 'package:style_sphere/presentation/screens/Settings/editProfile/changeEmail/new_email.dart';
+import 'package:style_sphere/presentation/screens/Settings/editProfile/changeEmail/verify_new_email.dart';
 import 'package:style_sphere/presentation/screens/Settings/editProfile/edit_profile.dart';
 import 'package:style_sphere/presentation/screens/Settings/language_currency.dart';
 import 'package:style_sphere/presentation/screens/Settings/region.dart';
@@ -38,8 +38,10 @@ class AppRoutes {
   static const String confirmationPage = '/confirmationPage';
   static const String languages = '/languages';
   static const String region = '/region';
+  static const String newEmail = '/newEmail';
 
   static const String emailVerification = '/emailVerification';
+  static const String newEmailVerification = '/newEmailVerification';
 
   static Map<String, WidgetBuilder> define() {
     return {
@@ -94,10 +96,21 @@ class AppRoutes {
           ),
         );
       case AppRoutes.emailVerification:
-        final args = settings.arguments as String;
+        final args = settings.arguments as Map<String, dynamic>;
+        final userData = UserData.fromJson(json.decode(args["user"]));
+
         return MaterialPageRoute(
           builder: (_) => EmailVerification(
-            email: args,
+            user: userData,
+          ),
+        );
+      case AppRoutes.newEmailVerification:
+        final args = settings.arguments as Map<String, dynamic>;
+        final userData = UserData.fromJson(json.decode(args["user"]));
+
+        return MaterialPageRoute(
+          builder: (_) => NewEmailVerification(
+            user: userData,
           ),
         );
       case AppRoutes.region:
@@ -107,6 +120,15 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => RegionPage(
             region: args["region"],
+            user: userData,
+          ),
+        );
+      case AppRoutes.newEmail:
+        final args = settings.arguments as Map<String, dynamic>;
+        final userData = UserData.fromJson(json.decode(args["user"]));
+
+        return MaterialPageRoute(
+          builder: (_) => NewEmail(
             user: userData,
           ),
         );

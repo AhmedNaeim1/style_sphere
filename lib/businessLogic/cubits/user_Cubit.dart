@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:style_sphere/businessLogic/blocs/user_state.dart';
@@ -48,6 +50,37 @@ class userCubit extends Cubit<userStates> {
     }
   }
 
+  void sendOTP(UserData user, BuildContext context) async {
+    emit(userInitialState());
+    emit(userRegisterLoadingState());
+
+    try {
+      final otp = await _userRepository.sendOTP(user.email!);
+
+      if (otp == "Success") {
+        emit(userRegisterSuccessState());
+        Navigator.pushReplacementNamed(context, AppRoutes.newEmailVerification,
+            arguments: {"user": json.encode(user)});
+      } else {
+        emit(userRegisterErrorState());
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Error while sending OTP. Please try again!"),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      emit(userRegisterErrorState());
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Error while sending OTP. Please try again!"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   void registerWithEmailPassword(
     UserData userData,
     BuildContext context,
@@ -58,7 +91,7 @@ class userCubit extends Cubit<userStates> {
     try {
       final user = await _userRepository.registerUser(userData);
 
-      final otp = await _userRepository.sendOTP(user.email!.toString());
+      final otp = await _userRepository.sendOTP(user.user!.toString());
 
       if (user.runtimeType == UserData && otp == "Success") {
         emit(userRegisterSuccessState());
@@ -66,7 +99,7 @@ class userCubit extends Cubit<userStates> {
         Navigator.pushReplacementNamed(
           context,
           AppRoutes.emailVerification,
-          arguments: user.email,
+          arguments: {"user": json.encode(user)},
         );
       } else if (user["message"] != null) {
         emit(userRegisterErrorState());
@@ -98,25 +131,34 @@ class userCubit extends Cubit<userStates> {
     }
   }
 
-  void verifyEmail(String email, String otp, BuildContext context) async {
+  void verifyEmail(String email, String otp, BuildContext context, String page,
+      String id) async {
     emit(userInitialState());
     emit(userRegisterLoadingState());
 
     try {
-      final user = await _userRepository.verifyOTP(email, otp);
+      final user = await _userRepository.verifyOTP(email, otp, id);
 
       if (user.runtimeType == UserData) {
         emit(userRegisterSuccessState());
         await savePreferencesInfo(user);
-        Navigator.pushReplacementNamed(
-          context,
-          AppRoutes.preferences,
-          arguments: {
-            'preferences': {"Style": [], "Material": [], "Occasion": []},
-            'profile': false,
-            'preferencesPage': 'Style',
-          },
-        );
+        if (page == "NewEmail") {
+          Navigator.pushReplacementNamed(
+            context,
+            AppRoutes.confirmationPage,
+            arguments: "",
+          );
+        } else if (page == "SignUp") {
+          Navigator.pushReplacementNamed(
+            context,
+            AppRoutes.preferences,
+            arguments: {
+              'preferences': {"Style": [], "Material": [], "Occasion": []},
+              'profile': false,
+              'preferencesPage': 'Style',
+            },
+          );
+        }
       }
     } catch (e) {
       emit(userRegisterErrorState());

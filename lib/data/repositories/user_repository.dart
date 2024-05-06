@@ -25,7 +25,7 @@ class UserRepository {
   Future<UserData> getUserDataFromSharedPreferences() async {
     UserData user = UserData();
 
-    user = (await getUserPreferencesInfo())!;
+    user = (await getUserPreferencesInfo());
 
     return user;
   }
@@ -113,13 +113,10 @@ class UserRepository {
     }
   }
 
-  verifyOTP(String email, String otp) async {
+  verifyOTP(String email, String otp, String id) async {
     final response = await http.post(
       Uri.parse('http://127.0.0.1:3005/user/userOTPVerification'),
-      body: {
-        "email": email,
-        "otp": otp,
-      },
+      body: {"email": email, "otp": otp, "id": id},
     );
     if (response.statusCode == 200) {
       UserData user = UserData.fromJson(jsonDecode(response.body));

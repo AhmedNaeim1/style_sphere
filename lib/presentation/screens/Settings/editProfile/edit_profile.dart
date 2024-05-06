@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +16,7 @@ import 'package:style_sphere/presentation/router.dart';
 class EditProfilePage extends StatefulWidget {
   final UserData user;
 
-  EditProfilePage({super.key, required this.user});
+  const EditProfilePage({super.key, required this.user});
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
@@ -126,11 +128,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             buildSizedBox(2.h),
                             buildEditProfileRow(
-                              "Change Email",
-                              AppRoutes.editProfile,
-                              context,
-                              {},
-                            ),
+                                "Change Email", AppRoutes.newEmail, context, {
+                              "user": json.encode(widget.user),
+                            }),
                             buildSizedBox(1.h),
                             const Divider(
                               color: Colors.grey,
