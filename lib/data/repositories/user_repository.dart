@@ -98,6 +98,21 @@ class UserRepository {
     }
   }
 
+  changePassword(String userId, String oldPassword, String newPassword) async {
+    final response = await http.put(
+      Uri.parse('http://127.0.0.1:3005/user/$userId/changePassword'),
+      body: {"oldPassword": oldPassword, "newPassword": newPassword},
+    );
+
+    if (response.statusCode == 200) {
+      UserData user = UserData.fromJson(jsonDecode(response.body));
+
+      return user;
+    } else {
+      return "error";
+    }
+  }
+
   sendOTP(String email) async {
     final response = await http
         .post(Uri.parse('http://127.0.0.1:3005/user/userOTPSending'), body: {

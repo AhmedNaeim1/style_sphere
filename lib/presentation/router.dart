@@ -13,6 +13,7 @@ import 'package:style_sphere/presentation/screens/Authentication/register/third_
 import 'package:style_sphere/presentation/screens/Settings/confirmation_page.dart';
 import 'package:style_sphere/presentation/screens/Settings/editProfile/changeEmail/new_email.dart';
 import 'package:style_sphere/presentation/screens/Settings/editProfile/changeEmail/verify_new_email.dart';
+import 'package:style_sphere/presentation/screens/Settings/editProfile/change_password.dart';
 import 'package:style_sphere/presentation/screens/Settings/editProfile/edit_profile.dart';
 import 'package:style_sphere/presentation/screens/Settings/language_currency.dart';
 import 'package:style_sphere/presentation/screens/Settings/region.dart';
@@ -39,6 +40,7 @@ class AppRoutes {
   static const String languages = '/languages';
   static const String region = '/region';
   static const String newEmail = '/newEmail';
+  static const String newPassword = '/newPassword';
 
   static const String emailVerification = '/emailVerification';
   static const String newEmailVerification = '/newEmailVerification';
@@ -110,6 +112,15 @@ class AppRoutes {
 
         return MaterialPageRoute(
           builder: (_) => NewEmailVerification(
+            user: userData,
+          ),
+        );
+      case AppRoutes.newPassword:
+        final args = settings.arguments as Map<String, dynamic>;
+        final userData = UserData.fromJson(json.decode(args["user"]));
+
+        return MaterialPageRoute(
+          builder: (_) => NewPassword(
             user: userData,
           ),
         );

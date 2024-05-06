@@ -137,12 +137,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               thickness: 0.2,
                             ),
                             buildSizedBox(1.h),
-                            buildEditProfileRow(
-                              "Change Password",
-                              AppRoutes.editProfile,
-                              context,
-                              {},
-                            ),
+                            buildEditProfileRow("Change Password",
+                                AppRoutes.newPassword, context, {
+                              "user": json.encode(widget.user),
+                            }),
                             buildSizedBox(1.h),
                             const Divider(
                               color: Colors.grey,
