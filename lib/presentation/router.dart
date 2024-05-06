@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:style_sphere/data/models/user_data.dart';
 import 'package:style_sphere/main.dart';
 import 'package:style_sphere/presentation/constant_widgets/botton_navigation_bar.dart';
-import 'package:style_sphere/presentation/screens/Authentication/login.dart';
+import 'package:style_sphere/presentation/screens/Authentication/login/forgot_password.dart';
+import 'package:style_sphere/presentation/screens/Authentication/login/login.dart';
+import 'package:style_sphere/presentation/screens/Authentication/login/newPassword.dart';
 import 'package:style_sphere/presentation/screens/Authentication/login_Register_Page.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/email_verification.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/first_Step.dart';
@@ -40,7 +42,9 @@ class AppRoutes {
   static const String languages = '/languages';
   static const String region = '/region';
   static const String newEmail = '/newEmail';
+  static const String changePassword = '/changePassword';
   static const String newPassword = '/newPassword';
+  static const String forgotPassword = '/forgotPassword';
 
   static const String emailVerification = '/emailVerification';
   static const String newEmailVerification = '/newEmailVerification';
@@ -54,6 +58,7 @@ class AppRoutes {
       profile: (context) => const ProfilePage(),
       navbar: (context) => const BottomNavbar(),
       settings: (context) => const SettingsPage(),
+      forgotPassword: (context) => const ForgotPassword(),
     };
   }
 
@@ -100,6 +105,7 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => EmailVerification(
             user: userData,
+            page: args["page"],
           ),
         );
       case AppRoutes.newEmailVerification:
@@ -108,6 +114,15 @@ class AppRoutes {
 
         return MaterialPageRoute(
           builder: (_) => NewEmailVerification(
+            user: userData,
+          ),
+        );
+      case AppRoutes.changePassword:
+        final args = settings.arguments as Map<String, dynamic>;
+        final userData = UserData.fromJson(json.decode(args["user"]));
+
+        return MaterialPageRoute(
+          builder: (_) => ChangePassword(
             user: userData,
           ),
         );

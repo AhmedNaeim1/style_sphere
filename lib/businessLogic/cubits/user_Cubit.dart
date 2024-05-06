@@ -50,25 +50,32 @@ class userCubit extends Cubit<userStates> {
     }
   }
 
-  void changePassword(
-      String userId, String oldPassword, String newPassword, context) async {
+  void changePassword(String userId, String oldPassword, String newPassword,
+      context, String page) async {
     try {
       final user = await _userRepository.changePassword(
           userId, oldPassword, newPassword);
       if (user.runtimeType == UserData) {
         savePreferencesInfo(user);
-        Navigator.pushReplacementNamed(
-          context,
-          AppRoutes.confirmationPage,
-          arguments: "Password",
-        );
+        if (page == "Forgot Password") {
+          Navigator.pushReplacementNamed(
+            context,
+            AppRoutes.loginRegisterPage,
+          );
+        } else if (page == "Change Password") {
+          Navigator.pushReplacementNamed(
+            context,
+            AppRoutes.confirmationPage,
+            arguments: "Password",
+          );
+        }
       }
     } catch (e) {
       emit(UploadUserDataErrorState(error: e.toString()));
     }
   }
 
-  void sendOTP(UserData user, BuildContext context) async {
+  void sendOTP(UserData user, BuildContext context, String page) async {
     emit(userInitialState());
     emit(userRegisterLoadingState());
 
@@ -77,8 +84,17 @@ class userCubit extends Cubit<userStates> {
 
       if (otp == "Success") {
         emit(userRegisterSuccessState());
-        Navigator.pushReplacementNamed(context, AppRoutes.newEmailVerification,
-            arguments: {"user": json.encode(user)});
+        if (page == "Forgot Password") {
+          Navigator.pushReplacementNamed(
+            context,
+            AppRoutes.emailVerification,
+            arguments: {"user": json.encode(user), "page": "Forgot Password"},
+          );
+        } else {
+          Navigator.pushReplacementNamed(
+              context, AppRoutes.newEmailVerification,
+              arguments: {"user": json.encode(user)});
+        }
       } else {
         emit(userRegisterErrorState());
         ScaffoldMessenger.of(context).showSnackBar(
@@ -117,7 +133,7 @@ class userCubit extends Cubit<userStates> {
         Navigator.pushReplacementNamed(
           context,
           AppRoutes.emailVerification,
-          arguments: {"user": json.encode(user)},
+          arguments: {"user": json.encode(user), "page": "SignUp"},
         );
       } else if (user["message"] != null) {
         emit(userRegisterErrorState());
@@ -156,7 +172,7 @@ class userCubit extends Cubit<userStates> {
 
     try {
       final user = await _userRepository.verifyOTP(email, otp, id);
-
+      print(user);
       if (user.runtimeType == UserData) {
         emit(userRegisterSuccessState());
         await savePreferencesInfo(user);
@@ -175,6 +191,12 @@ class userCubit extends Cubit<userStates> {
               'profile': false,
               'preferencesPage': 'Style',
             },
+          );
+        } else if (page == "Forgot Password") {
+          Navigator.pushReplacementNamed(
+            context,
+            AppRoutes.newPassword,
+            arguments: {"user": json.encode(user)},
           );
         }
       }

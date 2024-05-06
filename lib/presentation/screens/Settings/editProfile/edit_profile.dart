@@ -138,7 +138,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             buildSizedBox(1.h),
                             buildEditProfileRow("Change Password",
-                                AppRoutes.newPassword, context, {
+                                AppRoutes.changePassword, context, {
                               "user": json.encode(widget.user),
                             }),
                             buildSizedBox(1.h),

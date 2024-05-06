@@ -14,10 +14,12 @@ import 'package:style_sphere/presentation/constant_widgets/texts.dart';
 // ignore: must_be_immutable
 class EmailVerification extends StatefulWidget {
   UserData user;
+  String page;
 
   EmailVerification({
     super.key,
     required this.user,
+    required this.page,
   });
 
   @override
@@ -128,7 +130,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                             ),
                             const Spacer(),
                             CustomElevatedButton(
-                              text: 'Continue',
+                              text: 'Verify Account',
                               onPressed: () {
                                 if (_otpController.text.isEmpty) {
                                   setState(
@@ -139,13 +141,23 @@ class _EmailVerificationState extends State<EmailVerification> {
                                     },
                                   );
                                 } else {
-                                  cubit.verifyEmail(
-                                    widget.user.email!,
-                                    _otpController.text,
-                                    context,
-                                    "SignUp",
-                                    widget.user.userID!,
-                                  );
+                                  if (widget.page == "SignUp") {
+                                    cubit.verifyEmail(
+                                      widget.user.email!,
+                                      _otpController.text,
+                                      context,
+                                      "SignUp",
+                                      widget.user.userID!,
+                                    );
+                                  } else if (widget.page == "Forgot Password") {
+                                    cubit.verifyEmail(
+                                      widget.user.email!,
+                                      _otpController.text,
+                                      context,
+                                      "Forgot Password",
+                                      widget.user.userID ?? "",
+                                    );
+                                  }
                                 }
                               },
                               color: buttonColor,

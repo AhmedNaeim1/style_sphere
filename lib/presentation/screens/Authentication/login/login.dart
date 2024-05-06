@@ -10,6 +10,7 @@ import 'package:style_sphere/presentation/constant_widgets/buttons.dart';
 import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
 import 'package:style_sphere/presentation/constant_widgets/textFields.dart';
 import 'package:style_sphere/presentation/constant_widgets/texts.dart';
+import 'package:style_sphere/presentation/router.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -104,12 +105,18 @@ class _LoginPageState extends State<LoginPage> {
                                           ],
                                         )
                                       : buildSizedBox(0.h),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: buildCustomText(
-                                      text: "Forgot Password?",
-                                      color: primaryColor,
-                                      fontSize: 10,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, AppRoutes.forgotPassword);
+                                    },
+                                    child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: buildCustomText(
+                                        text: "Forgot Password?",
+                                        color: primaryColor,
+                                        fontSize: 10,
+                                      ),
                                     ),
                                   ),
                                 ],

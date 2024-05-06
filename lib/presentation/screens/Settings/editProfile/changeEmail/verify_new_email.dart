@@ -120,7 +120,7 @@ class _NewEmailVerificationState extends State<NewEmailVerification> {
                             ),
                             const Spacer(),
                             CustomElevatedButton(
-                              text: 'Continue',
+                              text: 'Verify New Email',
                               onPressed: () {
                                 if (_otpController.text.isEmpty) {
                                   setState(

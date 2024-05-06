@@ -133,7 +133,7 @@ class _NewEmailState extends State<NewEmail> {
                             ),
                             const Spacer(),
                             CustomElevatedButton(
-                              text: 'Continue',
+                              text: 'Verify New Email',
                               onPressed: () {
                                 if (_newEmailController.text.isEmpty) {
                                   setState(
@@ -145,7 +145,7 @@ class _NewEmailState extends State<NewEmail> {
                                   );
                                 } else {
                                   widget.user.email = _newEmailController.text;
-                                  cubit.sendOTP(widget.user, context);
+                                  cubit.sendOTP(widget.user, context, "");
                                 }
                               },
                               color: buttonColor,

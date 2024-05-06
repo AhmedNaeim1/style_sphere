@@ -12,19 +12,19 @@ import 'package:style_sphere/presentation/constant_widgets/textFields.dart';
 import 'package:style_sphere/presentation/constant_widgets/texts.dart';
 
 // ignore: must_be_immutable
-class NewPassword extends StatefulWidget {
+class ChangePassword extends StatefulWidget {
   UserData user;
 
-  NewPassword({
+  ChangePassword({
     super.key,
     required this.user,
   });
 
   @override
-  State<NewPassword> createState() => _NewPasswordState();
+  State<ChangePassword> createState() => _ChangePasswordState();
 }
 
-class _NewPasswordState extends State<NewPassword> {
+class _ChangePasswordState extends State<ChangePassword> {
   final TextEditingController _oldPasswordController = TextEditingController();
   final TextEditingController _newConfirmPasswordController =
       TextEditingController();
@@ -168,7 +168,7 @@ class _NewPasswordState extends State<NewPassword> {
                             ),
                             const Spacer(),
                             CustomElevatedButton(
-                              text: 'Continue',
+                              text: 'Save',
                               onPressed: () {
                                 if (_newPasswordController.text.isEmpty ||
                                     _oldPasswordController.text.isEmpty ||
@@ -186,7 +186,8 @@ class _NewPasswordState extends State<NewPassword> {
                                       widget.user.userID!,
                                       _oldPasswordController.text,
                                       _newPasswordController.text,
-                                      context);
+                                      context,
+                                      "Change Password");
                                 }
                               },
                               color: buttonColor,
