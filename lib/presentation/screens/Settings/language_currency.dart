@@ -11,7 +11,8 @@ class LanguageCurrencyPage extends StatefulWidget {
 
   final UserData user;
 
-  LanguageCurrencyPage({super.key, required this.page, required this.user});
+  const LanguageCurrencyPage(
+      {super.key, required this.page, required this.user});
 
   @override
   State<LanguageCurrencyPage> createState() => _LanguageCurrencyPageState();

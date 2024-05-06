@@ -10,7 +10,7 @@ class RegionPage extends StatefulWidget {
   final String region;
   final UserData user;
 
-  RegionPage({
+  const RegionPage({
     super.key,
     required this.region,
     required this.user,

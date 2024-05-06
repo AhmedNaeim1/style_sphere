@@ -189,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ],
                           ),
                           SizedBox(height: 20.h),
-                          Expanded(
+                          const Expanded(
                             child: TabBarView(
                               children: [
                                 SingleChildScrollView(
