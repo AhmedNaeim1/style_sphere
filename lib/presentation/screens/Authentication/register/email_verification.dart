@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
 import 'package:style_sphere/constants.dart';
+import 'package:style_sphere/data/models/user_data.dart';
 import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
 import 'package:style_sphere/presentation/constant_widgets/buttons.dart';
 import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
@@ -12,11 +13,11 @@ import 'package:style_sphere/presentation/constant_widgets/texts.dart';
 
 // ignore: must_be_immutable
 class EmailVerification extends StatefulWidget {
-  String email;
+  UserData user;
 
   EmailVerification({
     super.key,
-    required this.email,
+    required this.user,
   });
 
   @override
@@ -81,7 +82,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                             ),
                             buildSizedBox(1.h),
                             buildCustomText(
-                                text: "Code has been send to ${widget.email}",
+                                text: "Code has been send to ${widget.user}",
                                 fontSize: 10,
                                 color: greyBlueColor),
                             buildCustomText(
@@ -133,13 +134,18 @@ class _EmailVerificationState extends State<EmailVerification> {
                                   setState(
                                     () {
                                       errorMessage =
-                                          "Choose your date of birth to continue";
+                                          "Enter a valid OTP to continue";
                                       errorDateOfBirth = true;
                                     },
                                   );
                                 } else {
-                                  cubit.verifyEmail(widget.email,
-                                      _otpController.text, context);
+                                  cubit.verifyEmail(
+                                    widget.user.email!,
+                                    _otpController.text,
+                                    context,
+                                    "SignUp",
+                                    widget.user.userID!,
+                                  );
                                 }
                               },
                               color: buttonColor,
