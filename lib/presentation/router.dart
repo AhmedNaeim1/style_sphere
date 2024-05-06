@@ -54,10 +54,6 @@ class AppRoutes {
       profile: (context) => const ProfilePage(),
       navbar: (context) => const BottomNavbar(),
       settings: (context) => const SettingsPage(),
-
-      // signup: (context) => SignUpScreen(),
-      // profile: (context) => const ProfileScreen(),
-      // EmailVerification: (context) => const EmailVerificationPage(),
     };
   }
 
@@ -173,7 +169,6 @@ class AppRoutes {
 
       case AppRoutes.navbar:
         return MaterialPageRoute(builder: (_) => const BottomNavbar());
-
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

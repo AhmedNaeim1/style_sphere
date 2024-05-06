@@ -50,6 +50,24 @@ class userCubit extends Cubit<userStates> {
     }
   }
 
+  void changePassword(
+      String userId, String oldPassword, String newPassword, context) async {
+    try {
+      final user = await _userRepository.changePassword(
+          userId, oldPassword, newPassword);
+      if (user.runtimeType == UserData) {
+        savePreferencesInfo(user);
+        Navigator.pushReplacementNamed(
+          context,
+          AppRoutes.confirmationPage,
+          arguments: "Password",
+        );
+      }
+    } catch (e) {
+      emit(UploadUserDataErrorState(error: e.toString()));
+    }
+  }
+
   void sendOTP(UserData user, BuildContext context) async {
     emit(userInitialState());
     emit(userRegisterLoadingState());

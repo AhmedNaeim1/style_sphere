@@ -44,7 +44,7 @@ class _NewPasswordState extends State<NewPassword> {
       ),
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: buildAppBar("Change Email", context, 14.sp),
+        appBar: buildAppBar("Change Password", context, 14.sp),
         body: LayoutBuilder(
           builder: (context, constraint) {
             return SingleChildScrollView(
