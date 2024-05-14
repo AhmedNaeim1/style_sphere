@@ -21,15 +21,6 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: darkBlueColor,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
         actions: [
           IconButton(
             icon: Icon(
@@ -38,19 +29,18 @@ class _ProfilePageState extends State<ProfilePage> {
               size: 20.sp,
             ),
             onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.settings);
+              Navigator.of(context, rootNavigator: true)
+                  .pushNamed(AppRoutes.settings);
             },
           ),
         ],
-        title: Center(
-          child: Text(
-            "Profile",
-            style: TextStyle(
-              fontFamily: 'Gabarito',
-              color: darkBlueColor,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
-            ),
+        title: Text(
+          "Profile",
+          style: TextStyle(
+            fontFamily: 'Gabarito',
+            color: darkBlueColor,
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),

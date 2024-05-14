@@ -64,12 +64,12 @@ class _NewEmailVerificationState extends State<NewEmailVerification> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             buildSizedBox(5.h),
-                            buildCustomText(
+                            buildCustomTextGabarito(
                                 text:
                                     "Code has been send to ${widget.user.email}",
                                 fontSize: 10,
                                 color: greyBlueColor),
-                            buildCustomText(
+                            buildCustomTextGabarito(
                                 text: "Enter the code to verify your account.",
                                 fontSize: 10,
                                 color: greyBlueColor),

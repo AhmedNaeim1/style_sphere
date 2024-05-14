@@ -63,7 +63,7 @@ class _SecondStepState extends State<SecondStep> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Center(
-                              child: buildCustomText(
+                              child: buildCustomTextGabarito(
                                 text: "2/3",
                                 fontSize: 10,
                                 color: grey20Color,
@@ -72,7 +72,7 @@ class _SecondStepState extends State<SecondStep> {
                               ),
                             ),
                             buildSizedBox(3.h),
-                            buildCustomText(
+                            buildCustomTextGabarito(
                               text:
                                   "Hey ${widget.name.split(" ")[0]}, what’s your date of birth?",
                               fontSize: 21,
@@ -80,7 +80,7 @@ class _SecondStepState extends State<SecondStep> {
                               color: darkBlueColor,
                             ),
                             buildSizedBox(1.h),
-                            buildCustomText(
+                            buildCustomTextGabarito(
                                 text:
                                     "We need this to keep StyleSphere a safe space",
                                 fontSize: 10,

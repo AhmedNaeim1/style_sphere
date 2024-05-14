@@ -32,7 +32,7 @@ class ConfirmationPage extends StatelessWidget {
                         image: AssetImage('assets/settings/confirmation.png'),
                       ),
                       buildSizedBox(2.h),
-                      buildCustomText(
+                      buildCustomTextGabarito(
                         align: TextAlign.center,
                         text: pageComingFrom == "Preferences"
                             ? 'Your Preferences Have Been Updated Successfully!'

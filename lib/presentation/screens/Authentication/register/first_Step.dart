@@ -61,7 +61,7 @@ class _FirstStepState extends State<FirstStep> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Center(
-                              child: buildCustomText(
+                              child: buildCustomTextGabarito(
                                 text: "1/3",
                                 color: darkBlueColor,
                                 fontSize: 10,
@@ -70,14 +70,14 @@ class _FirstStepState extends State<FirstStep> {
                               ),
                             ),
                             buildSizedBox(3.h),
-                            buildCustomText(
+                            buildCustomTextGabarito(
                               text: "What's your name?",
                               fontSize: 21,
                               fontWeight: FontWeight.w500,
                               color: darkBlueColor,
                             ),
                             buildSizedBox(1.h),
-                            buildCustomText(
+                            buildCustomTextGabarito(
                               text:
                                   "So we can personalize your StyleSphere experience!",
                               fontSize: 10,

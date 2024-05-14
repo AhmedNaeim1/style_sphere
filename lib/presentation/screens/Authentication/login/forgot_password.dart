@@ -47,14 +47,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           buildSizedBox(3.h),
-                          buildCustomText(
+                          buildCustomTextGabarito(
                             text: "Forgot Password",
                             fontSize: 21,
                             fontWeight: FontWeight.w500,
                             color: darkBlueColor,
                           ),
                           buildSizedBox(1.h),
-                          buildCustomText(
+                          buildCustomTextGabarito(
                             align: TextAlign.center,
                             text:
                                 "No worries! Enter your email address below and we will send you a code to reset password.",

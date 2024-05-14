@@ -123,7 +123,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                  child: buildCustomText(
+                  child: buildCustomTextGabarito(
                     text: widget.preferencesPage == "Style"
                         ? "1/3"
                         : widget.preferencesPage == "Material"
@@ -136,7 +136,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
                   ),
                 ),
                 buildSizedBox(1.h),
-                buildCustomText(
+                buildCustomTextGabarito(
                   text:
                       "What’s your preferred ${widget.preferencesPage.toLowerCase()}?",
                   fontSize: widget.preferencesPage == "Style"
@@ -148,7 +148,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
                   color: darkBlueColor,
                 ),
                 buildSizedBox(1.h),
-                buildCustomText(
+                buildCustomTextGabarito(
                   text: "So we can personalize your StyleSphere experience!",
                   fontSize: 10,
                   color: greyBlueColor,

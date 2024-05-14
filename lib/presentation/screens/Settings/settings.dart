@@ -70,7 +70,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                buildCustomText(
+                                buildCustomTextGabarito(
                                   text: "Account",
                                   color: blackColor,
                                   fontSize: 16,
@@ -120,7 +120,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   },
                                 ),
                                 buildSizedBox(4.h),
-                                buildCustomText(
+                                buildCustomTextGabarito(
                                   text: "Saved Items",
                                   color: blackColor,
                                   fontSize: 16,
@@ -132,8 +132,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                   "Saved Cards",
                                   "assets/iconSavedCards.png",
                                   context,
-                                  AppRoutes.editProfile,
-                                  state.user,
+                                  AppRoutes.savedCards,
+                                  state.user.userID,
                                 ),
                                 buildSizedBox(2.h),
                                 buildSettingsRow(
@@ -151,7 +151,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                buildCustomText(
+                                buildCustomTextGabarito(
                                   text: "Error",
                                   color: blackColor,
                                   fontSize: 16,
@@ -159,7 +159,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   fontWeight: FontWeight.normal,
                                 ),
                                 buildSizedBox(2.h),
-                                buildCustomText(
+                                buildCustomTextGabarito(
                                   text: "An error occurred",
                                   color: blackColor,
                                   fontSize: 16,

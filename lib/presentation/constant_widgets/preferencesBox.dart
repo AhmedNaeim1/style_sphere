@@ -75,7 +75,7 @@ class _CustomPreferenceBoxState extends State<CustomPreferenceBox> {
           padding: const EdgeInsets.all(8.0),
           child: Align(
             alignment: Alignment.bottomRight,
-            child: buildCustomText(
+            child: buildCustomTextGabarito(
               text: widget.text == "Material"
                   ? materials[widget.index]
                   : widget.text == "Occasion"

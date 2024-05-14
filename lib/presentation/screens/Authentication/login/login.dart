@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                                     },
                                     child: Align(
                                       alignment: Alignment.centerRight,
-                                      child: buildCustomText(
+                                      child: buildCustomTextGabarito(
                                         text: "Forgot Password?",
                                         color: primaryColor,
                                         fontSize: 10,

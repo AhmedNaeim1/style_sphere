@@ -68,7 +68,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                           children: [
                             buildSizedBox(5.h),
                             Center(
-                              child: buildCustomText(
+                              child: buildCustomTextGabarito(
                                   text:
                                       "We will send a verification code to make sure it’s you",
                                   fontSize: 10,

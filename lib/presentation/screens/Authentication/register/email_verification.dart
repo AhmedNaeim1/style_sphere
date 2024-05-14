@@ -67,7 +67,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Center(
-                              child: buildCustomText(
+                              child: buildCustomTextGabarito(
                                 text: "3/3",
                                 fontSize: 10,
                                 color: grey20Color,
@@ -76,18 +76,18 @@ class _EmailVerificationState extends State<EmailVerification> {
                               ),
                             ),
                             buildSizedBox(3.h),
-                            buildCustomText(
+                            buildCustomTextGabarito(
                               text: "Verify Account",
                               fontSize: 21,
                               fontWeight: FontWeight.w500,
                               color: darkBlueColor,
                             ),
                             buildSizedBox(1.h),
-                            buildCustomText(
+                            buildCustomTextGabarito(
                                 text: "Code has been send to ${widget.user}",
                                 fontSize: 10,
                                 color: greyBlueColor),
-                            buildCustomText(
+                            buildCustomTextGabarito(
                                 text: "Enter the code to verify your account.",
                                 fontSize: 10,
                                 color: greyBlueColor),
@@ -116,12 +116,12 @@ class _EmailVerificationState extends State<EmailVerification> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                buildCustomText(
+                                buildCustomTextGabarito(
                                   text: "Didn't receive code?",
                                   fontSize: 10,
                                   color: greyBlueColor,
                                 ),
-                                buildCustomText(
+                                buildCustomTextGabarito(
                                   text: " Resend",
                                   fontSize: 10,
                                   color: darkBlueColor,

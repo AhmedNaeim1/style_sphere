@@ -12,6 +12,8 @@ import 'package:style_sphere/presentation/screens/Authentication/register/email_
 import 'package:style_sphere/presentation/screens/Authentication/register/first_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/second_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/third_Step.dart';
+import 'package:style_sphere/presentation/screens/Settings/cards/add_card.dart';
+import 'package:style_sphere/presentation/screens/Settings/cards/saved_cards.dart';
 import 'package:style_sphere/presentation/screens/Settings/confirmation_page.dart';
 import 'package:style_sphere/presentation/screens/Settings/editProfile/changeEmail/new_email.dart';
 import 'package:style_sphere/presentation/screens/Settings/editProfile/changeEmail/verify_new_email.dart';
@@ -45,6 +47,8 @@ class AppRoutes {
   static const String changePassword = '/changePassword';
   static const String newPassword = '/newPassword';
   static const String forgotPassword = '/forgotPassword';
+  static const String savedCards = '/savedCards';
+  static const String addCard = '/addCard';
 
   static const String emailVerification = '/emailVerification';
   static const String newEmailVerification = '/newEmailVerification';
@@ -78,6 +82,15 @@ class AppRoutes {
         final name = settings.arguments as String;
 
         return MaterialPageRoute(builder: (_) => SecondStep(name: name));
+      case AppRoutes.addCard:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return MaterialPageRoute(
+            builder: (_) => AddCard(
+                  userID: args["userID"].toString(),
+                  paymentMethodID: args["paymentMethodID"],
+                  // page: args["page"],
+                ));
       case AppRoutes.loginRegisterPage:
         return MaterialPageRoute(builder: (_) => const LoginRegisterPage());
       case AppRoutes.login:
@@ -96,6 +109,13 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => ConfirmationPage(
             pageComingFrom: args,
+          ),
+        );
+      case AppRoutes.savedCards:
+        final args = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => SavedCards(
+            userID: args,
           ),
         );
       case AppRoutes.emailVerification:

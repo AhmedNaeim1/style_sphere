@@ -17,3 +17,18 @@ Future<UserData> getUserPreferencesInfo() async {
       UserData.fromJson(json.decode(userPreferencesInfoString!));
   return userPreference;
 }
+
+String formatCardNumber(String cardNumber) {
+  String formattedCardNumber = '';
+  for (int i = 0; i < cardNumber.length; i++) {
+    if (i != 0 && i % 4 == 0 && i != cardNumber.length - 1) {
+      formattedCardNumber += ' ';
+    }
+    if (i >= cardNumber.length / 2 - 4 && i < cardNumber.length / 2 + 4) {
+      formattedCardNumber += '*';
+    } else {
+      formattedCardNumber += cardNumber[i];
+    }
+  }
+  return formattedCardNumber;
+}

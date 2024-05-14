@@ -88,7 +88,7 @@ class _ThirdStepState extends State<ThirdStep> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Center(
-                                child: buildCustomText(
+                                child: buildCustomTextGabarito(
                                   text: "3/3",
                                   fontSize: 10,
                                   color: grey20Color,
@@ -96,14 +96,14 @@ class _ThirdStepState extends State<ThirdStep> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              buildCustomText(
+                              buildCustomTextGabarito(
                                 text: "What's your Email?",
                                 fontSize: 21,
                                 fontWeight: FontWeight.w500,
                                 color: darkBlueColor,
                               ),
                               buildSizedBox(1.h),
-                              buildCustomText(
+                              buildCustomTextGabarito(
                                 text:
                                     "We will send a verification code to make sure it’s you.",
                                 fontSize: 10,
@@ -324,7 +324,7 @@ class _ThirdStepState extends State<ThirdStep> {
                               ),
                               buildSizedBox(1.h),
                               Center(
-                                child: buildCustomText(
+                                child: buildCustomTextGabarito(
                                   text:
                                       "By continuing, you agree to our Terms of Service and Privacy Policy.",
                                   fontSize: 10,

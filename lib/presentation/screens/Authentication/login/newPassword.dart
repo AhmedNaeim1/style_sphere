@@ -57,20 +57,20 @@ class _NewPasswordState extends State<NewPassword> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           buildSizedBox(3.h),
-                          buildCustomText(
+                          buildCustomTextGabarito(
                             text: "Create New Password",
                             fontSize: 21,
                             fontWeight: FontWeight.w500,
                             color: darkBlueColor,
                           ),
                           buildSizedBox(1.h),
-                          buildCustomText(
+                          buildCustomTextGabarito(
                             text: "Please enter and confirm your new password.",
                             fontSize: 10,
                             color: greyBlueColor,
                           ),
                           buildSizedBox(1.h),
-                          buildCustomText(
+                          buildCustomTextGabarito(
                             text: "You will need to login after you reset.",
                             fontSize: 10,
                             color: greyBlueColor,

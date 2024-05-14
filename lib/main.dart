@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:style_sphere/businessLogic/cubits/checkout_cubits/payment_cubit.dart';
 import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
+import 'package:style_sphere/data/repositories/checkout_repository/payment_repository.dart';
 import 'package:style_sphere/data/repositories/user_repository.dart';
 import 'package:style_sphere/presentation/router.dart';
 
@@ -22,6 +24,9 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(
                 create: (context) => userCubit(repository: UserRepository())),
+            BlocProvider(
+                create: (context) =>
+                    PaymentCubit(repository: PaymentRepository())),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -32,7 +37,7 @@ class MyApp extends StatelessWidget {
             ),
             routes: AppRoutes.define(),
             onGenerateRoute: AppRoutes.generateRoute,
-            initialRoute: AppRoutes.profile,
+            initialRoute: AppRoutes.navbar,
           ),
         );
       },

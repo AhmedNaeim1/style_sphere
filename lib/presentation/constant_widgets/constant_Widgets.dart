@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:style_sphere/businessLogic/cubits/checkout_cubits/payment_cubit.dart';
 import 'package:style_sphere/constants.dart';
+import 'package:style_sphere/data/models/checkout/payment_data.dart';
 import 'package:style_sphere/presentation/constant_widgets/texts.dart';
+import 'package:style_sphere/presentation/functions/constant_functions.dart';
 
 Widget buildSizedBox(double height) {
   return SizedBox(
@@ -28,7 +31,7 @@ Column buildPasswordInfoRow(
           SizedBox(
             width: 1.w,
           ),
-          buildCustomText(
+          buildCustomTextGabarito(
             text: text,
             fontSize: 10,
             color: iconColor,
@@ -64,7 +67,7 @@ Widget buildSettingsRow(
             ),
           ),
           SizedBox(width: 4.w),
-          buildCustomText(
+          buildCustomTextGabarito(
             text: text,
             color: grey80Color,
             fontSize: 13,
@@ -91,7 +94,7 @@ Widget buildEditProfileRow(String labelText, String routeName,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        buildCustomText(
+        buildCustomTextGabarito(
           text: labelText,
           color: Colors.black,
           fontSize: 11,
@@ -120,7 +123,7 @@ Widget buildLanguageCurrencyTile({
     onTap: () {
       onChanged(languageValue);
     },
-    title: buildCustomText(
+    title: buildCustomTextGabarito(
       text: languageName,
       color: blackColor,
       fontSize: 12,
@@ -174,7 +177,7 @@ Widget buildRegionTile({
         imageIconPath,
       ),
     ),
-    title: buildCustomText(
+    title: buildCustomTextGabarito(
       text: regionName,
       color: blackColor,
       fontSize: 12,
@@ -203,6 +206,97 @@ Widget buildRegionTile({
               color: Colors.white,
             )
           : null,
+    ),
+  );
+}
+
+Widget buildSavedCards(PaymentData payment, int index, BuildContext context,
+    bool paymentPage, String userID, PaymentCubit paymentCubit) {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.white,
+      image: DecorationImage(
+        image: AssetImage("assets/settings/savedCards${index + 1}.png"),
+        fit: BoxFit.fitWidth,
+      ),
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildCustomTextInter(
+                text: payment.name!,
+                color: Colors.white,
+                fontSize: 14,
+              ),
+              Image.asset(
+                "assets/settings/visa.png",
+                fit: BoxFit.fitHeight,
+              ),
+            ],
+          ),
+          buildSizedBox(5.h),
+          buildCustomTextInter(
+            text: "Visa Classic",
+            color: Colors.white,
+            fontSize: 12,
+          ),
+          buildCustomTextInter(
+            text: formatCardNumber(payment.cardNumber.toString()),
+            color: Colors.white,
+            fontSize: 16,
+            align: TextAlign.left,
+            fontWeight: FontWeight.normal,
+          ),
+          paymentPage
+              ? Container()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: const Text(
+                                  'Are you sure you want to delete this card?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    paymentCubit.deletePayment(
+                                        payment.paymentMethodID!, userID);
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Yes',
+                                      style: TextStyle(color: greenColor)),
+                                ),
+                                const SizedBox(
+                                    height: 30,
+                                    child: VerticalDivider(
+                                        color: Colors.black, thickness: 1)),
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text('No',
+                                      style: TextStyle(color: redColor)),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      icon: Icon(Icons.restore_from_trash, color: redColor),
+                    ),
+                  ],
+                ),
+        ],
+      ),
     ),
   );
 }
