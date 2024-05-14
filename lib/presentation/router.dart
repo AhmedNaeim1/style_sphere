@@ -12,6 +12,8 @@ import 'package:style_sphere/presentation/screens/Authentication/register/email_
 import 'package:style_sphere/presentation/screens/Authentication/register/first_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/second_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/third_Step.dart';
+import 'package:style_sphere/presentation/screens/Settings/addresses/add_address.dart';
+import 'package:style_sphere/presentation/screens/Settings/addresses/saved_address.dart';
 import 'package:style_sphere/presentation/screens/Settings/cards/add_card.dart';
 import 'package:style_sphere/presentation/screens/Settings/cards/saved_cards.dart';
 import 'package:style_sphere/presentation/screens/Settings/confirmation_page.dart';
@@ -48,7 +50,9 @@ class AppRoutes {
   static const String newPassword = '/newPassword';
   static const String forgotPassword = '/forgotPassword';
   static const String savedCards = '/savedCards';
+  static const String savedAddress = '/savedAddress';
   static const String addCard = '/addCard';
+  static const String addAddress = '/addAddress';
 
   static const String emailVerification = '/emailVerification';
   static const String newEmailVerification = '/newEmailVerification';
@@ -91,6 +95,15 @@ class AppRoutes {
                   paymentMethodID: args["paymentMethodID"],
                   // page: args["page"],
                 ));
+      case AppRoutes.addAddress:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return MaterialPageRoute(
+            builder: (_) => AddAddress(
+                  userID: args["userID"].toString(),
+                  shipmentMethodID: args["shipmentMethodID"],
+                  // page: args["page"],
+                ));
       case AppRoutes.loginRegisterPage:
         return MaterialPageRoute(builder: (_) => const LoginRegisterPage());
       case AppRoutes.login:
@@ -115,6 +128,13 @@ class AppRoutes {
         final args = settings.arguments as String;
         return MaterialPageRoute(
           builder: (_) => SavedCards(
+            userID: args,
+          ),
+        );
+      case AppRoutes.savedAddress:
+        final args = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => SavedAddress(
             userID: args,
           ),
         );
