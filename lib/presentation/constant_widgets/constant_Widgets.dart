@@ -291,7 +291,7 @@ Widget buildSavedCards(PaymentData payment, int index, BuildContext context,
                           },
                         );
                       },
-                      icon: Icon(Icons.restore_from_trash, color: redColor),
+                      icon: Icon(Icons.delete, color: redColor),
                     ),
                   ],
                 ),
