@@ -60,41 +60,54 @@ class _SavedCardsState extends State<SavedCards> {
                                     const EdgeInsets.fromLTRB(18.0, 10, 18, 18),
                                 child: Column(
                                   children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(16.0),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            spreadRadius: 3,
-                                            blurRadius: 5,
+                                    state.payments.length == 0
+                                        ? Center(
+                                            child: buildCustomTextGabarito(
+                                              text: "No saved cards yet",
+                                              color: blackColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          )
+                                        : Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(16.0),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey
+                                                      .withOpacity(0.2),
+                                                  spreadRadius: 3,
+                                                  blurRadius: 5,
+                                                ),
+                                              ],
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Column(
+                                                children: List.generate(
+                                                  state.payments.length,
+                                                  (index) {
+                                                    return Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: buildSavedCards(
+                                                          state.payments[index],
+                                                          index,
+                                                          context,
+                                                          false,
+                                                          widget.userID,
+                                                          PaymentCubit.get(
+                                                              context)),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Column(
-                                          children: List.generate(
-                                            state.payments.length,
-                                            (index) {
-                                              return Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: buildSavedCards(
-                                                    state.payments[index],
-                                                    index,
-                                                    context,
-                                                    false,
-                                                    widget.userID,
-                                                    PaymentCubit.get(context)),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ),
                                     Spacer(),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
