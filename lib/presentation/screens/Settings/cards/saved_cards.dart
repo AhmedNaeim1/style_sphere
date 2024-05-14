@@ -60,7 +60,7 @@ class _SavedCardsState extends State<SavedCards> {
                                     const EdgeInsets.fromLTRB(18.0, 10, 18, 18),
                                 child: Column(
                                   children: [
-                                    state.payments.length == 0
+                                    state.payments.isEmpty
                                         ? Center(
                                             child: buildCustomTextGabarito(
                                               text: "No saved cards yet",
