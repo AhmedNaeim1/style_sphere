@@ -300,3 +300,38 @@ Widget buildSavedCards(PaymentData payment, int index, BuildContext context,
     ),
   );
 }
+
+class TabWidget extends StatelessWidget {
+  final String text;
+  final bool isSelected;
+
+  const TabWidget({
+    Key? key,
+    required this.text,
+    required this.isSelected,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 3.0),
+      child: Container(
+        height: 3.5.h,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: isSelected ? primaryColor : grey20Color,
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+              fontSize: 14,
+              color: isSelected ? Colors.white : Colors.black,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
