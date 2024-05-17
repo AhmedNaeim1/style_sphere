@@ -72,7 +72,7 @@ class _AddCardState extends State<AddCard> {
                               if (value.length == 4 ||
                                   value.length == 9 ||
                                   value.length == 14) {
-                                _cardNumberController.text = value + " ";
+                                _cardNumberController.text = "$value ";
                                 _cardNumberController.selection =
                                     TextSelection.fromPosition(TextPosition(
                                         offset:
@@ -99,7 +99,7 @@ class _AddCardState extends State<AddCard> {
                                     true,
                                     errorFirstName, (value) {
                                   if (value.length == 2) {
-                                    _expController.text = value + "/";
+                                    _expController.text = "$value/";
                                     _expController.selection =
                                         TextSelection.fromPosition(TextPosition(
                                             offset:

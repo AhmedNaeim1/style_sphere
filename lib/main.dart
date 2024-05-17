@@ -60,9 +60,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: const Column(
+    return const Scaffold(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(

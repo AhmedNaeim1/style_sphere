@@ -51,7 +51,7 @@ class _NewEmailVerificationState extends State<NewEmailVerification> {
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/newEmailVerify.png"),
+                        image: const AssetImage("assets/newEmailVerify.png"),
                         fit: BoxFit.values[6],
                         alignment: Alignment.centerLeft,
                       ),

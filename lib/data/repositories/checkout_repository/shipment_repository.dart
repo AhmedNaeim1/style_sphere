@@ -92,12 +92,10 @@ class ShippingRepository {
           'http://127.0.0.1:8080/shipping/get-user-shipments/$userID'));
       if (response.statusCode == 200) {
         List<dynamic> shipmentDataList = jsonDecode(response.body);
-        print(shipmentDataList);
 
         List<ShipmentModel> shipments = shipmentDataList
             .map((shipmentDataJson) => ShipmentModel.fromJson(shipmentDataJson))
             .toList();
-        print(shipments);
         return shipments;
       } else {
         throw Exception('Failed to fetch user shipments');

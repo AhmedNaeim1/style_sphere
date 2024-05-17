@@ -28,7 +28,7 @@ class ShipmentModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['shippingAddressID'] = shippingAddressID;
     data['userID'] = userID;
     data['shippingAddress'] = shippingAddress;
