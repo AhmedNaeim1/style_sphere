@@ -306,10 +306,10 @@ class TabWidget extends StatelessWidget {
   final bool isSelected;
 
   const TabWidget({
-    Key? key,
+    super.key,
     required this.text,
     required this.isSelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
