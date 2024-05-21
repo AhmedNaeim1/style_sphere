@@ -56,7 +56,7 @@ class UserData {
   dynamic registrationDate;
   int? followingCount;
   int? followersCount;
-  int? businessID;
+  String? businessID;
   String? languagePreference;
   String? currencyPreference;
   String? regionPreference;
