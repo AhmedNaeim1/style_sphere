@@ -5,10 +5,12 @@ import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/cubits/business_cubit.dart';
 import 'package:style_sphere/businessLogic/cubits/checkout_cubits/payment_cubit.dart';
 import 'package:style_sphere/businessLogic/cubits/checkout_cubits/shipment_cubit.dart';
+import 'package:style_sphere/businessLogic/cubits/product_cubit.dart';
 import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
 import 'package:style_sphere/data/repositories/business_repository.dart';
 import 'package:style_sphere/data/repositories/checkout_repository/payment_repository.dart';
 import 'package:style_sphere/data/repositories/checkout_repository/shipment_repository.dart';
+import 'package:style_sphere/data/repositories/product_repository.dart';
 import 'package:style_sphere/data/repositories/user_repository.dart';
 import 'package:style_sphere/presentation/router.dart';
 
@@ -40,6 +42,10 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (context) =>
                   BusinessCubit(repository: BusinessRepository()),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  ProductCubit(repository: ProductRepository()),
             ),
           ],
           child: MaterialApp(
