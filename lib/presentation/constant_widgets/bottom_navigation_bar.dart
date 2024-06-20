@@ -1,8 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:style_sphere/constants.dart';
-import 'package:style_sphere/main.dart';
+import 'package:style_sphere/data/models/user_data.dart';
+import 'package:style_sphere/presentation/screens/Selling/add_product.dart';
+import 'package:style_sphere/presentation/screens/Selling/start_selling.dart';
+import 'package:style_sphere/presentation/screens/chatbot.dart';
+import 'package:style_sphere/presentation/screens/home.dart';
 import 'package:style_sphere/presentation/screens/profile.dart';
 
 class MyBottomNavigationBar extends StatefulWidget {
@@ -52,15 +55,24 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 }
 
 class BottomNavbar extends StatelessWidget {
-  const BottomNavbar({super.key});
+  final int selectedIndex;
+  final UserData? user;
+
+  const BottomNavbar({super.key, required this.selectedIndex, this.user});
 
   @override
   Widget build(BuildContext context) {
     List<Widget> buildScreens() {
       return [
-        const MyHomePage(),
-        const ProfilePage(),
-        const ProfilePage(),
+        MyHomePage(
+          user: user,
+        ),
+        user!.businessID == null
+            ? StartSelling(
+                user: user!,
+              )
+            : SellingPage(),
+        const Chatbot(),
         const ProfilePage(),
       ];
     }
@@ -68,26 +80,32 @@ class BottomNavbar extends StatelessWidget {
     List<PersistentBottomNavBarItem> navBarsItems() {
       return [
         PersistentBottomNavBarItem(
-          icon: const Icon(CupertinoIcons.home),
+          icon: const ImageIcon(
+            AssetImage('assets/navbarHome.png'),
+          ),
           title: ("Home"),
           activeColorPrimary: primaryColor,
           inactiveColorPrimary: grey20Color,
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(CupertinoIcons.search),
+          icon: const ImageIcon(
+            AssetImage('assets/navbarSell.png'),
+          ),
           title: ("Sell"),
           activeColorPrimary: primaryColor,
           inactiveColorPrimary: grey20Color,
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(Icons.chat),
+          icon: const ImageIcon(
+            AssetImage('assets/navbarChat.png'),
+          ),
           title: ("Chat"),
           activeColorPrimary: primaryColor,
           inactiveColorPrimary: grey20Color,
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(
-            Icons.person,
+          icon: const ImageIcon(
+            AssetImage('assets/navbarProfile.png'),
           ),
           title: ("Profile"),
           activeColorPrimary: primaryColor,
