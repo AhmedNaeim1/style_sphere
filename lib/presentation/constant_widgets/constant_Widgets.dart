@@ -52,7 +52,7 @@ Widget buildSettingsRow(
 ) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushNamed(context, routeName, arguments: arguments);
+      Navigator.pushReplacementNamed(context, routeName, arguments: arguments);
     },
     child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 12),
