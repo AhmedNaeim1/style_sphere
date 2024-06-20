@@ -6,10 +6,22 @@ class ProductInitial extends ProductState {}
 
 class ProductLoading extends ProductState {}
 
-class ProductLoaded extends ProductState {
+class NewProductsLoaded extends ProductState {
+  final List<ProductModel> newProducts;
+
+  NewProductsLoaded(this.newProducts);
+}
+
+class ProductsLoaded extends ProductState {
   final Map<String, List<ProductModel>> products;
 
-  ProductLoaded(this.products);
+  ProductsLoaded(this.products);
+}
+
+class ProductLoaded extends ProductState {
+  final List<ProductModel> product;
+
+  ProductLoaded(this.product);
 }
 
 class ProductError extends ProductState {

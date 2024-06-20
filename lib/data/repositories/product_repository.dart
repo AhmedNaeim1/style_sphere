@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:style_sphere/data/models/products_data.dart';
+import 'package:style_sphere/data/models/user_data.dart';
 
 class ProductRepository {
   ProductRepository();
@@ -54,31 +55,68 @@ class ProductRepository {
 
   Future<List<ProductModel>> getAllProducts() async {
     final response = await http.get(Uri.parse('$baseUrl/products'));
+
     if (response.statusCode == 200) {
-      Iterable l = json.decode(response.body);
-      return List<ProductModel>.from(
-          l.map((model) => ProductModel.fromJson(model)));
+      List<dynamic> productsDataList = jsonDecode(response.body);
+      List<ProductModel> products = productsDataList
+          .map((productsDataJson) => ProductModel.fromJson(productsDataJson))
+          .toList();
+
+      List<ProductModel> availableProducts = [];
+      List<ProductModel> soldOutProducts = [];
+
+      for (var product in products) {
+        if (product.quantities!.every((quantity) =>
+            quantity.trim() == "0,0,0" || quantity.trim() == "0,0,0,0,0")) {
+          soldOutProducts.add(product);
+        } else {
+          availableProducts.add(product);
+        }
+      }
+      return availableProducts;
     } else {
       throw Exception('Failed to load products');
     }
   }
 
-  Future<List<ProductModel>> getProductsByCategory(String category) async {
-    final response =
-        await http.get(Uri.parse('$baseUrl/products?category=$category'));
+  Future<Map<String, List<ProductModel>>> getProductsByCategory(
+      String category) async {
+    final uri = Uri.parse('$baseUrl/products/')
+        .replace(queryParameters: {'category': category});
+    final response = await http.get(uri);
     if (response.statusCode == 200) {
-      Iterable l = json.decode(response.body);
-      return List<ProductModel>.from(
-          l.map((model) => ProductModel.fromJson(model)));
+      List<dynamic> productsDataList = jsonDecode(response.body);
+      List<ProductModel> products = productsDataList
+          .map((productsDataJson) => ProductModel.fromJson(productsDataJson))
+          .toList();
+
+      List<ProductModel> availableProducts = [];
+      List<ProductModel> soldOutProducts = [];
+
+      for (var product in products) {
+        if (product.quantities![0]
+            .split("[")[1]
+            .split("]")[0]
+            .split(",")
+            .every((quantity) => quantity.trim() == "0")) {
+          soldOutProducts.add(product);
+        } else {
+          availableProducts.add(product);
+        }
+      }
+
+      return {
+        'available': availableProducts,
+        'soldOut': soldOutProducts,
+      };
     } else {
-      throw Exception('Failed to load products by category');
+      throw Exception('Failed to load products by business');
     }
   }
 
   Future<Map<String, List<ProductModel>>> getProductsByBusiness(
       String businessId) async {
-    final uri = Uri.parse('$baseUrl/products/')
-        .replace(queryParameters: {'business': businessId});
+    final uri = Uri.parse('$baseUrl/products/business/$businessId');
     final response = await http.get(uri);
 
     if (response.statusCode == 200) {
@@ -91,8 +129,11 @@ class ProductRepository {
       List<ProductModel> soldOutProducts = [];
 
       for (var product in products) {
-        if (product.quantities!
-            .every((quantity) => quantity.trim() == "0,0,0")) {
+        if (product.quantities![0]
+            .split("[")[1]
+            .split("]")[0]
+            .split(",")
+            .every((quantity) => quantity.trim() == "0")) {
           soldOutProducts.add(product);
         } else {
           availableProducts.add(product);
@@ -103,6 +144,113 @@ class ProductRepository {
         'available': availableProducts,
         'soldOut': soldOutProducts,
       };
+    } else {
+      throw Exception('Failed to load products by business');
+    }
+  }
+
+  Future<Map<String, List<ProductModel>>> getMultipleProducts(
+      List<String> productIds) async {
+    final uri = Uri.parse('$baseUrl/products/list');
+    final response = await http.post(
+      uri,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({'productIDs': productIds}),
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> productsDataList = jsonDecode(response.body);
+      List<ProductModel> products = productsDataList
+          .map((productsDataJson) => ProductModel.fromJson(productsDataJson))
+          .toList();
+
+      List<ProductModel> availableProducts = [];
+      List<ProductModel> soldOutProducts = [];
+
+      for (var product in products) {
+        if (product.quantities![0]
+            .split("[")[1]
+            .split("]")[0]
+            .split(",")
+            .every((quantity) => quantity.trim() == "0")) {
+          soldOutProducts.add(product);
+        } else {
+          availableProducts.add(product);
+        }
+      }
+
+      print(availableProducts);
+      return {
+        'available': availableProducts,
+        'soldOut': soldOutProducts,
+      };
+    } else {
+      throw Exception('Failed to load products by business');
+    }
+  }
+
+  Future<List<String>> getSimilarProducts(String image) async {
+    final uri =
+        Uri.parse('https://search-by-imagee.loca.lt/find-similar-images');
+    final response = await http.post(
+      uri,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({'image_url': image}),
+    );
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+      List<dynamic> productsDataList = responseBody["similar_image_ids"];
+      return productsDataList.map((product) => product.toString()).toList();
+    } else {
+      throw Exception('Failed to load similar products');
+    }
+  }
+
+  Future<List<String>> getRecommendedProducts(UserData user) async {
+    final uri = Uri.parse(
+        'https://022e-34-82-104-157.ngrok-free.app/RecommenderSystemUsingOpenAI');
+    final response = await http.post(
+      uri,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        "materials": user.preferredMaterials,
+        "seasons": user.preferredOccasions,
+        "types": user.preferredStyles,
+      }),
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      List<dynamic> productsDataList = jsonDecode(response.body);
+      return productsDataList.map((product) => product.toString()).toList();
+    } else {
+      throw Exception('Failed to load products by business');
+    }
+  }
+
+  Future<List<String>> getSearchProducts(String name) async {
+    final uri = Uri.parse(
+        'https://f1de-34-173-161-247.ngrok-free.app/StyleSphereSearch');
+    final response = await http.post(
+      uri,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({"combined": name}),
+    );
+    print(response.body);
+    print("response.body");
+    if (response.statusCode == 200) {
+      List<dynamic> productsDataList = jsonDecode(response.body);
+      return productsDataList.map((product) => product.toString()).toList();
     } else {
       throw Exception('Failed to load products by business');
     }
