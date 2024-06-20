@@ -45,6 +45,7 @@ class userCubit extends Cubit<userStates> {
       final user = await _userRepository.updateUser(userId, userInfo);
 
       savePreferencesInfo(user);
+      getUserPreferencesInfo();
     } catch (e) {
       emit(UploadUserDataErrorState(error: e.toString()));
     }
@@ -220,7 +221,7 @@ class userCubit extends Cubit<userStates> {
     emit(userLoginLoadingState());
     try {
       final user = await _userRepository.logIn(email, password);
-
+      print(user.runtimeType);
       if (user.runtimeType == UserData) {
         emit(userLoginSuccessState());
         await savePreferencesInfo(user);

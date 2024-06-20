@@ -23,11 +23,11 @@ class UserRepository {
   }
 
   Future<UserData> getUserDataFromSharedPreferences() async {
-    UserData user = UserData();
+    UserData? user = UserData();
 
     user = (await getUserPreferencesInfo());
 
-    return user;
+    return user!;
   }
 
   Future<dynamic> logIn(String email, String password) async {
