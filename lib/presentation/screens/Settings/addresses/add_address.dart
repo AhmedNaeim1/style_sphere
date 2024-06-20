@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
+import 'package:style_sphere/businessLogic/cubits/business_cubit.dart';
 import 'package:style_sphere/businessLogic/cubits/checkout_cubits/shipment_cubit.dart';
+import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
+import 'package:style_sphere/data/models/business_data.dart';
 import 'package:style_sphere/data/models/checkout/shipment_data.dart';
+import 'package:style_sphere/data/models/user_data.dart';
 import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
 import 'package:style_sphere/presentation/constant_widgets/buttons.dart';
 import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
 import 'package:style_sphere/presentation/constant_widgets/textFields.dart';
+import 'package:style_sphere/presentation/router.dart';
 
 // ignore: must_be_immutable
 class AddAddress extends StatefulWidget {
-  final String userID;
-  final int shipmentMethodID;
+  final UserData user;
+  int? shipmentMethodID;
 
-  // final String page;
+  String? page;
 
-  const AddAddress({
-    super.key,
-    required this.userID,
-    required this.shipmentMethodID,
-    // required this.page
-  });
+  AddAddress({super.key, required this.user, this.shipmentMethodID, this.page});
 
   @override
   State<AddAddress> createState() => _AddAddressState();
@@ -46,7 +46,10 @@ class _AddAddressState extends State<AddAddress> {
       ),
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: buildAppBar("Add New Address", context, 12.sp),
+        appBar: buildAppBar(
+            widget.page == null ? "Add New Address" : "Billing Address",
+            context,
+            12.sp),
         body: LayoutBuilder(
           builder: (context, constraint) {
             return SingleChildScrollView(
@@ -108,28 +111,63 @@ class _AddAddressState extends State<AddAddress> {
                           buildSizedBox(2.h),
                           const Spacer(),
                           CustomElevatedButton(
-                            text: 'Add Card',
+                            text: 'Save Address',
                             onPressed: () {
-                              if (_nameController.text.isNotEmpty &&
-                                  _addressController.text.isNotEmpty &&
-                                  _countryController.text.isNotEmpty &&
-                                  _cityController.text.isNotEmpty &&
-                                  _phoneNumberController.text.isNotEmpty) {
-                                final ShipmentModel shipmentData =
-                                    ShipmentModel(
-                                  shippingAddressID: widget.shipmentMethodID,
-                                  userID: widget.userID,
-                                  name: _nameController.text,
-                                  shippingAddress: _addressController.text,
-                                  city: _cityController.text,
-                                  country: _countryController.text,
-                                  phoneNumber: _phoneNumberController.text,
-                                );
+                              if (widget.page == null) {
+                                if (_nameController.text.isNotEmpty &&
+                                    _addressController.text.isNotEmpty &&
+                                    _countryController.text.isNotEmpty &&
+                                    _cityController.text.isNotEmpty &&
+                                    _phoneNumberController.text.isNotEmpty) {
+                                  final ShipmentModel shipmentData =
+                                      ShipmentModel(
+                                    shippingAddressID: widget.shipmentMethodID,
+                                    userID: widget.user.userID,
+                                    name: _nameController.text,
+                                    shippingAddress: _addressController.text,
+                                    city: _cityController.text,
+                                    country: _countryController.text,
+                                    phoneNumber: _phoneNumberController.text,
+                                  );
 
-                                ShippingCubit.get(context)
-                                    .addShipment(shipmentData);
+                                  ShippingCubit.get(context)
+                                      .addShipment(shipmentData);
 
-                                Navigator.pop(context);
+                                  Navigator.pop(context);
+                                }
+                              } else {
+                                if (_nameController.text.isNotEmpty &&
+                                    _addressController.text.isNotEmpty &&
+                                    _countryController.text.isNotEmpty &&
+                                    _cityController.text.isNotEmpty &&
+                                    _phoneNumberController.text.isNotEmpty) {
+                                  final BusinessModel businessData =
+                                      BusinessModel(
+                                    businessID: widget.user.userID,
+                                    userID: widget.user.userID,
+                                    businessName: widget.user.name,
+                                    bio: "About my business",
+                                    contactInfo: _phoneNumberController.text,
+                                    billingAddress: _addressController.text,
+                                    businessCategory: "Category",
+                                    businessUrl: "https://example.com",
+                                    dateCreated: DateTime.now(),
+                                  );
+
+                                  BusinessCubit.get(context)
+                                      .createBusiness(businessData);
+                                  setState(() {
+                                    widget.user.businessID = widget.user.userID;
+                                  });
+                                  userCubit.get(context).updateUser(
+                                      widget.user.userID!, widget.user);
+
+                                  Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.addProduct,
+                                    // arguments: jsonEncode(widget.user),
+                                  );
+                                }
                               }
                             },
                             color: true,
