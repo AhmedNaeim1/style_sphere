@@ -24,31 +24,36 @@ class CustomPreferenceBox extends StatefulWidget {
 }
 
 class _CustomPreferenceBoxState extends State<CustomPreferenceBox> {
-  List<String> materials = [
-    "Cotton",
-    "Silk",
-    "Denim",
-    "Wool",
-    "Linen",
-    "Leather",
+  List<String> type = [
+    'Tshirts',
+    'Shirts',
+    'Casual Shoes',
+    'Watches',
+    'Sports Shoes',
+    'Tops',
+    'Handbags',
+    'Heels',
+    'Sunglasses',
+    'Wallets',
+    'Flip Flops',
+    'Sandals',
+    'Belts'
   ];
 
-  List<String> occasions = [
-    "Party",
-    "Wedding",
-    "Vacation",
-    "Work",
-    "Date",
-    "Gym",
+  List<String> season = [
+    'Spring',
+    'Summer',
+    'Fall',
+    'Winter',
   ];
 
   List<String> styles = [
     "Casual",
-    "Sporty",
-    "Street",
-    "Vintage",
-    "Classy",
-    "Oversize",
+    "Sports",
+    "Formal",
+    "Party",
+    "Smart Casual",
+    "Travel",
   ];
 
   @override
@@ -77,9 +82,9 @@ class _CustomPreferenceBoxState extends State<CustomPreferenceBox> {
             alignment: Alignment.bottomRight,
             child: buildCustomTextGabarito(
               text: widget.text == "Material"
-                  ? materials[widget.index]
+                  ? type[widget.index]
                   : widget.text == "Occasion"
-                      ? occasions[widget.index]
+                      ? season[widget.index]
                       : styles[widget.index],
               color: grey20Color,
               align: TextAlign.end,

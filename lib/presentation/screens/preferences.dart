@@ -31,8 +31,49 @@ class PreferencesPage extends StatefulWidget {
 
 class _PreferencesPageState extends State<PreferencesPage> {
   List<bool> stylePreferenceStates = [];
-  List<bool> materialPreferenceStates = [];
-  List<bool> occasionPreferenceStates = [];
+  List<bool> typePreferenceStates = [];
+  List<bool> seasonPreferenceStates = [];
+  List<String> type = [
+    'Tshirts',
+    'Shirts',
+    'Casual Shoes',
+    'Watches',
+    'Sports Shoes',
+    'Tops',
+    'Handbags',
+    'Heels',
+    'Sunglasses',
+    'Wallets',
+    'Flip Flops',
+    'Sandals',
+    'Belts'
+  ];
+
+  List<String> season = [
+    'Spring',
+    'Summer',
+    'Fall',
+    'Winter',
+  ];
+
+  List<String> styles = [
+    "Casual",
+    "Sports",
+    "Formal",
+    "Party",
+    "Smart Casual",
+    "Travel",
+  ];
+
+  List<String> mapPreferences(List<bool> states, List<String> preferences) {
+    List<String> selectedPreferences = [];
+    for (int i = 0; i < states.length; i++) {
+      if (states[i]) {
+        selectedPreferences.add(preferences[i]);
+      }
+    }
+    return selectedPreferences;
+  }
 
   @override
   void initState() {
@@ -42,18 +83,23 @@ class _PreferencesPageState extends State<PreferencesPage> {
         stylePreferenceStates = List.generate(6, (index) => false);
       } else {
         stylePreferenceStates = widget.preferences["Style"]!;
+        print(stylePreferenceStates);
+        print(typePreferenceStates);
+        print(seasonPreferenceStates);
       }
       if (widget.preferences["Material"].toString() == [].toString() &&
-          materialPreferenceStates.isEmpty) {
-        materialPreferenceStates = List.generate(6, (index) => false);
+          typePreferenceStates.isEmpty) {
+        typePreferenceStates = List.generate(13, (index) => false);
       } else {
-        materialPreferenceStates = widget.preferences["Material"]!;
+        typePreferenceStates = widget.preferences["Material"]!;
+        print(typePreferenceStates);
       }
       if (widget.preferences["Occasion"].toString() == [].toString() &&
-          occasionPreferenceStates.isEmpty) {
-        occasionPreferenceStates = List.generate(6, (index) => false);
+          seasonPreferenceStates.isEmpty) {
+        seasonPreferenceStates = List.generate(4, (index) => false);
       } else {
-        occasionPreferenceStates = widget.preferences["Occasion"]!;
+        seasonPreferenceStates = widget.preferences["Occasion"]!;
+        print(seasonPreferenceStates);
       }
     });
 
@@ -66,8 +112,8 @@ class _PreferencesPageState extends State<PreferencesPage> {
         widget.preferencesPage == "Style"
             ? stylePreferenceStates[index] = isClicked
             : widget.preferencesPage == "Material"
-                ? materialPreferenceStates[index] = isClicked
-                : occasionPreferenceStates[index] = isClicked;
+                ? typePreferenceStates[index] = isClicked
+                : seasonPreferenceStates[index] = isClicked;
       },
     );
   }
@@ -87,8 +133,8 @@ class _PreferencesPageState extends State<PreferencesPage> {
                 {
                   'preferences': {
                     "Style": stylePreferenceStates,
-                    "Material": materialPreferenceStates,
-                    "Occasion": occasionPreferenceStates
+                    "Material": typePreferenceStates,
+                    "Occasion": seasonPreferenceStates
                   },
                   'profile': widget.profile,
                   'preferencesPage': "Material",
@@ -101,8 +147,8 @@ class _PreferencesPageState extends State<PreferencesPage> {
                     {
                       'preferences': {
                         "Style": stylePreferenceStates,
-                        "Material": materialPreferenceStates,
-                        "Occasion": occasionPreferenceStates
+                        "Material": typePreferenceStates,
+                        "Occasion": seasonPreferenceStates
                       },
                       'profile': widget.profile,
                       'preferencesPage': "Occasion",
@@ -138,7 +184,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
                 buildSizedBox(1.h),
                 buildCustomTextGabarito(
                   text:
-                      "What’s your preferred ${widget.preferencesPage.toLowerCase()}?",
+                      "What’s your preferred ${widget.preferencesPage.toLowerCase() == "material" ? "type" : widget.preferencesPage.toLowerCase() == "occasion" ? "season" : widget.preferencesPage.toLowerCase()}?",
                   fontSize: widget.preferencesPage == "Style"
                       ? 21
                       : widget.preferencesPage == "Material"
@@ -161,8 +207,8 @@ class _PreferencesPageState extends State<PreferencesPage> {
                       itemCount: widget.preferencesPage == "Style"
                           ? stylePreferenceStates.length
                           : widget.preferencesPage == "Material"
-                              ? materialPreferenceStates.length
-                              : occasionPreferenceStates.length,
+                              ? typePreferenceStates.length
+                              : seasonPreferenceStates.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -176,8 +222,8 @@ class _PreferencesPageState extends State<PreferencesPage> {
                           isClicked: widget.preferencesPage == "Style"
                               ? stylePreferenceStates[index]
                               : widget.preferencesPage == "Material"
-                                  ? materialPreferenceStates[index]
-                                  : occasionPreferenceStates[index],
+                                  ? typePreferenceStates[index]
+                                  : seasonPreferenceStates[index],
                           onChanged: (clicked) {
                             updatePreferenceState(index, clicked);
                           },
@@ -201,44 +247,51 @@ class _PreferencesPageState extends State<PreferencesPage> {
             onPressed: () async {
               if (widget.preferencesPage == "Style" &&
                   stylePreferenceStates.contains(true)) {
+                print(stylePreferenceStates);
+                print(typePreferenceStates);
+                print(seasonPreferenceStates);
                 Navigator.pushNamed(
                   context,
                   AppRoutes.preferences,
                   arguments: {
                     'preferences': {
-                      "Style": stylePreferenceStates,
-                      "Material": materialPreferenceStates,
-                      "Occasion": occasionPreferenceStates
+                      "Style": mapPreferences(stylePreferenceStates, styles),
+                      "Material": mapPreferences(typePreferenceStates, type),
+                      "Occasion":
+                          mapPreferences(seasonPreferenceStates, season),
                     },
                     'profile': widget.profile,
                     'preferencesPage': "Material",
                   },
                 );
               } else if (widget.preferencesPage == "Material" &&
-                  materialPreferenceStates.contains(true)) {
+                  typePreferenceStates.contains(true)) {
+                print(typePreferenceStates);
+                print(mapPreferences(typePreferenceStates, type));
                 Navigator.pushNamed(
                   context,
                   AppRoutes.preferences,
                   arguments: {
                     'preferences': {
-                      "Style": stylePreferenceStates,
-                      "Material": materialPreferenceStates,
-                      "Occasion": occasionPreferenceStates
+                      "Style": mapPreferences(stylePreferenceStates, styles),
+                      "Material": mapPreferences(typePreferenceStates, type),
+                      "Occasion":
+                          mapPreferences(seasonPreferenceStates, season),
                     },
                     'profile': widget.profile,
                     'preferencesPage': "Occasion",
                   },
                 );
               } else if (widget.preferencesPage == "Occasion" &&
-                  occasionPreferenceStates.contains(true)) {
-                UserData userData = await getUserPreferencesInfo();
-                print(userData.preferredMaterials);
-                print(userData.userID);
-                print(userData.preferredStyles);
-                print(userData.preferredOccasions);
-                userData.preferredMaterials = materialPreferenceStates;
-                userData.preferredStyles = stylePreferenceStates;
-                userData.preferredOccasions = occasionPreferenceStates;
+                  seasonPreferenceStates.contains(true)) {
+                UserData? userData = await getUserPreferencesInfo();
+
+                userData!.preferredMaterials =
+                    mapPreferences(typePreferenceStates, type);
+                userData.preferredStyles =
+                    mapPreferences(stylePreferenceStates, styles);
+                userData.preferredOccasions =
+                    mapPreferences(seasonPreferenceStates, season);
                 cubit.updateUserPreferences(userData.userID!, userData);
                 widget.profile
                     ? Navigator.pushNamed(
@@ -249,6 +302,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
                     : Navigator.pushNamed(
                         context,
                         AppRoutes.navbar,
+                        arguments: {"user": userData},
                       );
               }
             },
