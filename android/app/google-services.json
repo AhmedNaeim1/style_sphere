@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "483967029733",
+    "project_id": "stylesphere-graduation",
+    "storage_bucket": "stylesphere-graduation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483967029733:android:22b8ec3d0be1c356cbdf0c",
+        "android_client_info": {
+          "package_name": "com.ahmedNaeim.style_sphere"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSiSEDHhoCRt7QtNjYF7r5tfrdXYj1LxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
