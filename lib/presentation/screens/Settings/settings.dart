@@ -7,14 +7,16 @@ import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/blocs/user_state.dart';
 import 'package:style_sphere/businessLogic/cubits/user_cubit.dart';
 import 'package:style_sphere/constants.dart';
+import 'package:style_sphere/data/models/user_data.dart';
 import 'package:style_sphere/data/repositories/user_repository.dart';
-import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
 import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
 import 'package:style_sphere/presentation/constant_widgets/texts.dart';
 import 'package:style_sphere/presentation/router.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+  final UserData user;
+
+  SettingsPage({super.key, required this.user});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -23,6 +25,8 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
+    final cubit = BlocProvider.of<userCubit>(context);
+
     return BlocProvider<userCubit>(
       create: (context) =>
           userCubit(repository: UserRepository())..getUserPreferencesData(),
@@ -33,7 +37,33 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: buildAppBar("Settings", context, 12.sp),
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: darkBlueColor,
+              ),
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, AppRoutes.navbar,
+                    arguments: {
+                      "selectedIndex": 3,
+                      "user": widget.user,
+                    });
+                cubit.getUserPreferencesData();
+              },
+            ),
+            title: Text(
+              "Settings",
+              style: TextStyle(
+                fontFamily: 'Gabarito',
+                color: darkBlueColor,
+                fontSize: 12.sp,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ),
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -133,7 +163,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   "assets/iconSavedCards.png",
                                   context,
                                   AppRoutes.savedCards,
-                                  state.user.userID,
+                                  state.user,
                                 ),
                                 buildSizedBox(2.h),
                                 buildSettingsRow(
@@ -141,7 +171,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   "assets/iconSavedAddress.png",
                                   context,
                                   AppRoutes.savedAddress,
-                                  state.user.userID,
+                                  jsonEncode(state.user),
                                 ),
                               ],
                             ),

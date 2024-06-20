@@ -36,7 +36,7 @@ class _RegionPageState extends State<RegionPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: buildAppBar("Region", context, 14.sp),
+      appBar: buildLeadingAppBar("Region", context, 14.sp, widget.user),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(

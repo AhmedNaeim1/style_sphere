@@ -36,8 +36,11 @@ class _LanguageCurrencyPageState extends State<LanguageCurrencyPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: buildAppBar(
-          widget.page == "Language" ? "Language" : "Currency", context, 14.sp),
+      appBar: buildLeadingAppBar(
+          widget.page == "Language" ? "Language" : "Currency",
+          context,
+          14.sp,
+          widget.user),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(

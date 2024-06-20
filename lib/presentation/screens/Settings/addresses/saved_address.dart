@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/blocs/checkout_blocs/shipment_state.dart';
 import 'package:style_sphere/businessLogic/cubits/checkout_cubits/shipment_cubit.dart';
 import 'package:style_sphere/constants.dart';
+import 'package:style_sphere/data/models/user_data.dart';
 import 'package:style_sphere/data/repositories/checkout_repository/shipment_repository.dart';
 import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
 import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
@@ -12,9 +15,9 @@ import 'package:style_sphere/presentation/constant_widgets/texts.dart';
 import 'package:style_sphere/presentation/router.dart';
 
 class SavedAddress extends StatefulWidget {
-  final String userID;
+  final UserData user;
 
-  const SavedAddress({super.key, required this.userID});
+  const SavedAddress({super.key, required this.user});
 
   @override
   State<SavedAddress> createState() => _SavedAddressState();
@@ -25,7 +28,7 @@ class _SavedAddressState extends State<SavedAddress> {
   Widget build(BuildContext context) {
     return BlocProvider<ShippingCubit>(
       create: (context) => ShippingCubit(repository: ShippingRepository())
-        ..getUserShipments(widget.userID),
+        ..getUserShipments(widget.user.userID!),
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
@@ -33,7 +36,8 @@ class _SavedAddressState extends State<SavedAddress> {
         ),
         child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: buildAppBar("Saved Addresses", context, 12.sp),
+          appBar: buildLeadingAppBar(
+              "Saved Addresses", context, 12.sp, widget.user),
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -130,7 +134,7 @@ class _SavedAddressState extends State<SavedAddress> {
                                                                           onPressed:
                                                                               () {
                                                                             BlocProvider.of<ShippingCubit>(context).deleteShipment(state.shipments[index].shippingAddressID!,
-                                                                                widget.userID);
+                                                                                widget.user.userID!);
                                                                             Navigator.of(context).pop();
                                                                           },
                                                                           child: Text(
@@ -191,7 +195,8 @@ class _SavedAddressState extends State<SavedAddress> {
                                               Navigator.pushNamed(
                                                   context, AppRoutes.addAddress,
                                                   arguments: {
-                                                    "userID": widget.userID,
+                                                    "user":
+                                                        jsonEncode(widget.user),
                                                     "shipmentMethodID":
                                                         state.shipments.length +
                                                             1

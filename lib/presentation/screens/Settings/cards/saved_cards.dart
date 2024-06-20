@@ -5,6 +5,7 @@ import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/blocs/checkout_blocs/payment_state.dart';
 import 'package:style_sphere/businessLogic/cubits/checkout_cubits/payment_cubit.dart';
 import 'package:style_sphere/constants.dart';
+import 'package:style_sphere/data/models/user_data.dart';
 import 'package:style_sphere/data/repositories/checkout_repository/payment_repository.dart';
 import 'package:style_sphere/presentation/constant_widgets/appBars.dart';
 import 'package:style_sphere/presentation/constant_widgets/constant_Widgets.dart';
@@ -12,9 +13,9 @@ import 'package:style_sphere/presentation/constant_widgets/texts.dart';
 import 'package:style_sphere/presentation/router.dart';
 
 class SavedCards extends StatefulWidget {
-  final String userID;
+  final UserData user;
 
-  const SavedCards({super.key, required this.userID});
+  const SavedCards({super.key, required this.user});
 
   @override
   State<SavedCards> createState() => _SavedCardsState();
@@ -25,7 +26,7 @@ class _SavedCardsState extends State<SavedCards> {
   Widget build(BuildContext context) {
     return BlocProvider<PaymentCubit>(
       create: (context) => PaymentCubit(repository: PaymentRepository())
-        ..getUserPayments(widget.userID),
+        ..getUserPayments(widget.user.userID!),
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
@@ -33,7 +34,8 @@ class _SavedCardsState extends State<SavedCards> {
         ),
         child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: buildAppBar("Saved Cards", context, 12.sp),
+          appBar:
+              buildLeadingAppBar("Saved Cards", context, 12.sp, widget.user),
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -99,7 +101,7 @@ class _SavedCardsState extends State<SavedCards> {
                                                           index,
                                                           context,
                                                           false,
-                                                          widget.userID,
+                                                          widget.user.userID!,
                                                           PaymentCubit.get(
                                                               context)),
                                                     );
@@ -132,7 +134,8 @@ class _SavedCardsState extends State<SavedCards> {
                                               Navigator.pushNamed(
                                                   context, AppRoutes.addCard,
                                                   arguments: {
-                                                    "userID": widget.userID,
+                                                    "userID":
+                                                        widget.user.userID,
                                                     "paymentMethodID":
                                                         state.payments.length +
                                                             1
