@@ -6,6 +6,7 @@ class BusinessModel {
   String? billingAddress;
   String? bio;
   String? businessCategory;
+  String? businessUrl;
   DateTime? dateCreated;
 
   BusinessModel({
@@ -16,6 +17,7 @@ class BusinessModel {
     this.billingAddress,
     this.businessCategory,
     this.dateCreated,
+    this.businessUrl,
     this.bio,
   });
 
@@ -27,6 +29,7 @@ class BusinessModel {
     billingAddress = json['billingAddress'];
     businessCategory = json['businessCategory'];
     bio = json['bio'];
+    businessUrl = json['businessUrl'];
     dateCreated = DateTime.tryParse(json['dateCreated'] ?? '');
   }
 
@@ -39,6 +42,7 @@ class BusinessModel {
     data['billingAddress'] = billingAddress;
     data['businessCategory'] = businessCategory;
     data['bio'] = bio;
+    data['businessUrl'] = businessUrl;
     data['dateCreated'] = dateCreated?.toIso8601String();
     return data;
   }

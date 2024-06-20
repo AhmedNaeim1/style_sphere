@@ -25,6 +25,7 @@ class BusinessCubit extends Cubit<BusinessState> {
       emit(BusinessLoadingState());
 
       final business = await _businessRepository.getBusiness(id);
+      // print(business);
       if (business == null) {
         emit(BusinessLoadedState([]));
       } else {
