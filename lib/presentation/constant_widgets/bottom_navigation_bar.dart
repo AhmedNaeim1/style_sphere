@@ -72,7 +72,7 @@ class BottomNavbar extends StatelessWidget {
                 user: user!,
               )
             : SellingPage(),
-        const Chatbot(),
+        Chatbot(user: user!),
         const ProfilePage(),
       ];
     }
