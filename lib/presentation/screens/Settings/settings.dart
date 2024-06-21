@@ -163,7 +163,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   "assets/iconSavedCards.png",
                                   context,
                                   AppRoutes.savedCards,
-                                  state.user,
+                                  json.encode(state.user),
                                 ),
                                 buildSizedBox(2.h),
                                 buildSettingsRow(
