@@ -39,10 +39,10 @@ dependencies:
   flutter_bloc: ^8.1.5
   http:
   sizer: ^2.0.15
-  flutter_picker:
+  #  flutter_picker:
   intl: ^0.19.0
   shared_preferences:
-  persistent_bottom_nav_bar: ^5.0.2
+  persistent_bottom_nav_bar:
   flutter_svg: ^2.0.10+1
   firebase_core:
   firebase_storage:
