@@ -8,52 +8,6 @@ import 'package:style_sphere/presentation/screens/chatbot.dart';
 import 'package:style_sphere/presentation/screens/home.dart';
 import 'package:style_sphere/presentation/screens/profile.dart';
 
-class MyBottomNavigationBar extends StatefulWidget {
-  final ValueChanged<int> onItemTapped;
-  final int selectedIndex;
-
-  const MyBottomNavigationBar({
-    super.key,
-    required this.selectedIndex,
-    required this.onItemTapped,
-  });
-
-  @override
-  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
-}
-
-class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.business),
-          label: 'Sell',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.chat),
-          label: 'Chat',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-      ],
-      currentIndex: widget.selectedIndex,
-      selectedItemColor: primaryColor,
-      unselectedItemColor: grey20Color,
-      onTap: (index) {
-        widget.onItemTapped(index);
-      },
-    );
-  }
-}
-
 class BottomNavbar extends StatelessWidget {
   final int selectedIndex;
   final UserData? user;
@@ -71,7 +25,7 @@ class BottomNavbar extends StatelessWidget {
             ? StartSelling(
                 user: user!,
               )
-            : SellingPage(),
+            : const SellingPage(),
         Chatbot(user: user!),
         const ProfilePage(),
       ];
@@ -80,33 +34,35 @@ class BottomNavbar extends StatelessWidget {
     List<PersistentBottomNavBarItem> navBarsItems() {
       return [
         PersistentBottomNavBarItem(
-          icon: const ImageIcon(
-            AssetImage('assets/navbarHome.png'),
+          icon: Image.asset(
+            "assets/navbarHomeActive.png",
+            fit: BoxFit.fitHeight,
+          ),
+          inactiveIcon: Image.asset(
+            "assets/navbarHome.png",
+            fit: BoxFit.fitHeight,
           ),
           title: ("Home"),
           activeColorPrimary: primaryColor,
           inactiveColorPrimary: grey20Color,
         ),
         PersistentBottomNavBarItem(
-          icon: const ImageIcon(
-            AssetImage('assets/navbarSell.png'),
-          ),
+          icon: Image.asset("assets/navbarSellActive.png"),
+          inactiveIcon: Image.asset("assets/navbarSell.png"),
           title: ("Sell"),
           activeColorPrimary: primaryColor,
           inactiveColorPrimary: grey20Color,
         ),
         PersistentBottomNavBarItem(
-          icon: const ImageIcon(
-            AssetImage('assets/navbarChat.png'),
-          ),
+          icon: Image.asset("assets/navbarChatActive.png"),
+          inactiveIcon: Image.asset("assets/navbarChat.png"),
           title: ("Chat"),
           activeColorPrimary: primaryColor,
           inactiveColorPrimary: grey20Color,
         ),
         PersistentBottomNavBarItem(
-          icon: const ImageIcon(
-            AssetImage('assets/navbarProfile.png'),
-          ),
+          icon: Image.asset("assets/navbarProfileActive.png"),
+          inactiveIcon: Image.asset("assets/navbarProfile.png"),
           title: ("Profile"),
           activeColorPrimary: primaryColor,
           inactiveColorPrimary: grey20Color,
@@ -117,6 +73,7 @@ class BottomNavbar extends StatelessWidget {
     PersistentTabController controller;
     controller = PersistentTabController(initialIndex: 0);
     return PersistentTabView(
+      navBarHeight: 70,
       context,
       controller: controller,
       screens: buildScreens(),
