@@ -216,7 +216,10 @@ class _MyHomePageState extends State<MyHomePage> {
           onTap: () {
             Navigator.of(context, rootNavigator: true).pushNamed(
               AppRoutes.productsDetails,
-              arguments: json.encode(products[index]),
+              arguments: {
+                "product": json.encode(products[index]),
+                "user": json.encode(widget.user)
+              },
             );
           },
           child: Padding(

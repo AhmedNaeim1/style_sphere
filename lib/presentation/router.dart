@@ -153,12 +153,14 @@ class AppRoutes {
         return MaterialPageRoute(
             builder: (_) => EditProfilePage(user: userPreference));
       case AppRoutes.productsDetails:
-        final args = settings.arguments as String;
+        final args = settings.arguments as Map<String, dynamic>;
 
-        final product = ProductModel.fromJson(json.decode(args));
+        final product = ProductModel.fromJson(json.decode(args["product"]));
+        final userPreference = UserData.fromJson(json.decode(args["user"]));
 
         return MaterialPageRoute(
-            builder: (_) => ProductsDetails(product: product));
+            builder: (_) =>
+                ProductsDetails(product: product, user: userPreference));
       case AppRoutes.confirmationPage:
         final args = settings.arguments as String;
         return MaterialPageRoute(
