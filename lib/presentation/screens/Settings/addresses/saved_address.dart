@@ -16,8 +16,9 @@ import 'package:style_sphere/presentation/router.dart';
 
 class SavedAddress extends StatefulWidget {
   final UserData user;
+  final String? page;
 
-  const SavedAddress({super.key, required this.user});
+  const SavedAddress({super.key, required this.user, this.page});
 
   @override
   State<SavedAddress> createState() => _SavedAddressState();
@@ -37,7 +38,8 @@ class _SavedAddressState extends State<SavedAddress> {
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: buildLeadingAppBar(
-              "Saved Addresses", context, 12.sp, widget.user),
+              "Saved Addresses", context, 12.sp, widget.user,
+              page: widget.page),
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -94,7 +96,19 @@ class _SavedAddressState extends State<SavedAddress> {
                                                 children: List.generate(
                                                   state.shipments.length,
                                                   (index) {
-                                                    return Padding(
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        if (widget.page ==
+                                                            "home") {
+                                                          Navigator.pop(
+                                                              context, {
+                                                            "selectedAddress":
+                                                                state.shipments[
+                                                                    index]
+                                                          });
+                                                        }
+                                                      },
+                                                      child: Padding(
                                                         padding:
                                                             const EdgeInsets
                                                                 .all(8.0),
@@ -128,7 +142,7 @@ class _SavedAddressState extends State<SavedAddress> {
                                                                     return AlertDialog(
                                                                       content:
                                                                           const Text(
-                                                                              'Are you sure you want to delete this card?'),
+                                                                              'Are you sure you want to delete this address?'),
                                                                       actions: <Widget>[
                                                                         TextButton(
                                                                           onPressed:
@@ -164,7 +178,9 @@ class _SavedAddressState extends State<SavedAddress> {
                                                                       redColor),
                                                             ),
                                                           ],
-                                                        ));
+                                                        ),
+                                                      ),
+                                                    );
                                                   },
                                                 ),
                                               ),

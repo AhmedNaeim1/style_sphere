@@ -14,8 +14,9 @@ import 'package:style_sphere/presentation/router.dart';
 
 class SavedCards extends StatefulWidget {
   final UserData user;
+  final String? page;
 
-  const SavedCards({super.key, required this.user});
+  const SavedCards({super.key, required this.user, this.page});
 
   @override
   State<SavedCards> createState() => _SavedCardsState();
@@ -34,8 +35,8 @@ class _SavedCardsState extends State<SavedCards> {
         ),
         child: Scaffold(
           backgroundColor: Colors.white,
-          appBar:
-              buildLeadingAppBar("Saved Cards", context, 12.sp, widget.user),
+          appBar: buildLeadingAppBar("Saved Cards", context, 12.sp, widget.user,
+              page: widget.page),
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -92,18 +93,32 @@ class _SavedCardsState extends State<SavedCards> {
                                                 children: List.generate(
                                                   state.payments.length,
                                                   (index) {
-                                                    return Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: buildSavedCards(
-                                                          state.payments[index],
-                                                          index,
-                                                          context,
-                                                          false,
-                                                          widget.user.userID!,
-                                                          PaymentCubit.get(
-                                                              context)),
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        if (widget.page ==
+                                                            "home") {
+                                                          Navigator.pop(
+                                                              context, {
+                                                            "selectedPaymentMethod":
+                                                                state.payments[
+                                                                    index],
+                                                          });
+                                                        }
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: buildSavedCards(
+                                                            state.payments[
+                                                                index],
+                                                            index,
+                                                            context,
+                                                            false,
+                                                            widget.user.userID!,
+                                                            PaymentCubit.get(
+                                                                context)),
+                                                      ),
                                                     );
                                                   },
                                                 ),

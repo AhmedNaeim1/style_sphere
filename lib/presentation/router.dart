@@ -12,6 +12,7 @@ import 'package:style_sphere/presentation/screens/Authentication/register/email_
 import 'package:style_sphere/presentation/screens/Authentication/register/first_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/second_Step.dart';
 import 'package:style_sphere/presentation/screens/Authentication/register/third_Step.dart';
+import 'package:style_sphere/presentation/screens/Chatbot/chatbot.dart';
 import 'package:style_sphere/presentation/screens/Selling/add_product.dart';
 import 'package:style_sphere/presentation/screens/Selling/add_product_success.dart';
 import 'package:style_sphere/presentation/screens/Settings/addresses/add_address.dart';
@@ -33,6 +34,8 @@ import 'package:style_sphere/presentation/screens/products_details.dart';
 import 'package:style_sphere/presentation/screens/profile.dart';
 import 'package:style_sphere/presentation/screens/search_result.dart';
 import 'package:style_sphere/presentation/screens/splash_screen.dart';
+
+import 'screens/Cart/cart_page.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -68,6 +71,8 @@ class AppRoutes {
   static const String addProductSuccess = '/addProductSuccess';
   static const String addProduct = '/addProduct';
   static const String searchResult = '/searchResult';
+  static const String cart = '/cart';
+  static const String chatbot = '/chatbot';
 
   static Map<String, WidgetBuilder> define() {
     return {
@@ -78,7 +83,6 @@ class AppRoutes {
       profile: (context) => const ProfilePage(),
       forgotPassword: (context) => const ForgotPassword(),
       splashScreen: (context) => SplashScreen(),
-      addProduct: (context) => SellingPage(),
     };
   }
 
@@ -87,7 +91,13 @@ class AppRoutes {
       case AppRoutes.home:
         return MaterialPageRoute(builder: (_) => const MyHomePage());
       case AppRoutes.addProduct:
-        return MaterialPageRoute(builder: (_) => SellingPage());
+        final args = settings.arguments as String;
+        final user = UserData.fromJson(json.decode(args));
+
+        return MaterialPageRoute(
+            builder: (_) => SellingPage(
+                  user: user,
+                ));
       case AppRoutes.thirdStep:
         final args = settings.arguments as Map<String, String>;
         return MaterialPageRoute(
@@ -129,13 +139,27 @@ class AppRoutes {
 
         return MaterialPageRoute(
             builder: (_) => SettingsPage(user: userPreference));
-      case AppRoutes.addProductSuccess:
+      case AppRoutes.chatbot:
+        final args = settings.arguments as String;
+
+        final userPreference = UserData.fromJson(json.decode(args));
+
+        return MaterialPageRoute(builder: (_) => Chatbot(user: userPreference));
+      case AppRoutes.cart:
         final args = settings.arguments as String;
 
         final userPreference = UserData.fromJson(json.decode(args));
 
         return MaterialPageRoute(
-            builder: (_) => AddProductSuccess(user: userPreference));
+            builder: (_) => CartPage(user: userPreference));
+      case AppRoutes.addProductSuccess:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        final userPreference = UserData.fromJson(json.decode(args["user"]));
+
+        return MaterialPageRoute(
+            builder: (_) =>
+                AddProductSuccess(user: userPreference, page: args["page"]));
       case AppRoutes.virtualTryOn:
         final args = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
@@ -169,11 +193,12 @@ class AppRoutes {
           ),
         );
       case AppRoutes.savedCards:
-        final args = settings.arguments as String;
-        final userData = UserData.fromJson(json.decode(args));
+        final args = settings.arguments as Map<String, dynamic>;
+        final userData = UserData.fromJson(json.decode(args["user"]));
         return MaterialPageRoute(
           builder: (_) => SavedCards(
             user: userData,
+            page: args["page"],
           ),
         );
       case AppRoutes.searchResult:
@@ -188,12 +213,13 @@ class AppRoutes {
           ),
         );
       case AppRoutes.savedAddress:
-        final args = settings.arguments as String;
-        final userData = UserData.fromJson(json.decode(args));
+        final args = settings.arguments as Map<String, dynamic>;
+        final userData = UserData.fromJson(json.decode(args["user"]));
 
         return MaterialPageRoute(
           builder: (_) => SavedAddress(
             user: userData,
+            page: args["page"],
           ),
         );
       case AppRoutes.emailVerification:
