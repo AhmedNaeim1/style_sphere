@@ -153,19 +153,20 @@ class SellingPageState extends State<SellingPage> {
   Future<void> uploadItem() async {
     Map<String, dynamic> productData = {
       "productID": "1234",
-      "businessID": widget.user!.businessID.toString(),
+      "businessID": widget.user!.userID.toString(),
       'material': _selectedType,
       'type': _selectedType,
       'category': _selectedCategoru,
       'price': _priceController.text,
       'name': _titleController.text,
+      "imageUrls": [selectedImageURL],
       'description': _descriptionController.text,
       'season': selectedSeason,
       'condition': selectedCondition,
       'colors': selectedColor,
       'gender': "F",
-      'sizes': ["S"],
-      "quantities": ["2", "0", "0", "0", "0"]
+      'sizes': jsonEncode(["S"]),
+      'quantities': jsonEncode(["2", "0", "0", "0", "0"])
     };
 
     await _apiService.uploadProduct(productData, widget.user!, context);
