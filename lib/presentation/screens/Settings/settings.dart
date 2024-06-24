@@ -177,6 +177,43 @@ class _SettingsPageState extends State<SettingsPage> {
                                     "user": json.encode(widget.user),
                                   },
                                 ),
+                                buildSizedBox(2.h),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushReplacementNamed(
+                                        context, AppRoutes.loginRegisterPage);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 0.0, horizontal: 12),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 18.sp,
+                                          height: 18.sp,
+                                          child: Icon(
+                                            Icons.logout,
+                                            color: redColor,
+                                            size: 20.sp,
+                                          ),
+                                        ),
+                                        SizedBox(width: 4.w),
+                                        buildCustomTextGabarito(
+                                          text: "Logout",
+                                          color: redColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                        const Spacer(),
+                                        Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: redColor,
+                                          size: 12.sp,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           );
