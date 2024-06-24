@@ -127,26 +127,26 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                                 Navigator.of(context).pop();
                               },
                             ),
-                            const Spacer(),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.black,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.share,
-                                    color: Colors.black,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
+                            // const Spacer(),
+                            // Column(
+                            //   mainAxisSize: MainAxisSize.min,
+                            //   children: [
+                            //     IconButton(
+                            //       icon: const Icon(
+                            //         Icons.favorite_border,
+                            //         color: Colors.black,
+                            //       ),
+                            //       onPressed: () {},
+                            //     ),
+                            //     IconButton(
+                            //       icon: const Icon(
+                            //         Icons.share,
+                            //         color: Colors.black,
+                            //       ),
+                            //       onPressed: () {},
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),
@@ -397,15 +397,22 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                                 ),
                                 buildSizedBox(1.h),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     CircleAvatar(
                                       radius: 20,
-                                      backgroundImage: NetworkImage(
-                                        businessState.businesses[0].businessUrl
-                                            .toString(),
+                                      backgroundColor: primaryColor,
+                                      child: ClipOval(
+                                        child: Image.asset(
+                                          "assets/navbarProfile.png",
+                                          fit: BoxFit.fitWidth,
+                                          width: 40,
+                                          height: 40,
+                                        ),
                                       ),
+                                    ),
+
+                                    SizedBox(
+                                      width: 5.w,
                                     ),
                                     Column(
                                       crossAxisAlignment:
@@ -426,9 +433,9 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                                         ),
                                       ],
                                     ),
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(Icons.chat_bubble))
+                                    // IconButton(
+                                    //     onPressed: () {},
+                                    //     icon: const Icon(Icons.chat_bubble))
                                   ],
                                 ),
                               ],
