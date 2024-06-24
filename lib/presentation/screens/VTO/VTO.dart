@@ -75,8 +75,7 @@ class _VirtualTryOnState extends State<VirtualTryOn> {
           String clothURL = widget.productUrl;
           print('File Uploaded. Download URL: $downloadURL');
 
-          const apiUrl =
-              "https://99de-34-124-146-51.ngrok-free.app/StyleSphereVirtualTryOn";
+          const apiUrl = "https://vton.loca.lt/StyleSphereVirtualTryOn";
 
           var response = await http.post(
             Uri.parse(apiUrl),
@@ -97,30 +96,29 @@ class _VirtualTryOnState extends State<VirtualTryOn> {
             // Parse the JSON response
             Map<String, dynamic> jsonResponse = json.decode(response.body);
             var newImageUrl = jsonResponse['output'];
-            var error = jsonResponse['Error'];
-            if (error.toString().isNotEmpty) {
-              print('Error: $error');
-              progressController.close(); // Close the progress controller
-              Navigator.pop(context); // Go back to the previous screen
-              return;
-            } else {
-              print('New Image URL: $newImageUrl');
+            // var error = jsonResponse['Error'];
+            // if (error.toString().isNotEmpty) {
+            //   print('Error: $error');
+            //   progressController.close(); // Close the progress controller
+            //   Navigator.pop(context); // Go back to the previous screen
+            //   return;
+            // } else {
+            print('New Image URL: $newImageUrl');
 
-              // Update progress to complete
-              progressController.add(1.0);
+            // Update progress to complete
+            progressController.add(1.0);
 
-              // Close the progress controller
-              await Future.delayed(const Duration(seconds: 1));
-              progressController.close();
+            // Close the progress controller
+            await Future.delayed(const Duration(seconds: 1));
+            progressController.close();
 
-              // Navigate to result page with the result image URL
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ResultScreen(imageUrl: newImageUrl),
-                ),
-              );
-            }
+            // Navigate to result page with the result image URL
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ResultScreen(imageUrl: newImageUrl),
+              ),
+            );
           } else {
             // Request failed with an error status code
             print('Request failed with status: ${response.statusCode}');
