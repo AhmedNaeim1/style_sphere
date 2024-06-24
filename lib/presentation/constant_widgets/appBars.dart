@@ -33,7 +33,8 @@ PreferredSizeWidget buildAppBar(
 }
 
 PreferredSizeWidget buildLeadingAppBar(
-    String title, BuildContext context, double fontSize, UserData user) {
+    String title, BuildContext context, double fontSize, UserData user,
+    {String? page}) {
   return AppBar(
     backgroundColor: Colors.transparent,
     elevation: 0,
@@ -43,8 +44,12 @@ PreferredSizeWidget buildLeadingAppBar(
         color: darkBlueColor,
       ),
       onPressed: () {
-        Navigator.pushNamed(context, AppRoutes.settings,
-            arguments: jsonEncode(user));
+        if (page == 'home') {
+          Navigator.pop(context);
+        } else {
+          Navigator.pushNamed(context, AppRoutes.settings,
+              arguments: jsonEncode(user));
+        }
       },
     ),
     title: Text(
