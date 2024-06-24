@@ -90,6 +90,7 @@ class ProductCubit extends Cubit<ProductState> {
     try {
       emit(ProductLoading());
       final products = await _productRepository.getMultipleProducts(productIds);
+
       emit(ProductsLoaded(products));
     } catch (e) {
       emit(ProductError(e.toString()));

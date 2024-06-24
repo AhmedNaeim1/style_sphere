@@ -214,8 +214,9 @@ class ProductRepository {
   }
 
   Future<List<String>> getRecommendedProducts(UserData user) async {
+    print("object");
     final uri = Uri.parse(
-        'https://022e-34-82-104-157.ngrok-free.app/RecommenderSystemUsingOpenAI');
+        'https://aa02-34-125-120-17.ngrok-free.app/RecommenderSystemUsingOpenAI');
     final response = await http.post(
       uri,
       headers: {

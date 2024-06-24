@@ -32,7 +32,7 @@ class ProductModel {
   });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
-    productID = json['_id'];
+    productID = json['productID'];
     businessID = json['businessID'];
     name = json['name'];
     description = json['description'];
@@ -50,7 +50,7 @@ class ProductModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = productID;
+    data['productID'] = productID;
     data['businessID'] = businessID;
     data['name'] = name;
     data['description'] = description;

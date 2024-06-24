@@ -7,6 +7,7 @@ import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/blocs/business_state.dart';
 import 'package:style_sphere/businessLogic/blocs/product_state.dart';
 import 'package:style_sphere/businessLogic/cubits/business_cubit.dart';
+import 'package:style_sphere/businessLogic/cubits/cart_cubit.dart';
 import 'package:style_sphere/businessLogic/cubits/product_cubit.dart';
 import 'package:style_sphere/constants.dart';
 import 'package:style_sphere/data/models/products_data.dart';
@@ -28,10 +29,10 @@ class ProductsDetails extends StatefulWidget {
 }
 
 class _ProductsDetailsState extends State<ProductsDetails> {
+  String? selectedSize;
+
   @override
   Widget build(BuildContext context) {
-    bool selected = false;
-    Color color = const Color(0xffF5F6FA);
     final sizeList = ["S", "M", "L", "XL", "2XL"];
 
     return MultiBlocProvider(
@@ -50,51 +51,60 @@ class _ProductsDetailsState extends State<ProductsDetails> {
           statusBarBrightness: Brightness.light,
         ),
         child: Scaffold(
-          // bottomNavigationBar: BottomAppBar(
-          //   color: grey80Color,
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       Column(
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           buildCustomTextGabarito(
-          //             text: "Price",
-          //             fontSize: 12,
-          //             color: Colors.black,
-          //           ),
-          //           buildCustomTextGabarito(
-          //             text: widget.user.currencyPreference == "USD"
-          //                 ? "\$${widget.product.price}"
-          //                 : "${widget.product.price} LE",
-          //             fontSize: 12,
-          //             color: Colors.black,
-          //           ),
-          //         ],
-          //       ),
-          //       ElevatedButton(
-          //         onPressed: () {
-          //           // Add to cart logic
-          //         },
-          //         style: ElevatedButton.styleFrom(
-          //           backgroundColor: primaryColor,
-          //           shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(10),
-          //           ),
-          //           padding: const EdgeInsets.symmetric(
-          //             horizontal: 20,
-          //             vertical: 10,
-          //           ),
-          //         ),
-          //         child: buildCustomTextGabarito(
-          //           text: "Add to Cart",
-          //           fontSize: 16,
-          //           color: Colors.white,
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
+          bottomNavigationBar: BottomAppBar(
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildCustomTextGabarito(
+                      text: "Price",
+                      fontSize: 12,
+                      color: Colors.black,
+                    ),
+                    buildCustomTextGabarito(
+                      text: widget.user.currencyPreference == "USD"
+                          ? "\$${widget.product.price}"
+                          : "${widget.product.price} LE",
+                      fontSize: 12,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await BlocProvider.of<CartCubit>(context).addProductToCart(
+                      widget.user.userID.toString(),
+                      widget.product.productID.toString(),
+                      1,
+                      DateTime.now().toString(),
+                      widget.product.price!,
+                    );
+                    //go to carts page
+                    Navigator.of(context).pushNamed(AppRoutes.cart,
+                        arguments: json.encode(widget.user));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
+                  ),
+                  child: buildCustomTextGabarito(
+                    text: "Add to Cart",
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
           backgroundColor: Colors.white,
           body: SafeArea(
             child: SingleChildScrollView(
@@ -124,13 +134,6 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                                 IconButton(
                                   icon: const Icon(
                                     Icons.favorite_border,
-                                    color: Colors.black,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.share,
                                     color: Colors.black,
                                   ),
                                   onPressed: () {},
@@ -295,10 +298,7 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                                         return GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              selected = !selected;
-                                              color = selected
-                                                  ? primaryColor
-                                                  : const Color(0xffF5F6FA);
+                                              selectedSize = sizeList[index];
                                             });
                                           },
                                           child: Padding(
@@ -310,51 +310,25 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                                                       sizeList.length -
                                                   20,
                                               decoration: BoxDecoration(
-                                                // border: Border.all(
-                                                //     color: grey50Color),
                                                 borderRadius:
                                                     BorderRadius.circular(10),
-                                                color: color,
+                                                color: selectedSize ==
+                                                        sizeList[index]
+                                                    ? primaryColor
+                                                    : const Color(0xffF5F6FA),
                                               ),
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
-                                                child: widget.product
-                                                            .quantities![0]
-                                                            .split("[")[1]
-                                                            .split("]")[0]
-                                                            .split(",")
-                                                            .length <=
-                                                        index
-                                                    ? buildCustomTextGabarito(
-                                                        text: sizeList[index],
-                                                        fontSize: 12,
-                                                        color: grey50Color,
-                                                        align: TextAlign.center,
-                                                      )
-                                                    : widget.product
-                                                                .quantities![0]
-                                                                .split("[")[1]
-                                                                .split("]")[0]
-                                                                .split(
-                                                                    ",")[index] ==
-                                                            "0"
-                                                        ? buildCustomTextGabarito(
-                                                            text:
-                                                                sizeList[index],
-                                                            fontSize: 14,
-                                                            color: grey50Color,
-                                                            align: TextAlign
-                                                                .center,
-                                                          )
-                                                        : buildCustomTextGabarito(
-                                                            text:
-                                                                sizeList[index],
-                                                            fontSize: 14,
-                                                            color: blackColor,
-                                                            align: TextAlign
-                                                                .center,
-                                                          ),
+                                                child: buildCustomTextGabarito(
+                                                  text: sizeList[index],
+                                                  fontSize: 14,
+                                                  color: selectedSize ==
+                                                          sizeList[index]
+                                                      ? Colors.white
+                                                      : blackColor,
+                                                  align: TextAlign.center,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -530,10 +504,6 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                       ],
                     ),
                   ),
-                  // Align(
-                  //   alignment: Alignment.bottomCenter,
-                  //   child:
-                  // ),
                 ],
               ),
             ),
