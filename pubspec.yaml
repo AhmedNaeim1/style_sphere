@@ -84,6 +84,7 @@ flutter:
     - assets/preferences/material/
     - assets/preferences/occasion/
     - assets/preferences/style/
+    - assets/icons/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
