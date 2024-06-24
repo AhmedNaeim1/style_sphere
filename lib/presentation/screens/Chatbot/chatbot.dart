@@ -134,7 +134,7 @@ class _ChatbotState extends State<Chatbot> {
         print(secondImageIds);
 
         if (secondImageIds.isNotEmpty) {
-          Navigator.of(context).push(
+          Navigator.of(context, rootNavigator: true).push(
             MaterialPageRoute(
                 builder: (context) => ChatbotResultPage(
                       user: widget.user,
@@ -217,12 +217,12 @@ class _ChatbotState extends State<Chatbot> {
             ),
           ],
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back, color: Colors.black),
+        //   onPressed: () {
+        //     Navigator.of(context).pop();
+        //   },
+        // ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
