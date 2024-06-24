@@ -163,7 +163,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                   "assets/iconSavedCards.png",
                                   context,
                                   AppRoutes.savedCards,
-                                  json.encode(state.user),
+                                  {
+                                    "user": json.encode(widget.user),
+                                  },
                                 ),
                                 buildSizedBox(2.h),
                                 buildSettingsRow(
@@ -171,7 +173,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                   "assets/iconSavedAddress.png",
                                   context,
                                   AppRoutes.savedAddress,
-                                  jsonEncode(state.user),
+                                  {
+                                    "user": json.encode(widget.user),
+                                  },
                                 ),
                               ],
                             ),
