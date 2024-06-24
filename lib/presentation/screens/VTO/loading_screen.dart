@@ -16,7 +16,7 @@ class LoadingScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Doing The Magic For You....',
+              'Doing the Magic for you....',
               style: TextStyle(
                 fontFamily: "Gabarito",
                 fontSize: 24.0,
