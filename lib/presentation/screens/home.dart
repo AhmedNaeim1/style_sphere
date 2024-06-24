@@ -7,7 +7,6 @@ import 'package:sizer/sizer.dart';
 import 'package:style_sphere/businessLogic/blocs/product_state.dart';
 import 'package:style_sphere/businessLogic/cubits/product_cubit.dart';
 import 'package:style_sphere/businessLogic/cubits/reco_cubit.dart';
-import 'package:style_sphere/constants.dart';
 import 'package:style_sphere/data/models/products_data.dart';
 import 'package:style_sphere/data/models/user_data.dart';
 import 'package:style_sphere/data/repositories/product_repository.dart';
@@ -61,20 +60,20 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
       child: Scaffold(
-        floatingActionButton: // Add a floating action button to the bottom right corner of the screen that opens the chatbot
-            FloatingActionButton(
-          backgroundColor: primaryColor,
-          onPressed: () {
-            Navigator.of(context, rootNavigator: true).pushNamed(
-              AppRoutes.chatbot,
-              arguments: json.encode(widget.user),
-            );
-          },
-          child: const Icon(
-            Icons.chat,
-            color: Colors.black,
-          ),
-        ),
+        // floatingActionButton: // Add a floating action button to the bottom right corner of the screen that opens the chatbot
+        //     FloatingActionButton(
+        //   backgroundColor: primaryColor,
+        //   onPressed: () {
+        //     Navigator.of(context, rootNavigator: true).pushNamed(
+        //       AppRoutes.chatbot,
+        //       arguments: json.encode(widget.user),
+        //     );
+        //   },
+        //   child: const Icon(
+        //     Icons.chat,
+        //     color: Colors.black,
+        //   ),
+        // ),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
