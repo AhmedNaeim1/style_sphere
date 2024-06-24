@@ -57,8 +57,11 @@ class ResultPage extends StatelessWidget {
                           print(user!.businessID);
                           Navigator.of(context, rootNavigator: true).pushNamed(
                             AppRoutes.productsDetails,
-                            arguments: json.encode(
-                                productState.products['available']![index]),
+                            arguments: {
+                              "product": json.encode(
+                                  productState.products['available']![index]),
+                              "user": json.encode(user)
+                            },
                           );
                           print(productState
                               .products['available']![index].businessID);
