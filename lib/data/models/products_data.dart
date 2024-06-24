@@ -7,8 +7,8 @@ class ProductModel {
   String? material;
   String? category;
   double? price;
-  List<String>? sizes;
-  List<String>? quantities;
+  String? sizes;
+  String? quantities;
   String? colors;
   String? type;
   DateTime? dateAdded;
@@ -40,8 +40,8 @@ class ProductModel {
     material = json['material'];
     category = json['category'];
     price = json['price']?.toDouble();
-    sizes = List<String>.from(json['sizes'] ?? []);
-    quantities = List<String>.from(json['quantities'] ?? []);
+    sizes = json['sizes'] ?? [];
+    quantities = json['quantities'] ?? [];
     colors = json['colors'];
     type = json['type'];
     dateAdded = DateTime.tryParse(json['dateAdded'] ?? '');

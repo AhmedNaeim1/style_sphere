@@ -64,10 +64,10 @@ class ProductRepository {
 
       List<ProductModel> availableProducts = [];
       List<ProductModel> soldOutProducts = [];
-
       for (var product in products) {
-        if (product.quantities!.every((quantity) =>
-            quantity.trim() == "0,0,0" || quantity.trim() == "0,0,0,0,0")) {
+        var list = product.quantities!.split("[")[1].split("]")[0].split(",");
+
+        if (list.every((quantity) => quantity.trim() == "0")) {
           soldOutProducts.add(product);
         } else {
           availableProducts.add(product);
@@ -94,11 +94,9 @@ class ProductRepository {
       List<ProductModel> soldOutProducts = [];
 
       for (var product in products) {
-        if (product.quantities![0]
-            .split("[")[1]
-            .split("]")[0]
-            .split(",")
-            .every((quantity) => quantity.trim() == "0")) {
+        var list = product.quantities!.split("[")[1].split("]")[0].split(",");
+
+        if (list.every((quantity) => quantity.trim() == "0")) {
           soldOutProducts.add(product);
         } else {
           availableProducts.add(product);
@@ -124,22 +122,20 @@ class ProductRepository {
       List<ProductModel> products = productsDataList
           .map((productsDataJson) => ProductModel.fromJson(productsDataJson))
           .toList();
+      print(products);
 
       List<ProductModel> availableProducts = [];
       List<ProductModel> soldOutProducts = [];
 
       for (var product in products) {
-        if (product.quantities![0]
-            .split("[")[1]
-            .split("]")[0]
-            .split(",")
-            .every((quantity) => quantity.trim() == "0")) {
+        var list = product.quantities!.split("[")[1].split("]")[0].split(",");
+
+        if (list.every((quantity) => quantity.trim() == "0")) {
           soldOutProducts.add(product);
         } else {
           availableProducts.add(product);
         }
       }
-
       return {
         'available': availableProducts,
         'soldOut': soldOutProducts,

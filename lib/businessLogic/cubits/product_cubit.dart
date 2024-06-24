@@ -51,6 +51,7 @@ class ProductCubit extends Cubit<ProductState> {
           await _productRepository.getProductsByBusiness(businessId);
       emit(ProductsLoaded(products));
     } catch (e) {
+      print("object");
       emit(ProductError(e.toString()));
     }
   }
