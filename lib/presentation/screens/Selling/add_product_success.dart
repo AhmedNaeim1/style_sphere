@@ -4,8 +4,9 @@ import 'package:style_sphere/presentation/router.dart';
 
 class AddProductSuccess extends StatefulWidget {
   final UserData user;
+  final bool? page;
 
-  const AddProductSuccess({super.key, required this.user});
+  const AddProductSuccess({super.key, required this.user, this.page});
 
   @override
   _AddProductSuccessState createState() => _AddProductSuccessState();
@@ -97,9 +98,9 @@ class _AddProductSuccessState extends State<AddProductSuccess> {
                         padding: const EdgeInsets.only(left: 20),
                         child: RichText(
                           textAlign: TextAlign.left,
-                          text: const TextSpan(
+                          text: TextSpan(
                             children: [
-                              TextSpan(
+                              const TextSpan(
                                 text: 'Successfully\n',
                                 style: TextStyle(
                                   fontSize: 36.0,
@@ -109,8 +110,9 @@ class _AddProductSuccessState extends State<AddProductSuccess> {
                                 ),
                               ),
                               TextSpan(
-                                text: 'Uploaded Listing',
-                                style: TextStyle(
+                                text:
+                                    widget.page! ? 'Ordered' : "Uploaded Item",
+                                style: const TextStyle(
                                   fontSize: 36.0,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -118,8 +120,9 @@ class _AddProductSuccessState extends State<AddProductSuccess> {
                                 ),
                               ),
                               TextSpan(
-                                text:
-                                    '\n\nView your uploaded items from the profile',
+                                text: widget.page!
+                                    ? ""
+                                    : '\n\nView your uploaded items from the profile',
                                 style: TextStyle(
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.normal,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
@@ -165,7 +167,7 @@ class _AddAddressState extends State<AddAddress> {
                                   Navigator.pushNamed(
                                     context,
                                     AppRoutes.addProduct,
-                                    // arguments: jsonEncode(widget.user),
+                                    arguments: json.encode(widget.user),
                                   );
                                 }
                               }

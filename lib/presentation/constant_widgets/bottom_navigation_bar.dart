@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:style_sphere/constants.dart';
 import 'package:style_sphere/data/models/user_data.dart';
+import 'package:style_sphere/presentation/screens/Chatbot/chatbot.dart';
 import 'package:style_sphere/presentation/screens/Selling/add_product.dart';
 import 'package:style_sphere/presentation/screens/Selling/start_selling.dart';
-import 'package:style_sphere/presentation/screens/chatbot.dart';
 import 'package:style_sphere/presentation/screens/home.dart';
 import 'package:style_sphere/presentation/screens/profile.dart';
 
@@ -25,7 +25,7 @@ class BottomNavbar extends StatelessWidget {
             ? StartSelling(
                 user: user!,
               )
-            : const SellingPage(),
+            : SellingPage(user: user!),
         Chatbot(user: user!),
         const ProfilePage(),
       ];

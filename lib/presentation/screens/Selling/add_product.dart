@@ -1,7 +1,58 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:style_sphere/data/models/user_data.dart';
+import 'package:style_sphere/presentation/functions/constant_functions.dart';
+
+import '../../router.dart';
+
+class ApiService {
+  final Dio _dio = Dio(
+    BaseOptions(
+      baseUrl: 'http://127.0.0.1:3040',
+      connectTimeout: const Duration(milliseconds: 5000),
+      receiveTimeout: const Duration(milliseconds: 3000),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    ),
+  );
+
+  Future<void> uploadProduct(Map<String, dynamic> productData, UserData user,
+      BuildContext context) async {
+    try {
+      final response = await _dio.post('/products/', data: productData);
+      print('Product uploaded: ${response.data}');
+      Navigator.of(context, rootNavigator: true)
+          .pushNamed(AppRoutes.addProductSuccess, arguments: {
+        "user": json.encode(user),
+        "page": false,
+      });
+    } catch (e) {
+      if (e is DioError) {
+        // Handle DioError
+        if (e.response != null) {
+          print(
+              'Error uploading product: ${e.response!.statusCode} - ${e.response!.data}');
+          print('Request was made to: ${e.requestOptions.uri}');
+        } else {
+          print('Error uploading product: $e');
+          print('Request was made to: ${e.requestOptions.uri}');
+        }
+      } else {
+        print('Unexpected error: $e');
+      }
+    }
+  }
+}
 
 class SellingPage extends StatefulWidget {
-  const SellingPage({super.key});
+  final UserData? user;
+
+  const SellingPage({super.key, this.user});
 
   @override
   SellingPageState createState() => SellingPageState();
@@ -18,11 +69,15 @@ class SellingPageState extends State<SellingPage> {
   String? selectedCondition;
   String? selectedColor;
   bool manySelected = false;
-  bool imagesUploaded = false;
   String? _selectedType;
   String? _selectedCategoru;
-
-  List<SizeEntry> sizeEntries = []; // List to store multiple size entries
+  List<SizeEntry> sizeEntries = [];
+  final ApiService _apiService = ApiService();
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  File? _selectedImage;
+  String? selectedImageURL;
 
   void toggleCategory(String category, String sectionLabel) {
     setState(() {
@@ -39,7 +94,6 @@ class SellingPageState extends State<SellingPage> {
           break;
         case 'Color':
           selectedColor = selectedColor == category ? null : category;
-
           break;
         case 'Condition':
           selectedCondition = selectedCondition == category ? null : category;
@@ -68,16 +122,53 @@ class SellingPageState extends State<SellingPage> {
     });
   }
 
-  void validateImagesUploaded() {
+  void addSizeEntry() {
     setState(() {
-      imagesUploaded = true; // Simulating image upload completion
+      sizeEntries.add(SizeEntry());
     });
   }
 
-  void addSizeEntry() {
-    setState(() {
-      sizeEntries.add(SizeEntry()); // Add a new SizeEntry object
-    });
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _selectedImage = File(pickedFile.path);
+      });
+
+      var imageUrl = await uploadImageFile(
+        _selectedImage!,
+        "${widget.user!.userID}_${widget.user!.name} product",
+      );
+
+      setState(() {
+        selectedImageURL = imageUrl;
+      });
+
+      print(selectedImageURL);
+    }
+  }
+
+  Future<void> uploadItem() async {
+    Map<String, dynamic> productData = {
+      "productID": "1234",
+      "businessID": widget.user!.businessID.toString(),
+      'material': _selectedType,
+      'type': _selectedType,
+      'category': _selectedCategoru,
+      'price': _priceController.text,
+      'name': _titleController.text,
+      'description': _descriptionController.text,
+      'season': selectedSeason,
+      'condition': selectedCondition,
+      'colors': selectedColor,
+      'gender': "F",
+      'sizes': ["S"],
+      "quantities": ["2", "0", "0", "0", "0"]
+    };
+
+    await _apiService.uploadProduct(productData, widget.user!, context);
   }
 
   @override
@@ -96,12 +187,12 @@ class SellingPageState extends State<SellingPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
+              const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Center(
+                    Center(
                       child: Text(
                         'Post your item',
                         style: TextStyle(
@@ -110,49 +201,38 @@ class SellingPageState extends State<SellingPage> {
                         ),
                       ),
                     ),
-                    const Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Upload Image*'),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_forward_ios),
-                          onPressed: validateImagesUploaded,
-                          color: Colors.cyan.shade600,
-                        ),
-                      ],
-                    ),
-                    Center(
-                      child: Column(
-                        children: [
-                          Image.network(
-                            'https://placehold.co/100x100',
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          ),
-                          const SizedBox(height: 8),
-                          const Text(
-                            'Upload Images',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                    if (!imagesUploaded)
-                      const Text(
-                        'Please upload images*',
-                        style: TextStyle(color: Colors.red),
-                      ),
+                    Divider(),
                   ],
                 ),
               ),
               const Divider(),
+              GestureDetector(
+                onTap: pickImage,
+                child: _selectedImage == null
+                    ? Container(
+                        height: 200,
+                        color: Colors.grey[300],
+                        child: const Center(
+                          child: Text(
+                            'Upload Image',
+                            style: TextStyle(color: Colors.black, fontSize: 18),
+                          ),
+                        ),
+                      )
+                    : Center(
+                        child: Image.file(
+                          _selectedImage!,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+              ),
+              const Divider(),
               buildTextField('Price', 'Enter the price you wish this item for',
-                  isRequired: true),
+                  isRequired: true, controller: _priceController),
               const Divider(),
               buildDropdownField(
-                'Category*',
+                'Item Category*',
                 'Select Category',
                 [
                   'Topwear',
@@ -210,7 +290,7 @@ class SellingPageState extends State<SellingPage> {
               ),
               const Divider(),
               buildDropdownField(
-                'Sub Category*',
+                'Sub Type*',
                 'Select Sub Category',
                 [
                   'Cotton',
@@ -528,24 +608,15 @@ class SellingPageState extends State<SellingPage> {
                 ),
               ],
               buildTextField('Item Title', 'Enter a title for this item',
-                  isRequired: true),
+                  isRequired: true, controller: _titleController),
               const Divider(),
               buildTextField('Description', 'Write a description on this item',
-                  isTextArea: true, isRequired: true),
+                  isTextArea: true,
+                  isRequired: true,
+                  controller: _descriptionController),
               const Divider(),
               ElevatedButton(
-                onPressed: () {
-                  if (!imagesUploaded) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Please upload images'),
-                      ),
-                    );
-                  } else {
-                    // Proceed with uploading item
-                    // Implement your logic here
-                  }
-                },
+                onPressed: uploadItem,
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.cyan.shade600,
@@ -566,7 +637,9 @@ class SellingPageState extends State<SellingPage> {
   }
 
   Widget buildTextField(String label, String placeholder,
-      {bool isTextArea = false, bool isRequired = false}) {
+      {bool isTextArea = false,
+      bool isRequired = false,
+      TextEditingController? controller}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -581,6 +654,7 @@ class SellingPageState extends State<SellingPage> {
         const SizedBox(height: 8),
         isTextArea
             ? TextField(
+                controller: controller,
                 maxLines: 4,
                 decoration: InputDecoration(
                   hintText: placeholder,
@@ -594,6 +668,7 @@ class SellingPageState extends State<SellingPage> {
                 ),
               )
             : TextField(
+                controller: controller,
                 decoration: InputDecoration(
                   hintText: placeholder,
                   border: OutlineInputBorder(
