@@ -209,7 +209,7 @@ class _ChatbotState extends State<Chatbot> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Chatbot", style: TextStyle(color: Colors.black)),
+                const Text("GIO", style: TextStyle(color: Colors.black)),
                 if (isTyping)
                   const Text("Typing...",
                       style: TextStyle(color: Colors.grey, fontSize: 12)),

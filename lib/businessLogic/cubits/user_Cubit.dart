@@ -226,7 +226,11 @@ class userCubit extends Cubit<userStates> {
         emit(userLoginSuccessState());
         await savePreferencesInfo(user);
 
-        Navigator.of(context).pushReplacementNamed(AppRoutes.navbar);
+        Navigator.of(context)
+            .pushReplacementNamed(AppRoutes.navbar, arguments: {
+          "selectedIndex": 0,
+          "user": user,
+        });
       } else if (user == "Error while logging in") {
         emit(userLoginErrorState());
         ScaffoldMessenger.of(context).showSnackBar(

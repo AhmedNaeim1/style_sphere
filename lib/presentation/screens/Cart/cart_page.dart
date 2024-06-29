@@ -89,6 +89,7 @@ class _CartPageState extends State<CartPage> {
                 await context
                     .read<ProductCubit>()
                     .getMultipleProducts(productIDs.cast<String>());
+                print(productIDs);
               }
             }
           },
