@@ -6,7 +6,7 @@ import 'package:style_sphere/data/models/cart_data.dart';
 class CartRepository {
   CartRepository();
 
-  String baseUrl = 'http://127.0.0.1:3001';
+  String baseUrl = 'http://127.0.0.1:3020';
 
   Future<Map<String, List<dynamic>>> getAllCartItems(String userID) async {
     final response = await http.get(Uri.parse('$baseUrl/cart/$userID'));

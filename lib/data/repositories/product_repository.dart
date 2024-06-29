@@ -7,7 +7,7 @@ import 'package:style_sphere/data/models/user_data.dart';
 class ProductRepository {
   ProductRepository();
 
-  String baseUrl = 'http://127.0.0.1:3040';
+  String baseUrl = 'http://127.0.0.1:3020';
 
   Future<ProductModel> getProduct(String productId) async {
     final response = await http.get(Uri.parse('$baseUrl/products/$productId'));
@@ -209,10 +209,11 @@ class ProductRepository {
     }
   }
 
+  // https://firebasestorage.googleapis.com/v0/b/stylesphere-graduation.appspot.com/o/Hoddie_hazem.jpg?alt=media&token=e32b1e66-ce6b-4495-8ecc-45f11fcc1a44
   Future<List<String>> getRecommendedProducts(UserData user) async {
     print("object");
     final uri = Uri.parse(
-        'https://aa02-34-125-120-17.ngrok-free.app/RecommenderSystemUsingOpenAI');
+        'https://3b8d-35-245-160-41.ngrok-free.app/RecommenderSystemUsingOpenAI');
     final response = await http.post(
       uri,
       headers: {
@@ -235,7 +236,7 @@ class ProductRepository {
 
   Future<List<String>> getSearchProducts(String name) async {
     final uri = Uri.parse(
-        'https://f1de-34-173-161-247.ngrok-free.app/StyleSphereSearch');
+        'https://300e-35-197-121-37.ngrok-free.app/StyleSphereSearch');
     final response = await http.post(
       uri,
       headers: {

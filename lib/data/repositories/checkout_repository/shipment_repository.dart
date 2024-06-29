@@ -7,7 +7,7 @@ class ShippingRepository {
   Future<List<ShipmentModel>> getAllShipments() async {
     try {
       final response = await http
-          .get(Uri.parse('http://127.0.0.1:8080/shipping/get-shipments'));
+          .get(Uri.parse('http://127.0.0.1:3020/shipping/get-shipments'));
       if (response.statusCode == 200) {
         Iterable list = jsonDecode(response.body);
         List<ShipmentModel> shipments =
@@ -24,7 +24,7 @@ class ShippingRepository {
   Future<bool> deleteShipment(int shippingAddressID, String userID) async {
     try {
       final response = await http.delete(Uri.parse(
-          'http://127.0.0.1:8080/shipping/$shippingAddressID/$userID'));
+          'http://127.0.0.1:3020/shipping/$shippingAddressID/$userID'));
       if (response.statusCode == 200) {
         return true;
       } else {
@@ -38,7 +38,7 @@ class ShippingRepository {
   Future<bool> addShipment(ShipmentModel shipment) async {
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:8080/shipping/add-shipment'),
+        Uri.parse('http://127.0.0.1:3020/shipping/add-shipment'),
         body: jsonEncode(shipment.toJson()),
         headers: {'Content-Type': 'application/json'},
       );
@@ -56,7 +56,7 @@ class ShippingRepository {
       int shippingAddressID, String userID) async {
     try {
       final response = await http.get(Uri.parse(
-          'http://127.0.0.1:8080/shipping/get-shipment/$shippingAddressID/$userID'));
+          'http://127.0.0.1:3020/shipping/get-shipment/$shippingAddressID/$userID'));
       if (response.statusCode == 200) {
         return ShipmentModel.fromJson(jsonDecode(response.body));
       } else {
@@ -72,7 +72,7 @@ class ShippingRepository {
     try {
       final response = await http.put(
         Uri.parse(
-            'http://127.0.0.1:8080/shipping/update-shipment/$shippingAddressID/$userID'),
+            'http://127.0.0.1:3020/shipping/update-shipment/$shippingAddressID/$userID'),
         body: jsonEncode(shipment.toJson()),
         headers: {'Content-Type': 'application/json'},
       );
@@ -89,7 +89,7 @@ class ShippingRepository {
   Future<List<ShipmentModel>> getUserShipments(String userID) async {
     try {
       final response = await http.get(Uri.parse(
-          'http://127.0.0.1:8080/shipping/get-user-shipments/$userID'));
+          'http://127.0.0.1:3020/shipping/get-user-shipments/$userID'));
       if (response.statusCode == 200) {
         List<dynamic> shipmentDataList = jsonDecode(response.body);
 

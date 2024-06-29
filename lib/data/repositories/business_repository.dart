@@ -7,7 +7,7 @@ import 'package:style_sphere/data/models/business_data.dart';
 class BusinessRepository {
   BusinessRepository();
 
-  final String baseUrl = 'https://127.0.0.1:7218/business';
+  final String baseUrl = 'https://127.0.0.1:3020/business';
 
   Future<List<BusinessModel>> getAllBusinesses() async {
     final response = await http.get(Uri.parse('$baseUrl/allBusinesses'));

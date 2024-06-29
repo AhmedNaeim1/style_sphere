@@ -26,7 +26,7 @@ class PaymentRepository {
   Future<bool> deletePayment(int paymentMethodID, String userID) async {
     try {
       final response = await http.delete(
-          Uri.parse('http://127.0.0.1:8080/payments/$paymentMethodID/$userID'));
+          Uri.parse('http://127.0.0.1:3020/payments/$paymentMethodID/$userID'));
       print(response.body);
       if (response.statusCode == 200) {
         return true;
@@ -41,7 +41,7 @@ class PaymentRepository {
   Future<bool> addPayment(PaymentData payment) async {
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:8080/payments/add-payment'),
+        Uri.parse('http://127.0.0.1:3020/payments/add-payment'),
         body: jsonEncode(payment.toJson()),
         headers: {'Content-Type': 'application/json'},
       );
@@ -59,7 +59,7 @@ class PaymentRepository {
   Future<PaymentData> getPayment(int paymentMethodID, int userID) async {
     try {
       final response = await http.get(Uri.parse(
-          'http://127.0.0.1:8080/payments/get-payment/$paymentMethodID/$userID'));
+          'http://127.0.0.1:3020/payments/get-payment/$paymentMethodID/$userID'));
       if (response.statusCode == 200) {
         return PaymentData.fromJson(jsonDecode(response.body));
       } else {
@@ -75,7 +75,7 @@ class PaymentRepository {
     try {
       final response = await http.put(
         Uri.parse(
-            'http://127.0.0.1:8080/payments/update-payment/$paymentMethodID/$userID'),
+            'http://127.0.0.1:3020/payments/update-payment/$paymentMethodID/$userID'),
         body: jsonEncode(payment.toJson()),
         headers: {'Content-Type': 'application/json'},
       );
@@ -92,7 +92,7 @@ class PaymentRepository {
   Future<List<PaymentData>> getUserPayments(String userID) async {
     try {
       final response = await http.get(
-          Uri.parse('http://127.0.0.1:8080/payments/get-user-payment/$userID'));
+          Uri.parse('http://127.0.0.1:3020/payments/get-user-payment/$userID'));
       if (response.statusCode == 200) {
         List<dynamic> paymentDataList = jsonDecode(response.body);
 

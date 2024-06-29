@@ -33,7 +33,7 @@ class UserRepository {
   Future<dynamic> logIn(String email, String password) async {
     UserData user;
     final response =
-        await http.post(Uri.parse('http://127.0.0.1:3005/user/login'), body: {
+        await http.post(Uri.parse('http://127.0.0.1:3020/user/login'), body: {
       'email': email,
       'password': password,
     });
@@ -52,7 +52,7 @@ class UserRepository {
 
   Future<dynamic> registerUser(UserData user) async {
     final response = await http.post(
-        Uri.parse('http://127.0.0.1:3005/user/signup'),
+        Uri.parse('http://127.0.0.1:3020/user/signup'),
         body: jsonEncode(user.toJson()),
         headers: {'Content-Type': 'application/json'});
     print("response");
@@ -71,7 +71,7 @@ class UserRepository {
   updateUserPreferences(String userId, UserData userPreferencesInfo) async {
     userPreferencesInfo.userID = userId;
     final response = await http.put(
-        Uri.parse('http://127.0.0.1:3005/user/$userId/preferences'),
+        Uri.parse('http://127.0.0.1:3020/user/$userId/preferences'),
         body: jsonEncode(userPreferencesInfo.toJson()),
         headers: {'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
@@ -86,7 +86,7 @@ class UserRepository {
   updateUser(String userId, UserData userInfo) async {
     userInfo.userID = userId;
     final response = await http.put(
-        Uri.parse('http://127.0.0.1:3005/user/$userId'),
+        Uri.parse('http://127.0.0.1:3020/user/$userId'),
         body: jsonEncode(userInfo.toJson()),
         headers: {'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
@@ -100,7 +100,7 @@ class UserRepository {
 
   changePassword(String userId, String oldPassword, String newPassword) async {
     final response = await http.put(
-      Uri.parse('http://127.0.0.1:3005/user/$userId/changePassword'),
+      Uri.parse('http://127.0.0.1:3020/user/$userId/changePassword'),
       body: {"oldPassword": oldPassword, "newPassword": newPassword},
     );
 
@@ -115,7 +115,7 @@ class UserRepository {
 
   sendOTP(String email) async {
     final response = await http
-        .post(Uri.parse('http://127.0.0.1:3005/user/userOTPSending'), body: {
+        .post(Uri.parse('http://127.0.0.1:3020/user/userOTPSending'), body: {
       "email": email,
     });
 
@@ -130,7 +130,7 @@ class UserRepository {
 
   verifyOTP(String email, String otp, String id) async {
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:3005/user/userOTPVerification'),
+      Uri.parse('http://127.0.0.1:3020/user/userOTPVerification'),
       body: {"email": email, "otp": otp, "id": id},
     );
     if (response.statusCode == 200) {
@@ -143,7 +143,7 @@ class UserRepository {
 
   // checkOTP(String email, String otp) async {
   //   final response = await http.post(
-  //       Uri.parse('http://' + serverIP + ':3005/user/otp'),
+  //       Uri.parse('http://' + serverIP + ':3020/user/otp'),
   //       body: jsonEncode({"email": email, "otp": otp}),
   //       headers: {'Content-Type': 'application/json'});
   //   if (response.statusCode == 200) {
